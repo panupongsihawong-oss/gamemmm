@@ -3,38 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EdTech Learning System | Senior Project</title>
-    <!-- ใช้ฟอนต์ Kanit เพื่อความทันสมัย โค้งมน อ่านง่าย -->
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>CyberGuard Thailand | Senior Project</title>
+    <!-- ฟอนต์ Prompt ทันสมัย สวยงาม อ่านง่าย -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ==========================================
-           MODERN ED-TECH UI / LIGHT GLASSMORPHISM
-           ========================================== */
         :root {
-            --primary: #4361ee;
-            --primary-light: #4895ef;
-            --secondary: #f72585;
-            --success: #4cc9f0;
-            --text-dark: #2b2d42;
-            --text-muted: #6c757d;
-            --glass-bg: rgba(255, 255, 255, 0.85);
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --glass: rgba(255, 255, 255, 0.85);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
 
         body {
-            font-family: 'Kanit', sans-serif;
-            /* พื้นหลังไล่สีสวยงาม สว่างตา */
-            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
-            color: var(--text-dark);
+            font-family: 'Prompt', sans-serif;
+            /* ธีมสี Cyber Sunset สว่างสดใส โมเดิร์น ไม่หม่นหมอง */
+            background: linear-gradient(135deg, #fbcfe8 0%, #a5f3fc 50%, #c7d2fe 100%);
+            color: var(--text-main);
             overflow: hidden; 
             width: 100vw;
             height: 100vh;
         }
 
-        /* 3D Canvas Background */
         #webgl-container {
             position: absolute;
             top: 0; left: 0;
@@ -42,7 +37,6 @@
             z-index: 1;
         }
 
-        /* UI Layer Overlay */
         #ui-layer {
             position: absolute;
             top: 0; left: 0;
@@ -62,7 +56,7 @@
             align-items: center;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             transform: scale(0.95);
         }
 
@@ -73,121 +67,120 @@
             transform: scale(1);
         }
 
-        /* Light Glassmorphism Panels */
         .modern-panel {
-            background: var(--glass-bg);
+            background: var(--glass);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.9);
             border-radius: 30px;
-            padding: 50px;
+            padding: 40px;
             width: 90%;
-            max-width: 700px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 650px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
             position: relative;
             text-align: center;
         }
 
         h1.title-text {
-            font-size: 3rem;
+            font-size: 2.8rem;
             font-weight: 700;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
-        .form-group { margin-bottom: 25px; text-align: left; }
+        .form-group { margin-bottom: 20px; text-align: left; }
         .form-group label {
-            display: block; font-weight: 600; font-size: 1.1rem; color: var(--primary); margin-bottom: 8px;
+            display: block; font-weight: 600; font-size: 1rem; color: var(--primary); margin-bottom: 8px;
         }
         
         .modern-input {
-            width: 100%; padding: 15px 20px; background: rgba(255,255,255,0.9);
-            border: 2px solid #e9ecef; border-radius: 15px; color: var(--text-dark);
-            font-family: 'Kanit'; font-size: 1.1rem; outline: none; transition: 0.3s;
+            width: 100%; padding: 14px 20px; background: #fff;
+            border: 2px solid #e2e8f0; border-radius: 14px; color: var(--text-main);
+            font-family: 'Prompt'; font-size: 1rem; outline: none; transition: 0.3s;
         }
-        .modern-input:focus { border-color: var(--primary-light); box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15); }
+        .modern-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15); }
 
         .btn-modern {
-            width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            border: none; color: #fff; font-family: 'Kanit'; font-size: 1.3rem; font-weight: 600;
-            cursor: pointer; transition: 0.3s; border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.2);
+            width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none; color: #fff; font-family: 'Prompt'; font-size: 1.2rem; font-weight: 600;
+            cursor: pointer; transition: 0.3s; border-radius: 14px;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
             margin-top: 15px;
         }
         .btn-modern:hover:not(:disabled) {
-            transform: translateY(-3px); box-shadow: 0 15px 25px rgba(67, 97, 238, 0.3);
+            transform: translateY(-3px); box-shadow: 0 15px 25px rgba(99, 102, 241, 0.4);
         }
-        .btn-modern:disabled { background: #ced4da; box-shadow: none; cursor: not-allowed; }
+        .btn-modern:disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; color: #64748b; }
 
-        /* In-Game HUD */
         #hud {
-            position: absolute; top: 0; left: 0; width: 100%; padding: 20px 40px;
+            position: absolute; top: 0; left: 0; width: 100%; padding: 15px 30px;
             display: flex; justify-content: space-between; z-index: 5;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.8), transparent);
-            font-weight: 700; font-size: 1.5rem; color: var(--primary);
+            background: rgba(255,255,255,0.8); backdrop-filter: blur(10px);
+            font-weight: 700; font-size: 1.2rem; color: var(--primary);
+            border-bottom: 1px solid rgba(255,255,255,0.5);
             opacity: 0; transition: 0.5s; pointer-events: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
         
-        /* YouTube Module */
+        /* YouTube Shorts Vertical Container */
         .video-container {
-            width: 100%; height: 380px; background: #000; border-radius: 20px;
-            overflow: hidden; position: relative; margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            width: 100%; max-width: 300px; height: 520px;
+            margin: 0 auto 20px auto;
+            background: #000; border-radius: 20px;
+            overflow: hidden; position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 4px solid #fff;
         }
-        .video-blocker { position: absolute; bottom: 0; left: 0; width: 100%; height: 70px; z-index: 10; }
-        .progress-bar { width: 100%; height: 12px; background: #e9ecef; border-radius: 10px; overflow: hidden; margin-bottom: 20px;}
-        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--success)); transition: width 0.2s linear; }
-
-        /* Quiz Module */
-        .choice-btn {
-            display: block; width: 100%; padding: 18px 25px; margin-bottom: 15px;
-            background: #fff; border: 2px solid #e9ecef; color: var(--text-dark);
-            text-align: left; font-size: 1.1rem; font-family: 'Kanit'; cursor: pointer;
-            border-radius: 15px; transition: 0.2s; font-weight: 500;
-        }
-        .choice-btn:hover { border-color: var(--primary); background: #f8f9fa; transform: scale(1.01); }
-        .choice-btn.correct { background: #d1e7dd; border-color: #198754; color: #0f5132; }
-        .choice-btn.wrong { background: #f8d7da; border-color: #dc3545; color: #842029; }
+        .video-blocker { position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; z-index: 10; }
         
-        /* Instruction */
+        .progress-bar { width: 100%; height: 12px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-bottom: 20px;}
+        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--primary)); transition: width 0.2s linear; }
+
+        .choice-btn {
+            display: block; width: 100%; padding: 16px 20px; margin-bottom: 12px;
+            background: #fff; border: 2px solid #e2e8f0; color: var(--text-main);
+            text-align: left; font-size: 1.05rem; font-family: 'Prompt'; cursor: pointer;
+            border-radius: 14px; transition: 0.2s; font-weight: 500;
+        }
+        .choice-btn:hover { border-color: var(--primary); background: #f8fafc; transform: scale(1.01); }
+        .choice-btn.correct { background: #dcfce7; border-color: #22c55e; color: #166534; }
+        .choice-btn.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+        
         .controls-hint {
             position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: rgba(255,255,255,0.9); padding: 10px 25px; border-radius: 30px;
-            font-weight: 600; font-size: 1.2rem; color: var(--primary);
-            text-align: center; pointer-events: none; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: 0.5s;
+            background: #fff; padding: 12px 24px; border-radius: 30px;
+            font-weight: 600; font-size: 1.1rem; color: var(--primary);
+            text-align: center; pointer-events: none; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: 0.5s; border: 1px solid #e2e8f0;
         }
     </style>
 </head>
 <body>
 
-    <!-- 3D Graphics Container -->
     <div id="webgl-container"></div>
 
-    <!-- HUD Overlay -->
     <div id="hud">
-        <div>ผู้เรียน: <span id="hud-name" style="color: var(--secondary);">ไม่ระบุตัวตน</span></div>
-        <div>คะแนน: <span id="hud-score" style="color: var(--secondary);">0</span></div>
+        <div>ผู้พิทักษ์: <span id="hud-name" style="color: var(--secondary);">ผู้เล่น</span></div>
+        <div>คะแนนไซเบอร์: <span id="hud-score" style="color: var(--secondary);">0</span> XP</div>
     </div>
     
     <div class="controls-hint" id="controls-hint" style="opacity: 0;">
-        <i class="fa-solid fa-arrows-left-right"></i> กด [A] / [D] หรือ [ลูกศรซ้าย/ขวา] เพื่อบังคับทิศทาง
+        <i class="fa-solid fa-gamepad"></i> ใช้ปุ่ม [A] / [D] หรือ [ลูกศรซ้าย/ขวา] เพื่อควบคุมยาน
     </div>
 
-    <!-- UI Logic Layer -->
     <div id="ui-layer">
         
-        <!-- 1. หน้าจอหลัก (Main Menu) -->
+        <!-- 1. หน้าจอลงทะเบียน -->
         <div id="screen-login" class="screen active">
             <div class="modern-panel">
-                <div style="font-size: 4rem; color: var(--primary); margin-bottom: 10px;"><i class="fa-solid fa-graduation-cap"></i></div>
-                <h1 class="title-text">ระบบการเรียนรู้อัจฉริยะ</h1>
-                <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 1.1rem;">บูรณาการความรู้กฎหมายและจรรยาบรรณไซเบอร์ (Senior Project)</p>
+                <div style="font-size: 3.5rem; color: var(--primary); margin-bottom: 5px;"><i class="fa-solid fa-shield-halved"></i></div>
+                <h1 class="title-text">CyberGuard Thailand</h1>
+                <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 1.05rem;">เกมจำลองการเรียนรู้กฎหมายและจรรยาบรรณไซเบอร์ สำหรับนักเรียนไทย</p>
                 
                 <div class="form-group">
-                    <label>ชื่อ - นามสกุล</label>
+                    <label>ชื่อ - นามสกุล ผู้พิทักษ์</label>
                     <input type="text" id="player-name" class="modern-input" placeholder="ระบุชื่อของคุณ">
                 </div>
                 
@@ -196,24 +189,24 @@
                     <input type="text" id="school-name" class="modern-input" placeholder="เช่น ม.6/1 โรงเรียนศรีสะเกษวิทยาลัย">
                 </div>
 
-                <button class="btn-modern" onclick="GameApp.startGame()">เข้าสู่บทเรียน 3D <i class="fa-solid fa-play" style="margin-left: 8px;"></i></button>
+                <button class="btn-modern" onclick="GameApp.startGame()">เริ่มปฏิบัติภารกิจ <i class="fa-solid fa-rocket" style="margin-left: 8px;"></i></button>
             </div>
         </div>
 
-        <!-- 2. หน้าจอวิดีโอ (บังคับเรียน) -->
+        <!-- 2. หน้าจอวิดีโอ (YouTube Shorts ภาษาไทย) -->
         <div id="screen-video" class="screen">
-            <div class="modern-panel">
-                <h2 style="font-size: 2.2rem; color: var(--primary); font-weight: 700;">พบเนื้อหาการเรียนรู้ใหม่</h2>
-                <p style="margin-bottom: 25px; color: var(--text-muted);">กรุณารับชมวิดีโอให้จบ 100% จึงจะสามารถทำแบบทดสอบได้</p>
+            <div class="modern-panel" style="max-width: 480px; padding: 25px;">
+                <h2 style="font-size: 1.6rem; color: var(--primary); font-weight: 700;">📺 ภารกิจศึกษาข้อมูลกฎหมายไทย</h2>
+                <p style="margin-bottom: 15px; color: var(--text-muted); font-size: 0.9rem;">คำสั่ง: รับชมคลิปวิดีโอความรู้นี้ให้จบ 100% จึงจะปลดล็อกแบบทดสอบ</p>
                 
                 <div class="video-container">
                     <div id="youtube-player"></div>
-                    <div class="video-blocker"></div> <!-- บล็อกการข้ามวิดีโอ -->
+                    <div class="video-blocker"></div>
                 </div>
                 
                 <div class="progress-bar"><div class="progress-fill" id="vid-progress"></div></div>
                 <button id="btn-quiz" class="btn-modern" disabled onclick="GameApp.showQuiz()">
-                    <i class="fa-solid fa-lock" id="btn-lock-icon"></i> ระบบล็อกการทดสอบ
+                    <i class="fa-solid fa-lock" id="btn-lock-icon"></i> กำลังศึกษาข้อมูล...
                 </button>
             </div>
         </div>
@@ -221,23 +214,21 @@
         <!-- 3. หน้าจอแบบทดสอบ -->
         <div id="screen-quiz" class="screen">
             <div class="modern-panel">
-                <div style="display: inline-block; padding: 5px 15px; background: #e0ebff; color: var(--primary); border-radius: 20px; font-weight: 600; margin-bottom: 20px;">แบบทดสอบความเข้าใจ</div>
-                <h3 id="question-text" style="font-size: 1.4rem; margin-bottom: 30px; font-weight: 500; line-height: 1.6; color: var(--text-dark);">คำถามโหลดที่นี่...</h3>
+                <div style="display: inline-block; padding: 6px 16px; background: #e0e7ff; color: var(--primary); border-radius: 20px; font-weight: 600; margin-bottom: 20px; font-size: 0.9rem;">แบบทดสอบวัดผล</div>
+                <h3 id="question-text" style="font-size: 1.3rem; margin-bottom: 25px; font-weight: 500; line-height: 1.5; color: var(--text-main);">คำถามโหลดที่นี่...</h3>
                 
-                <div id="choices-container">
-                    <!-- ปุ่มตัวเลือกสร้างด้วย JS -->
-                </div>
+                <div id="choices-container"></div>
             </div>
         </div>
 
-        <!-- 4. หน้าจอจบเกม -->
+        <!-- 4. หน้าจอสรุปผล -->
         <div id="screen-end" class="screen">
             <div class="modern-panel">
-                <i class="fa-solid fa-award" style="font-size: 5rem; color: #ffb703; margin-bottom: 20px;"></i>
-                <h1 class="title-text" style="font-size: 2.5rem;">สรุปผลการเรียนรู้</h1>
-                <p style="font-size: 1.2rem; margin: 20px 0; color: var(--text-muted);">คะแนนสะสมทั้งหมดของคุณคือ</p>
-                <h1 style="font-size: 5rem; color: var(--primary); margin-bottom: 30px;" id="final-score">0</h1>
-                <button class="btn-modern" onclick="location.reload()">กลับสู่หน้าแรก</button>
+                <i class="fa-solid fa-award" style="font-size: 5rem; color: #fbbf24; margin-bottom: 15px;"></i>
+                <h1 class="title-text" style="font-size: 2.2rem;">เสร็จสิ้นภารกิจ!</h1>
+                <p style="font-size: 1.1rem; margin: 15px 0; color: var(--text-muted);">คะแนนรวมความรู้ไซเบอร์ของคุณคือ</p>
+                <h1 style="font-size: 4.5rem; color: var(--primary); margin-bottom: 25px;" id="final-score">0</h1>
+                <button class="btn-modern" onclick="location.reload()">เล่นใหม่อีกครั้ง <i class="fa-solid fa-rotate-right" style="margin-left: 5px;"></i></button>
             </div>
         </div>
 
@@ -249,58 +240,52 @@
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
-        /**
-         * =====================================================================
-         * CORE ARCHITECTURE: MODERN ED-TECH 3D
-         * =====================================================================
-         */
-
-        // --- Data & Questions ---
+        // --- ฐานข้อมูลคำถามและวิดีโอ Shorts ภาษาไทย ---
         const QuizData = [
             {
-                videoId: "M7lc1UVf-VE", // ใช้คลิปทดสอบของ Google (รับรองว่าเปิดได้ 100%)
-                question: "หากพบเห็นเพื่อนนักเรียนโพสต์ข้อมูลที่บิดเบือนบนโซเชียลมีเดีย ควรทำอย่างไรจึงจะเหมาะสมและถูกต้องตามกฎหมายมากที่สุด?",
+                videoId: "3pR0Ka4H-6U", // คลิป Shorts ภาษาไทยที่คุณให้มา
+                question: "จากวิดีโอความรู้เกี่ยวกับภัยไซเบอร์และการใช้สื่อสังคมออนไลน์ ข้อใดคือแนวปฏิบัติที่ถูกต้องที่สุดสำหรับนักเรียน?",
                 choices: [
-                    "รีบแชร์ต่อเพื่อให้ทุกคนทราบถึงปัญหาทันที",
-                    "แคปเจอร์หน้าจอและนำไปโพสต์ประจานในกลุ่มโรงเรียน",
-                    "แจ้งเตือนด้วยเหตุผลอย่างสุภาพ หรือแจ้งครูให้ช่วยตรวจสอบ",
-                    "เข้าไปคอมเมนต์ก่อกวนจนกว่าเพื่อนจะยอมลบโพสต์"
+                    "แชร์ข้อมูลที่น่าตกใจทันทีโดยไม่ต้องตรวจสอบแหล่งที่มา",
+                    "กลั่นแกล้งเพื่อนในคอมเมนต์เพื่อความสนุกสนานส่วนตัว",
+                    "ตรวจสอบความถูกต้องของข้อมูลก่อนเผยแพร่และเคารพสิทธิผู้อื่น",
+                    "นำรหัสผ่านของเพื่อนมาใช้งานเมื่อเพื่อนเผลอ"
                 ],
                 correctIndex: 2
             },
             {
-                videoId: "M7lc1UVf-VE", // สามารถเปลี่ยนรหัสคลิปอื่นๆ ได้ตามต้องการ
-                question: "การคัดลอกเนื้อหารายงานจากอินเทอร์เน็ตมาส่งครูโดยไม่ใส่แหล่งอ้างอิง ถือเป็นการกระทำที่เหมาะสมหรือไม่?",
+                videoId: "3pR0Ka4H-6U",
+                question: "หากนักเรียนพบเจอการกระทำที่เข้าข่ายผิด พ.ร.บ.คอมพิวเตอร์ ในโรงเรียน ควรดำเนินการอย่างไร?",
                 choices: [
-                    "เหมาะสม เพราะข้อมูลในเน็ตเป็นของสาธารณะ",
-                    "ไม่เหมาะสม เพราะถือเป็นการละเมิดลิขสิทธิ์และผิดจรรยาบรรณวิชาการ",
-                    "เหมาะสม หากเปลี่ยนรูปแบบตัวอักษรและสีพื้นหลังใหม่",
-                    "ไม่เหมาะสมเฉพาะกรณีที่เป็นข้อมูลภาษาต่างประเทศเท่านั้น"
+                    "นิ่งเฉยเพราะไม่ใช่เรื่องของเรา",
+                    "ร่วมแสดงความคิดเห็นสนับสนุนการกระทำนั้น",
+                    "แจ้งคุณครูหรือเจ้าหน้าที่ผู้รับผิดชอบเพื่อหาทางแก้ไขอย่างเหมาะสม",
+                    "สร้างข่าวปลอมซ้ำเพื่อให้เรื่องราวใหญ่โตขึ้น"
                 ],
-                correctIndex: 1
+                correctIndex: 2
             }
         ];
 
-        // --- 3D Engine Class (สว่าง ทันสมัย) ---
+        // --- 3D Engine ระดับสูง พร้อมระบบฉากหลังและต้นไม้/ตึกด้านข้าง ---
         class Engine3D {
             constructor() {
                 this.scene = new THREE.Scene();
-                
                 this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-                // ตั้งค่า alpha: true เพื่อให้พื้นหลัง CSS แสดงทะลุ Canvas 3D
                 this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
                 this.renderer.setSize(window.innerWidth, window.innerHeight);
                 document.getElementById('webgl-container').appendChild(this.renderer.domElement);
 
                 this.clock = new THREE.Clock();
                 this.isPlaying = false;
-                this.speed = 30;
+                this.speed = 32;
                 
                 this.objects = [];
+                this.sideScenery = [];
                 
                 this.setupLights();
                 this.setupEnvironment();
                 this.setupPlayer();
+                this.setupSideScenery();
 
                 window.addEventListener('resize', () => {
                     this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -310,32 +295,75 @@
             }
 
             setupLights() {
-                const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+                const ambient = new THREE.AmbientLight(0xffffff, 0.9);
                 this.scene.add(ambient);
-                const directional = new THREE.DirectionalLight(0xffffff, 0.8);
-                directional.position.set(5, 10, 5);
+                const directional = new THREE.DirectionalLight(0xffffff, 1.2);
+                directional.position.set(10, 20, 10);
                 this.scene.add(directional);
             }
 
             setupEnvironment() {
-                // ตาราง Grid สีสว่าง ทันสมัย
-                const gridHelper = new THREE.GridHelper(200, 50, 0x4361ee, 0xffffff);
+                // ถนนตารางเรืองแสง
+                const gridHelper = new THREE.GridHelper(250, 50, 0x6366f1, 0xc084fc);
                 gridHelper.position.y = -2;
-                // ปรับความทึบของ Grid
                 gridHelper.material.transparent = true;
                 gridHelper.material.opacity = 0.5;
                 this.scene.add(gridHelper);
                 this.grid = gridHelper;
             }
 
+            setupSideScenery() {
+                // สร้างสิ่งประดับด้านข้าง (ต้นไม้ไซเบอร์ / เสาข้อมูลเรืองแสง) ทั้งซ้ายและขวา เพื่อไม่ให้ฉากโล่ง
+                for (let i = 0; i < 20; i++) {
+                    this.createSidePair(-12, -i * 15);
+                    this.createSidePair(12, -i * 15);
+                }
+            }
+
+            createSidePair(xPos, zPos) {
+                const group = new THREE.Group();
+                // เสาไซเบอร์ / ต้นไม้เรืองแสง
+                const trunkGeo = new THREE.CylinderGeometry(0.4, 0.8, 6, 6);
+                const trunkMat = new THREE.MeshPhongMaterial({ color: 0x475569 });
+                const trunk = new THREE.Mesh(trunkGeo, trunkMat);
+                trunk.position.y = 1;
+                group.add(trunk);
+
+                const topGeo = new THREE.ConeGeometry(2, 4, 6);
+                const topMat = new THREE.MeshPhongMaterial({ color: 0x06b6d4, emissive: 0x0e7490 });
+                const top = new THREE.Mesh(topGeo, topMat);
+                top.position.y = 4;
+                group.add(top);
+
+                group.position.set(xPos, 0, zPos);
+                this.scene.add(group);
+                this.sideScenery.push(group);
+            }
+
             setupPlayer() {
-                // รูปทรงคริสตัล (Icosahedron) ดูทันสมัย
-                const geometry = new THREE.IcosahedronGeometry(1.2, 0);
-                const material = new THREE.MeshPhongMaterial({ 
-                    color: 0x4361ee, flatShading: true, shininess: 100
-                });
-                this.player = new THREE.Mesh(geometry, material);
-                
+                // สร้างโมเดล 3D ยานพิทักษ์ไซเบอร์ (ประกอบร่างจากเรขาคณิตขั้นสูง)
+                const playerGroup = new THREE.Group();
+
+                const bodyGeo = new THREE.ConeGeometry(1.2, 3, 6);
+                bodyGeo.rotateX(Math.PI / 2);
+                const bodyMat = new THREE.MeshPhongMaterial({ color: 0x6366f1, shininess: 100 });
+                const body = new THREE.Mesh(bodyGeo, bodyMat);
+                playerGroup.add(body);
+
+                // ปีกข้าง
+                const wingGeo = new THREE.BoxGeometry(3, 0.2, 1);
+                const wingMat = new THREE.MeshPhongMaterial({ color: 0xec4899 });
+                const wing = new THREE.Mesh(wingGeo, wingMat);
+                wing.position.set(0, 0, 0.5);
+                playerGroup.add(wing);
+
+                // แกนพลังงานเรืองแสงตรงกลาง
+                const coreGeo = new THREE.SphereGeometry(0.5, 16, 16);
+                const coreMat = new THREE.MeshPhongMaterial({ color: 0x06b6d4, emissive: 0x06b6d4 });
+                const core = new THREE.Mesh(coreGeo, coreMat);
+                playerGroup.add(core);
+
+                this.player = playerGroup;
                 this.player.position.set(0, 0, 10);
                 this.scene.add(this.player);
 
@@ -356,26 +384,28 @@
             spawnObstacle() {
                 if(!this.isPlaying) return;
                 
-                const isCollectible = Math.random() > 0.65;
-                let geometry, material;
+                const isCollectible = Math.random() > 0.55;
+                let mesh;
 
                 if (isCollectible) {
-                    // วงแหวนความรู้ (สีเขียวสว่าง)
-                    geometry = new THREE.TorusGeometry(1, 0.3, 16, 32);
-                    material = new THREE.MeshPhongMaterial({ color: 0x10b981, shininess: 100 });
+                    // ไอเทมเครื่องมือไซเบอร์ (ดาวคริสตัลเขียว)
+                    const geo = new THREE.OctahedronGeometry(1.2, 0);
+                    const mat = new THREE.MeshPhongMaterial({ color: 0x22c55e, emissive: 0x15803d });
+                    mesh = new THREE.Mesh(geo, mat);
+                    mesh.userData = { type: 'core' };
                 } else {
-                    // ไวรัสขัดขวาง (สีส้ม/แดง)
-                    geometry = new THREE.DodecahedronGeometry(1.5, 0);
-                    material = new THREE.MeshPhongMaterial({ color: 0xff5a5f, flatShading: true });
+                    // สิ่งกีดขวางไวรัส (กล่องหนามสีชมพู/แดง)
+                    const geo = new THREE.DodecahedronGeometry(1.4, 0);
+                    const mat = new THREE.MeshPhongMaterial({ color: 0xf43f5e, flatShading: true });
+                    mesh = new THREE.Mesh(geo, mat);
+                    mesh.userData = { type: 'virus' };
                 }
 
-                const mesh = new THREE.Mesh(geometry, material);
-                const lanes = [-6, 0, 6];
+                const lanes = [-5, 0, 5];
                 mesh.position.x = lanes[Math.floor(Math.random() * lanes.length)];
-                mesh.position.y = 0;
+                mesh.position.y = 0.5;
                 mesh.position.z = -120;
                 
-                mesh.userData = { type: isCollectible ? 'core' : 'virus' };
                 this.scene.add(mesh);
                 this.objects.push(mesh);
             }
@@ -396,8 +426,7 @@
                             GameApp.deductScore();
                             this.scene.remove(obj);
                             this.objects.splice(i, 1);
-                            // เอฟเฟกต์กระตุก
-                            gsap.to(this.player.position, {x: this.player.position.x + (Math.random()-0.5)*3, duration: 0.1, yoyo: true, repeat: 3});
+                            gsap.to(this.player.position, {x: this.player.position.x + (Math.random()-0.5)*2, duration: 0.1, yoyo: true, repeat: 3});
                         }
                     }
                 }
@@ -408,20 +437,24 @@
                 const delta = this.clock.getDelta();
 
                 if (this.isPlaying) {
-                    this.player.rotation.x += 1 * delta;
-                    this.player.rotation.y += 2 * delta;
+                    this.player.rotation.y = (this.keys.left ? 0.3 : 0) + (this.keys.right ? -0.3 : 0);
 
-                    if (this.keys.left && this.player.position.x > -7) this.player.position.x -= 18 * delta;
-                    if (this.keys.right && this.player.position.x < 7) this.player.position.x += 18 * delta;
+                    if (this.keys.left && this.player.position.x > -5.5) this.player.position.x -= 16 * delta;
+                    if (this.keys.right && this.player.position.x < 5.5) this.player.position.x += 16 * delta;
 
                     this.grid.position.z = (this.grid.position.z + this.speed * delta) % 10;
+
+                    // เลื่อนต้นไม้/ตึกด้านข้างให้สมจริง
+                    this.sideScenery.forEach(scenery => {
+                        scenery.position.z += this.speed * delta;
+                        if (scenery.position.z > 20) scenery.position.z = -280;
+                    });
 
                     for (let i = this.objects.length - 1; i >= 0; i--) {
                         const obj = this.objects[i];
                         obj.position.z += this.speed * delta;
-                        
-                        obj.rotation.x += 1.5 * delta;
-                        obj.rotation.y += 1.5 * delta;
+                        obj.rotation.x += 2 * delta;
+                        obj.rotation.y += 2 * delta;
 
                         if (obj.position.z > 20) {
                             this.scene.remove(obj);
@@ -434,15 +467,12 @@
             }
 
             startCinematic() {
-                gsap.fromTo(this.camera.position, 
-                    { y: 30, z: 60 }, 
-                    { y: 6, z: 22, duration: 2, ease: "power3.out" }
-                );
+                gsap.fromTo(this.camera.position, { y: 25, z: 50 }, { y: 6, z: 22, duration: 2, ease: "power3.out" });
             }
 
             pauseForUI() {
                 this.isPlaying = false;
-                gsap.to(this.camera.position, { z: 15, y: 3, duration: 1, ease: "power2.inOut" });
+                gsap.to(this.camera.position, { z: 14, y: 3, duration: 1, ease: "power2.inOut" });
             }
 
             resumeCinematic() {
@@ -451,7 +481,7 @@
             }
         }
 
-        // --- Game Application Manager ---
+        // --- ระบบจัดการเกมหลัก ---
         const GameApp = {
             engine: null,
             score: 0,
@@ -462,7 +492,7 @@
             init: function() {
                 this.engine = new Engine3D();
                 this.engine.animate();
-                setInterval(() => this.engine.spawnObstacle(), 1500);
+                setInterval(() => this.engine.spawnObstacle(), 1300);
             },
 
             switchScreen: function(hideId, showId) {
@@ -471,7 +501,7 @@
             },
 
             startGame: function() {
-                const name = document.getElementById('player-name').value || 'นักเรียนทั่วไป';
+                const name = document.getElementById('player-name').value || 'ผู้พิทักษ์นิรนาม';
                 document.getElementById('hud-name').innerText = name;
                 
                 this.switchScreen('screen-login', null);
@@ -486,7 +516,7 @@
             },
 
             deductScore: function() {
-                this.score -= 50;
+                this.score -= 20;
                 if(this.score < 0) this.score = 0;
                 document.getElementById('hud-score').innerText = this.score;
             },
@@ -507,14 +537,14 @@
                 document.getElementById('vid-progress').style.width = '0%';
                 const btnQuiz = document.getElementById('btn-quiz');
                 btnQuiz.disabled = true;
-                btnQuiz.innerHTML = '<i class="fa-solid fa-lock" id="btn-lock-icon"></i> ระบบล็อกการทดสอบ';
+                btnQuiz.innerHTML = '<i class="fa-solid fa-lock"></i> กำลังศึกษาข้อมูล (ห้ามข้าม)';
 
                 if(this.playerVideo) {
                     this.playerVideo.loadVideoById(vidId);
                 } else {
                     this.playerVideo = new YT.Player('youtube-player', {
                         videoId: vidId,
-                        playerVars: { 'controls': 0, 'disablekb': 1, 'rel': 0 },
+                        playerVars: { 'controls': 0, 'disablekb': 1, 'rel': 0, 'playsinline': 1 },
                         events: { 'onStateChange': (e) => this.onVideoStateChange(e) }
                     });
                 }
@@ -566,11 +596,11 @@
                 
                 if (selected === correct) {
                     btn.classList.add('correct');
-                    this.score += 500;
+                    this.score += 150;
                 } else {
                     btn.classList.add('wrong');
                     document.querySelectorAll('.choice-btn')[correct].classList.add('correct');
-                    this.score += 100; 
+                    this.score += 30; 
                 }
                 
                 document.getElementById('hud-score').innerText = this.score;
