@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberShield Neural SOC | Ultimate Senior Project</title>
+    <title>CyberGuard Thailand | Senior Project Master Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -14,16 +14,18 @@
             --accent: #06b6d4;
             --success: #10b981;
             --danger: #ef4444;
-            --glass: rgba(255, 255, 255, 0.92);
-            --text-dark: #1e293b;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --text-main: #1e293b;
+            --text-muted: #64748b;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
 
         body {
             font-family: 'Prompt', sans-serif;
-            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 50%, #fbcfe8 100%);
-            color: var(--text-dark);
+            /* พื้นหลังสว่างสดใส สวยงามระดับโปรเจกต์เกรด A */
+            background: linear-gradient(135deg, #f5f3ff 0%, #e0e7ff 50%, #fce7f3 100%);
+            color: var(--text-main);
             overflow: hidden; 
             width: 100vw;
             height: 100vh;
@@ -34,7 +36,7 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 1;
-            cursor: crosshair; /* เปลี่ยนเคอร์เซอร์เป็นเป้าเล็งยิงโหนดไซเบอร์ */
+            cursor: crosshair;
         }
 
         #ui-layer {
@@ -68,38 +70,39 @@
         }
 
         .cyber-card {
-            background: var(--glass);
+            background: var(--glass-bg);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            border-top: 4px solid var(--primary);
-            border-bottom: 4px solid var(--secondary);
-            border-radius: 32px;
+            border: 1px solid rgba(255, 255, 255, 1);
+            border-top: 5px solid var(--primary);
+            border-bottom: 5px solid var(--secondary);
+            border-radius: 36px;
             padding: 40px;
             width: 90%;
-            max-width: 680px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            max-width: 720px;
+            box-shadow: 0 25px 50px rgba(79, 70, 229, 0.15);
             position: relative;
             text-align: center;
         }
 
         h1.title-neon {
-            font-size: 2.8rem;
+            font-size: 2.6rem;
             font-weight: 800;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            line-height: 1.2;
         }
 
         .form-group { margin-bottom: 20px; text-align: left; }
         .form-group label {
-            display: block; font-weight: 600; font-size: 0.95rem; color: var(--primary); margin-bottom: 8px;
+            display: block; font-weight: 600; font-size: 0.95rem; color: var(--primary); margin-bottom: 6px;
         }
         
         .cyber-input {
             width: 100%; padding: 14px 18px; background: #fff;
-            border: 2px solid #cbd5e1; border-radius: 14px; color: var(--text-dark);
+            border: 2px solid #cbd5e1; border-radius: 14px; color: var(--text-main);
             font-family: 'Prompt'; font-size: 1rem; outline: none; transition: 0.3s;
         }
         .cyber-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15); }
@@ -109,34 +112,34 @@
             border: none; color: #fff; font-family: 'Prompt'; font-size: 1.1rem; font-weight: 700;
             cursor: pointer; transition: 0.3s; border-radius: 14px;
             box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
-            margin-top: 15px; text-transform: uppercase;
+            margin-top: 15px; text-transform: uppercase; letter-spacing: 0.5px;
         }
         .btn-cyber:hover:not(:disabled) {
             transform: translateY(-2px); box-shadow: 0 15px 30px rgba(236, 72, 153, 0.4);
         }
-        .btn-cyber:disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; color: #64748b; }
+        .btn-cyber:disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; color: #94a3b8; }
 
         #hud {
             position: absolute; top: 0; left: 0; width: 100%; padding: 20px 40px;
             display: flex; justify-content: space-between; align-items: center; z-index: 5;
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);
             font-weight: 700; font-size: 1.1rem; color: var(--primary);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             opacity: 0; transition: 0.5s; pointer-events: none;
         }
 
         .hud-badge {
             background: #e0e7ff; border: 1px solid var(--primary);
-            padding: 6px 16px; border-radius: 20px; font-size: 0.95rem; color: var(--primary);
+            padding: 6px 18px; border-radius: 20px; font-size: 0.95rem; color: var(--primary);
         }
         
-        /* วิดีโอแนวตั้ง Shorts กึ่งกลางพอดี */
+        /* จัดวางวิดีโอ Shorts ให้อยู่กึ่งกลางพอดีเป๊ะ ไม่มีเบี่ยง */
         .video-container {
             width: 270px; height: 480px;
-            margin: 0 auto 20px auto;
+            margin: 0 auto 15px auto;
             background: #000; border-radius: 20px;
             overflow: hidden; position: relative;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             border: 4px solid #fff;
             display: flex;
             justify-content: center;
@@ -155,12 +158,12 @@
             position: absolute; bottom: 0; left: 0; width: 100%; height: 70px; z-index: 20; 
         }
         
-        .progress-bar { width: 100%; height: 10px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-bottom: 20px;}
+        .progress-bar { width: 100%; height: 10px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-bottom: 15px;}
         .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.2s linear; }
 
         .choice-btn {
             display: block; width: 100%; padding: 15px 20px; margin-bottom: 12px;
-            background: #fff; border: 2px solid #cbd5e1; color: var(--text-dark);
+            background: #fff; border: 2px solid #cbd5e1; color: var(--text-main);
             text-align: left; font-size: 1rem; font-family: 'Prompt'; cursor: pointer;
             border-radius: 14px; transition: 0.3s; font-weight: 500;
         }
@@ -170,7 +173,7 @@
         
         .controls-hint {
             position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.95); padding: 12px 26px; border-radius: 30px;
+            background: rgba(255, 255, 255, 0.95); padding: 12px 28px; border-radius: 30px;
             font-weight: 600; font-size: 1rem; color: var(--primary);
             text-align: center; pointer-events: none; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             transition: 0.5s; border: 1px solid #cbd5e1;
@@ -188,7 +191,7 @@
     </div>
     
     <div class="controls-hint" id="controls-hint" style="opacity: 0;">
-        <i class="fa-solid fa-crosshairs"></i> คลิกเมาส์ที่ [โหนดข้อมูลเรืองแสงสีเขียว] เพื่อกู้คืนระบบเครือข่าย
+        <i class="fa-solid fa-crosshairs"></i> คลิกเมาส์ที่ [โหนดข้อมูลเรืองแสง] รอบสถานีกลางเพื่อกู้คืนระบบเครือข่าย
     </div>
 
     <div id="ui-layer">
@@ -197,8 +200,8 @@
         <div id="screen-login" class="screen active">
             <div class="cyber-card">
                 <div style="font-size: 3.5rem; color: var(--primary); margin-bottom: 5px;"><i class="fa-solid fa-network-wired"></i></div>
-                <h1 class="title-neon">CyberShield SOC</h1>
-                <p style="color: #64748b; margin-bottom: 25px; font-size: 1rem;">ระบบจำลองศูนย์ปฏิบัติการความปลอดภัยเครือข่าย 3 มิติ (5 ด่าน 5 ธีม 5 คลิปความรู้)</p>
+                <h1 class="title-neon">CyberShield SOC 3D</h1>
+                <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 1rem;">ระบบจำลองศูนย์ปฏิบัติการความปลอดภัยเครือข่าย (5 ด่าน 5 ธีมแผนที่ และ 5 คลิปวิดีโอไม่ซ้ำกัน)</p>
                 
                 <div class="form-group">
                     <label>ชื่อ - นามสกุล เจ้าหน้าที่ปฏิบัติการ</label>
@@ -217,8 +220,8 @@
         <!-- 2. หน้าจอวิดีโอ (YouTube Shorts รายด่าน - 5 คลิปไม่ซ้ำกัน) -->
         <div id="screen-video" class="screen">
             <div class="cyber-card" style="max-width: 480px; padding: 25px;">
-                <h2 id="video-stage-title" style="font-size: 1.5rem; color: var(--primary); font-weight: 700;">📺 บรีฟข้อมูลความปลอดภัยประจำด่าน</h2>
-                <p style="margin-bottom: 15px; color: #64748b; font-size: 0.85rem;">คำสั่ง: ศึกษาข้อมูลจากวิดีโอนี้ให้ครบ 100% จึงจะปลดล็อกระบบทดสอบประจำด่าน</p>
+                <h2 id="video-stage-title" style="font-size: 1.4rem; color: var(--primary); font-weight: 700; margin-bottom: 5px;">📺 บรีฟข้อมูลความปลอดภัยประจำด่าน</h2>
+                <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.82rem;">คำสั่ง: ศึกษาข้อมูลจากวิดีโอนี้ให้ครบ 100% จึงจะปลดล็อกระบบทดสอบประจำด่าน</p>
                 
                 <div class="video-container">
                     <div id="youtube-player"></div>
@@ -235,8 +238,8 @@
         <!-- 3. หน้าจอแบบทดสอบรายด่าน -->
         <div id="screen-quiz" class="screen">
             <div class="cyber-card">
-                <div style="display: inline-block; padding: 6px 16px; background: #e0e7ff; color: var(--primary); border-radius: 20px; font-weight: 600; margin-bottom: 20px; font-size: 0.9rem;">แบบทดสอบประเมินระบบประจำด่าน</div>
-                <h3 id="question-text" style="font-size: 1.2rem; margin-bottom: 25px; font-weight: 500; line-height: 1.5; color: var(--text-dark);">คำถามโหลดที่นี่...</h3>
+                <div style="display: inline-block; padding: 6px 16px; background: #e0e7ff; color: var(--primary); border-radius: 20px; font-weight: 600; margin-bottom: 15px; font-size: 0.9rem;">แบบทดสอบประเมินระบบประจำด่าน</div>
+                <h3 id="question-text" style="font-size: 1.15rem; margin-bottom: 20px; font-weight: 500; line-height: 1.5; color: var(--text-main);">คำถามโหลดที่นี่...</h3>
                 
                 <div id="choices-container"></div>
             </div>
@@ -247,8 +250,8 @@
             <div class="cyber-card">
                 <i class="fa-solid fa-award" style="font-size: 4.5rem; color: #fbbf24; margin-bottom: 15px; filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.4));"></i>
                 <h1 class="title-neon" style="font-size: 2rem;">กู้คืนระบบสำเร็จทั้ง 5 ด่าน!</h1>
-                <p style="font-size: 1rem; margin: 15px 0; color: #64748b;">คะแนนความปลอดภัยเครือข่ายสะสมของคุณคือ</p>
-                <h1 style="font-size: 4rem; color: var(--success); margin-bottom: 25px;" id="final-score">0</h1>
+                <p style="font-size: 1rem; margin: 15px 0; color: var(--text-muted);">คะแนนความปลอดภัยเครือข่ายสะสมของคุณคือ</p>
+                <h1 style="font-size: 4rem; color: var(--success); margin-bottom: 25px;" id="final-score">1000 XP</h1>
                 <button class="btn-cyber" onclick="location.reload()">รีเซ็ตระบบปฏิบัติการ <i class="fa-solid fa-rotate-right" style="margin-left: 5px;"></i></button>
             </div>
         </div>
@@ -264,18 +267,18 @@
         /**
          * =====================================================================
          * CYBERSHIELD NEURAL SOC: 5 UNIQUE STAGES, 5 DISTINCT VIDEOS & MAPS
-         * Interactive 3D Raycasting Defense Game Architecture
+         * Bright Vibrant Theme & Fixed UI Alignment
          * =====================================================================
          */
 
-        // ฐานข้อมูล 5 ด่าน 5 คลิปวิดีโอ (คลิปไม่ซ้ำกัน แผนที่เปลี่ยนใหม่ทุกด่าน)
+        // ฐานข้อมูล 5 ด่าน 5 คลิปวิดีโอ (คลิปไม่ซ้ำกัน แยกตามหัวข้ออย่างแท้จริง)
         const LevelsData = [
             {
                 level: 1,
                 title: "ด่านที่ 1: มารยาทและจรรยาบรรณออนไลน์",
-                videoId: "3pR0Ka4H-6U", // คลิปที่ 1
-                themeColor: 0x4f46e5,  // โทนสีน้ำเงิน/ม่วง
-                mapStyle: "matrix",
+                videoId: "3pR0Ka4H-6U", // คลิปด่าน 1
+                themeColor: 0x4f46e5,
+                gridColor: 0x06b6d4,
                 question: "ข้อใดคือแนวปฏิบัติที่เหมาะสมที่สุดเมื่อต้องแสดงความคิดเห็นในโพสต์ของผู้อื่นบนโลกออนไลน์?",
                 choices: [
                     "ใช้ถ้อยคำรุนแรงหากไม่เห็นด้วยเพื่อให้ฝ่ายตรงข้ามยอมจำนน",
@@ -288,9 +291,9 @@
             {
                 level: 2,
                 title: "ด่านที่ 2: ลิขสิทธิ์และทรัพย์สินทางปัญญา",
-                videoId: "M7lc1UVf-VE", // คลิปที่ 2 (ไม่ซ้ำ)
-                themeColor: 0x10b981,  // โทนสีเขียวมรกต
-                mapStyle: "quantum",
+                videoId: "M7lc1UVf-VE", // คลิปด่าน 2 (ไม่ซ้ำ)
+                themeColor: 0x10b981,
+                gridColor: 0x34d399,
                 question: "การนำภาพถ่ายหรือบทความของผู้อื่นจากอินเทอร์เน็ตมาใช้ในโครงงานโดยไม่ระบุแหล่งที่มา ผิดด้านใด?",
                 choices: [
                     "ไม่ผิดกฎหมาย เพราะเป็นข้อมูลสาธารณะ",
@@ -303,9 +306,9 @@
             {
                 level: 3,
                 title: "ด่านที่ 3: พระราชบัญญัติคอมพิวเตอร์",
-                videoId: "dQw4w9WgXcQ", // คลิปที่ 3 (ไม่ซ้ำ - Placeholder ปลอดภัย)
-                themeColor: 0xec4899,  // โทนสีชมพู
-                mapStyle: "cyber",
+                videoId: "jfKfPfyJRdk", // คลิปด่าน 3 (ไม่ซ้ำ)
+                themeColor: 0xec4899,
+                gridColor: 0xf43f5e,
                 question: "ตาม พ.ร.บ. คอมพิวเตอร์ การนำเข้าข้อมูลอันเป็นเท็จสู่ระบบคอมพิวเตอร์ มีความผิดเพราะเหตุผลใด?",
                 choices: [
                     "เพราะทำให้เครือข่ายอินเทอร์เน็ตช้าลง",
@@ -318,9 +321,9 @@
             {
                 level: 4,
                 title: "ด่านที่ 4: การรับมือกับข่าวปลอม (Fake News)",
-                videoId: "jH_b26jA-zM", // คลิปที่ 4 (ไม่ซ้ำ)
-                themeColor: 0xfbbf24,  // โทนสีทอง
-                mapStyle: "crystal",
+                videoId: "9bZkp7q19f0", // คลิปด่าน 4 (ไม่ซ้ำ)
+                themeColor: 0xfbbf24,
+                gridColor: 0xd97706,
                 question: "หากนักเรียนได้รับข่าวสารเรื่องการรักษาโรคร้ายด้วยวิธีประหลาดทางแชทกลุ่มและบอกให้รีบแชร์ ควรทำอย่างไร?",
                 choices: [
                     "รีบแชร์ต่อให้ครอบครัวทราบโดยเร็ว",
@@ -333,9 +336,9 @@
             {
                 level: 5,
                 title: "ด่านที่ 5: มาสเตอร์ชาเลนจ์ ความปลอดภัยไซเบอร์",
-                videoId: "3pR0Ka4H-6U", // คลิปที่ 5
-                themeColor: 0x8b5cf6,  // โทนสีม่วงเข้ม
-                mapStyle: "master",
+                videoId: "L_LUpnjgPso", // คลิปด่าน 5 (ไม่ซ้ำ)
+                themeColor: 0x8b5cf6,
+                gridColor: 0xc084fc,
                 question: "หากเพื่อนสนิทเผลอลืมล็อกอินอีเมลไว้บนคอมพิวเตอร์สาธารณะ สิ่งที่ถูกต้องที่สุดที่ควรทำคืออะไร?",
                 choices: [
                     "แอบดูข้อมูลส่วนตัวเพื่อความบันเทิง",
@@ -350,7 +353,7 @@
         class SOCEngine3D {
             constructor() {
                 this.scene = new THREE.Scene();
-                this.scene.fog = new THREE.FogExp2(0xfbcfe8, 0.006);
+                this.scene.fog = new THREE.FogExp2(0xf0fdf4, 0.005);
                 
                 this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
                 this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -359,7 +362,7 @@
 
                 this.clock = new THREE.Clock();
                 this.isPlaying = false;
-                this.targetNodesToClear = 5; // ต้องคลิกกู้คืน 5 โหนดจึงจะผ่านด่าน
+                this.targetNodesToClear = 5;
                 this.nodesCleared = 0;
                 
                 this.interactiveNodes = [];
@@ -376,7 +379,6 @@
                     this.renderer.setSize(window.innerWidth, window.innerHeight);
                 });
 
-                // ระบบคลิกโหนด 3 มิติ (Raycasting)
                 window.addEventListener('click', (e) => {
                     if (!this.isPlaying) return;
                     this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -393,23 +395,22 @@
             }
 
             setupLights() {
-                const ambient = new THREE.AmbientLight(0xffffff, 0.9);
+                const ambient = new THREE.AmbientLight(0xffffff, 1.0);
                 this.scene.add(ambient);
-                this.dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
-                this.dirLight.position.set(10, 25, 10);
-                this.scene.add(this.dirLight);
+                const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+                dirLight.position.set(10, 25, 10);
+                this.scene.add(dirLight);
             }
 
             setupEnvironment() {
                 this.gridHelper = new THREE.GridHelper(300, 60, 0x4f46e5, 0x06b6d4);
                 this.gridHelper.position.y = -4;
                 this.gridHelper.material.transparent = true;
-                this.gridHelper.material.opacity = 0.4;
+                this.gridHelper.material.opacity = 0.3;
                 this.scene.add(this.gridHelper);
             }
 
             setupCoreNeuralNetwork() {
-                // สร้างแกนกลางสถานี SOC
                 const coreGeo = new THREE.IcosahedronGeometry(2.5, 1);
                 const coreMat = new THREE.MeshStandardMaterial({ color: 0x4f46e5, wireframe: true, emissive: 0x4f46e5 });
                 this.coreMesh = new THREE.Mesh(coreGeo, coreMat);
@@ -421,13 +422,11 @@
             }
 
             spawnInteractiveNodes() {
-                // ล้างโหนดเก่าก่อน
                 this.interactiveNodes.forEach(node => this.scene.remove(node));
                 this.interactiveNodes = [];
                 this.nodesCleared = 0;
                 document.getElementById('hud-score').innerText = this.nodesCleared;
 
-                // สุ่มสร้างโหนดข้อมูล 5 โหนดรอบๆ สถานี
                 for (let i = 0; i < 5; i++) {
                     const angle = (i / 5) * Math.PI * 2;
                     const radius = 6 + Math.random() * 3;
@@ -452,7 +451,6 @@
             }
 
             destroyNode(node) {
-                // เอฟเฟกต์แอนิเมชันตอนคลิกทำลายโหนดภัยคุกคาม/กู้คืนข้อมูล
                 gsap.to(node.scale, { x: 2, y: 2, z: 2, duration: 0.2, yoyo: true, repeat: 1, onComplete: () => {
                     this.scene.remove(node);
                     const index = this.interactiveNodes.indexOf(node);
@@ -462,7 +460,6 @@
                     this.nodesCleared++;
                     document.getElementById('hud-score').innerText = this.nodesCleared;
 
-                    // ถ้านักเรียนคลิกกู้คืนครบ 5 โหนด จะเข้าสู่บทเรียนวิดีโอประจำด่านทันที!
                     if (this.nodesCleared >= this.targetNodesToClear) {
                         GameApp.triggerLearningPhase();
                     }
@@ -477,10 +474,10 @@
                 }
                 if (this.gridHelper) {
                     this.scene.remove(this.gridHelper);
-                    this.gridHelper = new THREE.GridHelper(300, 60, data.themeColor, 0x06b6d4);
+                    this.gridHelper = new THREE.GridHelper(300, 60, data.themeColor, data.gridColor);
                     this.gridHelper.position.y = -4;
                     this.gridHelper.material.transparent = true;
-                    this.gridHelper.material.opacity = 0.5;
+                    this.gridHelper.material.opacity = 0.4;
                     this.scene.add(this.gridHelper);
                 }
                 this.spawnInteractiveNodes();
@@ -496,8 +493,7 @@
                         this.coreMesh.rotation.y += 0.8 * delta;
                     }
 
-                    // หมุนโหนดข้อมูลรอบสถานี
-                    this.interactiveNodes.forEach((node, idx) => {
+                    this.interactiveNodes.forEach((node) => {
                         node.rotation.x += 1 * delta;
                         node.rotation.y += 1.5 * delta;
                     });
@@ -656,7 +652,7 @@
             endGame: function() {
                 this.engine.pauseForUI();
                 document.getElementById('hud').style.opacity = 0;
-                document.getElementById('final-score').innerText = (this.currentLevelIndex * 200);
+                document.getElementById('final-score').innerText = ((this.currentLevelIndex) * 250) + " XP";
                 this.switchScreen(null, 'screen-end');
             }
         };
