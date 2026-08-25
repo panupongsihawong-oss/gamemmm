@@ -3,30 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Inspector 3D | Senior Project</title>
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;500;700&family=Teko:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>EdTech Learning System | Senior Project</title>
+    <!-- ใช้ฟอนต์ Kanit เพื่อความทันสมัย โค้งมน อ่านง่าย -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* ==========================================
-           ADVANCED UI / UX STYLES
+           MODERN ED-TECH UI / LIGHT GLASSMORPHISM
            ========================================== */
         :root {
-            --primary: #00ffcc;
-            --primary-dim: rgba(0, 255, 204, 0.2);
-            --secondary: #ff007f;
-            --bg-dark: #050505;
-            --glass: rgba(10, 15, 20, 0.7);
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --secondary: #f72585;
+            --success: #4cc9f0;
+            --text-dark: #2b2d42;
+            --text-muted: #6c757d;
+            --glass-bg: rgba(255, 255, 255, 0.85);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
 
         body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: var(--bg-dark);
-            color: #fff;
-            overflow: hidden; /* Prevent scrolling */
+            font-family: 'Kanit', sans-serif;
+            /* พื้นหลังไล่สีสวยงาม สว่างตา */
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            color: var(--text-dark);
+            overflow: hidden; 
             width: 100vw;
             height: 100vh;
         }
@@ -45,7 +48,7 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 10;
-            pointer-events: none; /* Let clicks pass through to 3D when UI is hidden */
+            pointer-events: none; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -59,115 +62,102 @@
             align-items: center;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.5s ease;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.95);
         }
 
         .screen.active {
             opacity: 1;
             visibility: visible;
             pointer-events: all;
+            transform: scale(1);
         }
 
-        /* Glassmorphism Panels */
-        .cyber-panel {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-top: 1px solid var(--primary);
-            border-bottom: 1px solid var(--secondary);
-            border-radius: 20px;
-            padding: 40px;
+        /* Light Glassmorphism Panels */
+        .modern-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 30px;
+            padding: 50px;
             width: 90%;
             max-width: 700px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 20px var(--primary-dim);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             position: relative;
-            overflow: hidden;
-        }
-
-        /* Decor lines for panel */
-        .cyber-panel::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary));
-            animation: scanline 3s linear infinite;
-        }
-
-        @keyframes scanline { 100% { left: 100%; } }
-
-        h1.glitch-text {
-            font-family: 'Teko', sans-serif;
-            font-size: 4rem;
-            text-transform: uppercase;
             text-align: center;
+        }
+
+        h1.title-text {
+            font-size: 3rem;
+            font-weight: 700;
             background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
-            letter-spacing: 2px;
-            filter: drop-shadow(0 0 10px var(--primary-dim));
         }
 
         .form-group { margin-bottom: 25px; text-align: left; }
         .form-group label {
-            display: block; font-family: 'Teko'; font-size: 1.5rem; color: var(--primary); letter-spacing: 1px;
+            display: block; font-weight: 600; font-size: 1.1rem; color: var(--primary); margin-bottom: 8px;
         }
         
-        .cyber-input {
-            width: 100%; padding: 15px; background: rgba(0,0,0,0.6);
-            border: 1px solid #333; border-radius: 5px; color: #fff;
-            font-family: 'Sarabun'; font-size: 1.1rem; outline: none; transition: 0.3s;
-            border-left: 3px solid var(--primary);
+        .modern-input {
+            width: 100%; padding: 15px 20px; background: rgba(255,255,255,0.9);
+            border: 2px solid #e9ecef; border-radius: 15px; color: var(--text-dark);
+            font-family: 'Kanit'; font-size: 1.1rem; outline: none; transition: 0.3s;
         }
-        .cyber-input:focus { border-color: var(--primary); box-shadow: 0 0 15px var(--primary-dim); }
+        .modern-input:focus { border-color: var(--primary-light); box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15); }
 
-        .btn-cyber {
-            width: 100%; padding: 15px; background: transparent;
-            border: 2px solid var(--primary); color: var(--primary);
-            font-family: 'Teko'; font-size: 2rem; text-transform: uppercase;
-            cursor: pointer; position: relative; overflow: hidden;
-            transition: 0.3s; letter-spacing: 2px; border-radius: 5px;
+        .btn-modern {
+            width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border: none; color: #fff; font-family: 'Kanit'; font-size: 1.3rem; font-weight: 600;
+            cursor: pointer; transition: 0.3s; border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.2);
+            margin-top: 15px;
         }
-        .btn-cyber:hover {
-            background: var(--primary); color: #000; box-shadow: 0 0 30px var(--primary-dim);
-            transform: scale(1.02);
+        .btn-modern:hover:not(:disabled) {
+            transform: translateY(-3px); box-shadow: 0 15px 25px rgba(67, 97, 238, 0.3);
         }
+        .btn-modern:disabled { background: #ced4da; box-shadow: none; cursor: not-allowed; }
 
         /* In-Game HUD */
         #hud {
             position: absolute; top: 0; left: 0; width: 100%; padding: 20px 40px;
             display: flex; justify-content: space-between; z-index: 5;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
-            font-family: 'Teko'; font-size: 2rem; color: #fff; text-shadow: 0 0 10px var(--primary);
+            background: linear-gradient(to bottom, rgba(255,255,255,0.8), transparent);
+            font-weight: 700; font-size: 1.5rem; color: var(--primary);
             opacity: 0; transition: 0.5s; pointer-events: none;
         }
         
         /* YouTube Module */
         .video-container {
-            width: 100%; height: 400px; background: #000; border-radius: 10px;
-            border: 2px solid var(--secondary); position: relative; margin-bottom: 20px;
+            width: 100%; height: 380px; background: #000; border-radius: 20px;
+            overflow: hidden; position: relative; margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
-        .video-blocker {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; z-index: 10;
-        }
-        .progress-bar { width: 100%; height: 10px; background: #222; border-radius: 5px; overflow: hidden; margin-bottom: 20px;}
-        .progress-fill { height: 100%; width: 0%; background: var(--secondary); transition: width 0.2s linear; }
+        .video-blocker { position: absolute; bottom: 0; left: 0; width: 100%; height: 70px; z-index: 10; }
+        .progress-bar { width: 100%; height: 12px; background: #e9ecef; border-radius: 10px; overflow: hidden; margin-bottom: 20px;}
+        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--success)); transition: width 0.2s linear; }
 
         /* Quiz Module */
         .choice-btn {
-            display: block; width: 100%; padding: 15px; margin-bottom: 15px;
-            background: rgba(255,255,255,0.05); border: 1px solid #444; color: #fff;
-            text-align: left; font-size: 1.1rem; font-family: 'Sarabun'; cursor: pointer;
-            border-radius: 5px; transition: 0.3s;
+            display: block; width: 100%; padding: 18px 25px; margin-bottom: 15px;
+            background: #fff; border: 2px solid #e9ecef; color: var(--text-dark);
+            text-align: left; font-size: 1.1rem; font-family: 'Kanit'; cursor: pointer;
+            border-radius: 15px; transition: 0.2s; font-weight: 500;
         }
-        .choice-btn:hover { background: var(--primary-dim); border-color: var(--primary); }
-        .choice-btn.correct { background: rgba(0, 255, 204, 0.4); border-color: var(--primary); }
-        .choice-btn.wrong { background: rgba(255, 0, 127, 0.4); border-color: var(--secondary); }
+        .choice-btn:hover { border-color: var(--primary); background: #f8f9fa; transform: scale(1.01); }
+        .choice-btn.correct { background: #d1e7dd; border-color: #198754; color: #0f5132; }
+        .choice-btn.wrong { background: #f8d7da; border-color: #dc3545; color: #842029; }
         
         /* Instruction */
         .controls-hint {
-            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-            font-family: 'Teko'; font-size: 1.5rem; color: rgba(255,255,255,0.5);
-            text-align: center; pointer-events: none;
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: rgba(255,255,255,0.9); padding: 10px 25px; border-radius: 30px;
+            font-weight: 600; font-size: 1.2rem; color: var(--primary);
+            text-align: center; pointer-events: none; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: 0.5s;
         }
     </style>
 </head>
@@ -178,12 +168,12 @@
 
     <!-- HUD Overlay -->
     <div id="hud">
-        <div>AGENT: <span id="hud-name" style="color: var(--primary);">UNKNOWN</span></div>
-        <div>SCORE: <span id="hud-score" style="color: var(--secondary);">0</span></div>
+        <div>ผู้เรียน: <span id="hud-name" style="color: var(--secondary);">ไม่ระบุตัวตน</span></div>
+        <div>คะแนน: <span id="hud-score" style="color: var(--secondary);">0</span></div>
     </div>
     
     <div class="controls-hint" id="controls-hint" style="opacity: 0;">
-        [A] / [D] or [LEFT] / [RIGHT] TO STEER <br> AVOID RED, COLLECT GREEN
+        <i class="fa-solid fa-arrows-left-right"></i> กด [A] / [D] หรือ [ลูกศรซ้าย/ขวา] เพื่อบังคับทิศทาง
     </div>
 
     <!-- UI Logic Layer -->
@@ -191,29 +181,30 @@
         
         <!-- 1. หน้าจอหลัก (Main Menu) -->
         <div id="screen-login" class="screen active">
-            <div class="cyber-panel">
-                <h1 class="glitch-text">CYBER INSPECTOR 3D</h1>
-                <p style="text-align: center; margin-bottom: 30px; color: #aaa;">Digital Law & Ethics Simulator (Senior Project Build)</p>
+            <div class="modern-panel">
+                <div style="font-size: 4rem; color: var(--primary); margin-bottom: 10px;"><i class="fa-solid fa-graduation-cap"></i></div>
+                <h1 class="title-text">ระบบการเรียนรู้อัจฉริยะ</h1>
+                <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 1.1rem;">บูรณาการความรู้กฎหมายและจรรยาบรรณไซเบอร์ (Senior Project)</p>
                 
                 <div class="form-group">
-                    <label><i class="fa-solid fa-user-astronaut"></i> AGENT NAME</label>
-                    <input type="text" id="player-name" class="cyber-input" placeholder="กรอกชื่อ - นามสกุลของคุณ">
+                    <label>ชื่อ - นามสกุล</label>
+                    <input type="text" id="player-name" class="modern-input" placeholder="ระบุชื่อของคุณ">
                 </div>
                 
                 <div class="form-group">
-                    <label><i class="fa-solid fa-building-columns"></i> INSTITUTION</label>
-                    <input type="text" id="school-name" class="cyber-input" placeholder="ระบุชื่อโรงเรียน (เช่น โรงเรียนศรีสะเกษวิทยาลัย)">
+                    <label>ระดับชั้น / โรงเรียน</label>
+                    <input type="text" id="school-name" class="modern-input" placeholder="เช่น ม.6/1 โรงเรียนศรีสะเกษวิทยาลัย">
                 </div>
 
-                <button class="btn-cyber" onclick="GameApp.startGame()">INITIALIZE 3D ENGINE</button>
+                <button class="btn-modern" onclick="GameApp.startGame()">เข้าสู่บทเรียน 3D <i class="fa-solid fa-play" style="margin-left: 8px;"></i></button>
             </div>
         </div>
 
         <!-- 2. หน้าจอวิดีโอ (บังคับเรียน) -->
         <div id="screen-video" class="screen">
-            <div class="cyber-panel">
-                <h2 style="font-family: 'Teko'; font-size: 2.5rem; color: var(--secondary); text-align: center;">DATA CORE INTERCEPTED</h2>
-                <p style="text-align: center; margin-bottom: 20px;">ถอดรหัสข้อมูลสำเร็จ กรุณาศึกษาหลักฐานวิดีโอให้จบ 100%</p>
+            <div class="modern-panel">
+                <h2 style="font-size: 2.2rem; color: var(--primary); font-weight: 700;">พบเนื้อหาการเรียนรู้ใหม่</h2>
+                <p style="margin-bottom: 25px; color: var(--text-muted);">กรุณารับชมวิดีโอให้จบ 100% จึงจะสามารถทำแบบทดสอบได้</p>
                 
                 <div class="video-container">
                     <div id="youtube-player"></div>
@@ -221,17 +212,17 @@
                 </div>
                 
                 <div class="progress-bar"><div class="progress-fill" id="vid-progress"></div></div>
-                <button id="btn-quiz" class="btn-cyber" style="opacity: 0.5; cursor: not-allowed;" disabled onclick="GameApp.showQuiz()">
-                    <i class="fa-solid fa-lock"></i> SYSTEM LOCKED
+                <button id="btn-quiz" class="btn-modern" disabled onclick="GameApp.showQuiz()">
+                    <i class="fa-solid fa-lock" id="btn-lock-icon"></i> ระบบล็อกการทดสอบ
                 </button>
             </div>
         </div>
 
         <!-- 3. หน้าจอแบบทดสอบ -->
         <div id="screen-quiz" class="screen">
-            <div class="cyber-panel">
-                <h2 style="font-family: 'Teko'; font-size: 2.5rem; color: var(--primary); margin-bottom: 20px;">THREAT ASSESSMENT</h2>
-                <h3 id="question-text" style="font-size: 1.4rem; margin-bottom: 30px; font-weight: 400; line-height: 1.5;">คำถามโหลดที่นี่...</h3>
+            <div class="modern-panel">
+                <div style="display: inline-block; padding: 5px 15px; background: #e0ebff; color: var(--primary); border-radius: 20px; font-weight: 600; margin-bottom: 20px;">แบบทดสอบความเข้าใจ</div>
+                <h3 id="question-text" style="font-size: 1.4rem; margin-bottom: 30px; font-weight: 500; line-height: 1.6; color: var(--text-dark);">คำถามโหลดที่นี่...</h3>
                 
                 <div id="choices-container">
                     <!-- ปุ่มตัวเลือกสร้างด้วย JS -->
@@ -241,81 +232,76 @@
 
         <!-- 4. หน้าจอจบเกม -->
         <div id="screen-end" class="screen">
-            <div class="cyber-panel" style="text-align: center;">
-                <i class="fa-solid fa-shield-halved" style="font-size: 5rem; color: var(--primary); margin-bottom: 20px;"></i>
-                <h1 class="glitch-text">MISSION ACCOMPLISHED</h1>
-                <p style="font-size: 1.2rem; margin: 20px 0;">คะแนนประเมินจรรยาบรรณไซเบอร์ของคุณ:</p>
-                <h1 style="font-size: 5rem; color: var(--secondary); margin-bottom: 20px; font-family: 'Teko';" id="final-score">0</h1>
-                <button class="btn-cyber" onclick="location.reload()">REBOOT SYSTEM</button>
+            <div class="modern-panel">
+                <i class="fa-solid fa-award" style="font-size: 5rem; color: #ffb703; margin-bottom: 20px;"></i>
+                <h1 class="title-text" style="font-size: 2.5rem;">สรุปผลการเรียนรู้</h1>
+                <p style="font-size: 1.2rem; margin: 20px 0; color: var(--text-muted);">คะแนนสะสมทั้งหมดของคุณคือ</p>
+                <h1 style="font-size: 5rem; color: var(--primary); margin-bottom: 30px;" id="final-score">0</h1>
+                <button class="btn-modern" onclick="location.reload()">กลับสู่หน้าแรก</button>
             </div>
         </div>
 
     </div>
 
     <!-- External Libraries -->
-    <!-- Three.js สำหรับสร้างกราฟิก 3D แบบเขียนโค้ด (Procedural) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- GSAP สำหรับทำแอนิเมชันมุมกล้องและ UI ให้สมูทแบบมืออาชีพ -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <!-- YouTube IFrame API -->
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
         /**
          * =====================================================================
-         * CORE ARCHITECTURE: CYBER INSPECTOR 3D
-         * โครงสร้างแบบ Object-Oriented Programming (OOP) สำหรับ Senior Project
+         * CORE ARCHITECTURE: MODERN ED-TECH 3D
          * =====================================================================
          */
 
-        // --- Data & Questions (ข้อมูลการเรียนรู้) ---
+        // --- Data & Questions ---
         const QuizData = [
             {
-                videoId: "h0uWk_K8R3A", // คลิปความรู้ พรบ.คอมฯ
-                question: "หากพบเห็นเพื่อนนักเรียนโพสต์ข้อมูลที่บิดเบือนหรือ Fake News ทำให้โรงเรียนเสื่อมเสีย ตามกฎหมายควรทำอย่างไร?",
+                videoId: "M7lc1UVf-VE", // ใช้คลิปทดสอบของ Google (รับรองว่าเปิดได้ 100%)
+                question: "หากพบเห็นเพื่อนนักเรียนโพสต์ข้อมูลที่บิดเบือนบนโซเชียลมีเดีย ควรทำอย่างไรจึงจะเหมาะสมและถูกต้องตามกฎหมายมากที่สุด?",
                 choices: [
-                    "รีบแชร์ต่อเพื่อให้ทุกคนทราบถึงปัญหา",
-                    "แคปเจอร์หน้าจอและนำไปโพสต์ด่าประจาน",
-                    "แจ้งเตือนด้วยเหตุผล หรือแจ้งครู/ผู้ดูแลระบบให้ช่วยตรวจสอบ",
-                    "เข้าไปคอมเมนต์ก่อกวนจนกว่าเพื่อนจะลบโพสต์"
+                    "รีบแชร์ต่อเพื่อให้ทุกคนทราบถึงปัญหาทันที",
+                    "แคปเจอร์หน้าจอและนำไปโพสต์ประจานในกลุ่มโรงเรียน",
+                    "แจ้งเตือนด้วยเหตุผลอย่างสุภาพ หรือแจ้งครูให้ช่วยตรวจสอบ",
+                    "เข้าไปคอมเมนต์ก่อกวนจนกว่าเพื่อนจะยอมลบโพสต์"
                 ],
                 correctIndex: 2
             },
             {
-                videoId: "jH_b26jA-zM", // คลิปลิขสิทธิ์
-                question: "การนำผลงานโครงงานของรุ่นพี่มาเปลี่ยนชื่อเป็นของตนเองเพื่อส่งครู ผิดจรรยาบรรณและกฎหมายข้อใด?",
+                videoId: "M7lc1UVf-VE", // สามารถเปลี่ยนรหัสคลิปอื่นๆ ได้ตามต้องการ
+                question: "การคัดลอกเนื้อหารายงานจากอินเทอร์เน็ตมาส่งครูโดยไม่ใส่แหล่งอ้างอิง ถือเป็นการกระทำที่เหมาะสมหรือไม่?",
                 choices: [
-                    "ไม่ผิด เพราะอยู่ในโรงเรียนเดียวกัน",
-                    "ผิดฐานละเมิดลิขสิทธิ์ และผิดจรรยาบรรณวิชาชีพ",
-                    "ผิดเฉพาะกรณีที่รุ่นพี่เอาเรื่อง",
-                    "ไม่ผิด หากเราปรับแก้เนื้อหาข้างในเกิน 10%"
+                    "เหมาะสม เพราะข้อมูลในเน็ตเป็นของสาธารณะ",
+                    "ไม่เหมาะสม เพราะถือเป็นการละเมิดลิขสิทธิ์และผิดจรรยาบรรณวิชาการ",
+                    "เหมาะสม หากเปลี่ยนรูปแบบตัวอักษรและสีพื้นหลังใหม่",
+                    "ไม่เหมาะสมเฉพาะกรณีที่เป็นข้อมูลภาษาต่างประเทศเท่านั้น"
                 ],
                 correctIndex: 1
             }
         ];
 
-        // --- 3D Engine Class (ระบบจัดการภาพ 3 มิติ) ---
+        // --- 3D Engine Class (สว่าง ทันสมัย) ---
         class Engine3D {
             constructor() {
                 this.scene = new THREE.Scene();
-                this.scene.fog = new THREE.FogExp2(0x050505, 0.015); // ใส่หมอกเพื่อความสมจริง
                 
-                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                this.renderer = new THREE.WebGLRenderer({ antialias: true });
+                this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+                // ตั้งค่า alpha: true เพื่อให้พื้นหลัง CSS แสดงทะลุ Canvas 3D
+                this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
                 this.renderer.setSize(window.innerWidth, window.innerHeight);
                 document.getElementById('webgl-container').appendChild(this.renderer.domElement);
 
                 this.clock = new THREE.Clock();
                 this.isPlaying = false;
-                this.speed = 40;
+                this.speed = 30;
                 
-                this.objects = []; // เก็บสิ่งกีดขวางและไอเทม
+                this.objects = [];
                 
                 this.setupLights();
                 this.setupEnvironment();
                 this.setupPlayer();
 
-                // ปรับขนาดเมื่อย่อขยายจอ
                 window.addEventListener('resize', () => {
                     this.camera.aspect = window.innerWidth / window.innerHeight;
                     this.camera.updateProjectionMatrix();
@@ -324,41 +310,38 @@
             }
 
             setupLights() {
-                const ambient = new THREE.AmbientLight(0xffffff, 0.3);
+                const ambient = new THREE.AmbientLight(0xffffff, 0.6);
                 this.scene.add(ambient);
-                const directional = new THREE.DirectionalLight(0x00ffcc, 1);
-                directional.position.set(0, 10, 10);
+                const directional = new THREE.DirectionalLight(0xffffff, 0.8);
+                directional.position.set(5, 10, 5);
                 this.scene.add(directional);
             }
 
             setupEnvironment() {
-                // สร้างพื้นตารางแบบ Synthwave (Moving Grid)
-                const gridHelper = new THREE.GridHelper(200, 50, 0xff007f, 0x333333);
+                // ตาราง Grid สีสว่าง ทันสมัย
+                const gridHelper = new THREE.GridHelper(200, 50, 0x4361ee, 0xffffff);
                 gridHelper.position.y = -2;
+                // ปรับความทึบของ Grid
+                gridHelper.material.transparent = true;
+                gridHelper.material.opacity = 0.5;
                 this.scene.add(gridHelper);
                 this.grid = gridHelper;
             }
 
             setupPlayer() {
-                // สร้างตัวละครยาน 3D แบบ Procedural (ไม่ต้องพึ่งไฟล์ .gltf)
-                const geometry = new THREE.TetrahedronGeometry(1.5);
+                // รูปทรงคริสตัล (Icosahedron) ดูทันสมัย
+                const geometry = new THREE.IcosahedronGeometry(1.2, 0);
                 const material = new THREE.MeshPhongMaterial({ 
-                    color: 0x00ffcc, wireframe: true, emissive: 0x005544 
+                    color: 0x4361ee, flatShading: true, shininess: 100
                 });
                 this.player = new THREE.Mesh(geometry, material);
                 
-                // แสงวิ่งตามตัวละคร
-                this.playerLight = new THREE.PointLight(0x00ffcc, 2, 10);
-                this.player.add(this.playerLight);
-                
-                this.player.position.set(0, 0, 10); // ตำแหน่งเริ่มต้น
+                this.player.position.set(0, 0, 10);
                 this.scene.add(this.player);
 
-                // ตั้งกล้องไว้หลังยาน
-                this.camera.position.set(0, 5, 20);
+                this.camera.position.set(0, 6, 22);
                 this.camera.lookAt(this.player.position);
 
-                // ระบบควบคุม
                 this.keys = { left: false, right: false };
                 window.addEventListener('keydown', (e) => {
                     if(e.code === 'KeyA' || e.code === 'ArrowLeft') this.keys.left = true;
@@ -373,25 +356,24 @@
             spawnObstacle() {
                 if(!this.isPlaying) return;
                 
-                const isCollectible = Math.random() > 0.7; // โอกาส 30% เป็นของให้เก็บ
+                const isCollectible = Math.random() > 0.65;
                 let geometry, material;
 
                 if (isCollectible) {
-                    // Data Core (สีเขียว)
-                    geometry = new THREE.OctahedronGeometry(1);
-                    material = new THREE.MeshPhongMaterial({ color: 0x00ff00, emissive: 0x00aa00 });
+                    // วงแหวนความรู้ (สีเขียวสว่าง)
+                    geometry = new THREE.TorusGeometry(1, 0.3, 16, 32);
+                    material = new THREE.MeshPhongMaterial({ color: 0x10b981, shininess: 100 });
                 } else {
-                    // Virus Obstacle (สีแดง)
-                    geometry = new THREE.BoxGeometry(2, 2, 2);
-                    material = new THREE.MeshPhongMaterial({ color: 0xff0000, emissive: 0xaa0000 });
+                    // ไวรัสขัดขวาง (สีส้ม/แดง)
+                    geometry = new THREE.DodecahedronGeometry(1.5, 0);
+                    material = new THREE.MeshPhongMaterial({ color: 0xff5a5f, flatShading: true });
                 }
 
                 const mesh = new THREE.Mesh(geometry, material);
-                // สุ่มเกิดซ้าย กลาง ขวา
-                const lanes = [-5, 0, 5];
+                const lanes = [-6, 0, 6];
                 mesh.position.x = lanes[Math.floor(Math.random() * lanes.length)];
                 mesh.position.y = 0;
-                mesh.position.z = -100; // เกิดไกลๆ
+                mesh.position.z = -120;
                 
                 mesh.userData = { type: isCollectible ? 'core' : 'virus' };
                 this.scene.add(mesh);
@@ -406,18 +388,16 @@
                     const objBox = new THREE.Box3().setFromObject(obj);
                     
                     if (playerBox.intersectsBox(objBox)) {
-                        // ชน!
                         if(obj.userData.type === 'core') {
                             this.scene.remove(obj);
                             this.objects.splice(i, 1);
-                            GameApp.triggerLearningPhase(); // เรียกเปิดระบบเรียน
+                            GameApp.triggerLearningPhase();
                         } else {
-                            // ชนไวรัส หักคะแนน
                             GameApp.deductScore();
                             this.scene.remove(obj);
                             this.objects.splice(i, 1);
                             // เอฟเฟกต์กระตุก
-                            gsap.to(this.player.position, {x: this.player.position.x + (Math.random()-0.5)*2, duration: 0.1, yoyo: true, repeat: 3});
+                            gsap.to(this.player.position, {x: this.player.position.x + (Math.random()-0.5)*3, duration: 0.1, yoyo: true, repeat: 3});
                         }
                     }
                 }
@@ -425,60 +405,49 @@
 
             animate() {
                 requestAnimationFrame(() => this.animate());
-                
                 const delta = this.clock.getDelta();
 
                 if (this.isPlaying) {
-                    // หมุนยาน
-                    this.player.rotation.x += 2 * delta;
+                    this.player.rotation.x += 1 * delta;
                     this.player.rotation.y += 2 * delta;
 
-                    // เคลื่อนที่ซ้ายขวา
-                    if (this.keys.left && this.player.position.x > -6) this.player.position.x -= 15 * delta;
-                    if (this.keys.right && this.player.position.x < 6) this.player.position.x += 15 * delta;
+                    if (this.keys.left && this.player.position.x > -7) this.player.position.x -= 18 * delta;
+                    if (this.keys.right && this.player.position.x < 7) this.player.position.x += 18 * delta;
 
-                    // เลื่อนตารางให้ดูเหมือนพุ่งไปข้างหน้า
                     this.grid.position.z = (this.grid.position.z + this.speed * delta) % 10;
 
-                    // เลื่อนวัตถุเข้าหาตัว
                     for (let i = this.objects.length - 1; i >= 0; i--) {
                         const obj = this.objects[i];
                         obj.position.z += this.speed * delta;
                         
-                        // หมุนไอเทม
-                        obj.rotation.x += 1 * delta;
-                        obj.rotation.y += 2 * delta;
+                        obj.rotation.x += 1.5 * delta;
+                        obj.rotation.y += 1.5 * delta;
 
-                        if (obj.position.z > 15) { // เลยกล้องไปแล้ว
+                        if (obj.position.z > 20) {
                             this.scene.remove(obj);
                             this.objects.splice(i, 1);
                         }
                     }
-
                     this.checkCollisions();
                 }
-
                 this.renderer.render(this.scene, this.camera);
             }
 
-            // Cinematic Animations using GSAP
             startCinematic() {
-                // กล้องบินเข้าฉาก
                 gsap.fromTo(this.camera.position, 
-                    { y: 20, z: 50 }, 
-                    { y: 5, z: 20, duration: 2, ease: "power3.out" }
+                    { y: 30, z: 60 }, 
+                    { y: 6, z: 22, duration: 2, ease: "power3.out" }
                 );
             }
 
             pauseForUI() {
                 this.isPlaying = false;
-                // ซูมกล้องลงไป
-                gsap.to(this.camera.position, { z: 12, y: 2, duration: 1, ease: "power2.inOut" });
+                gsap.to(this.camera.position, { z: 15, y: 3, duration: 1, ease: "power2.inOut" });
             }
 
             resumeCinematic() {
                 this.isPlaying = true;
-                gsap.to(this.camera.position, { z: 20, y: 5, duration: 1, ease: "power2.out" });
+                gsap.to(this.camera.position, { z: 22, y: 6, duration: 1, ease: "power2.out" });
             }
         }
 
@@ -493,7 +462,6 @@
             init: function() {
                 this.engine = new Engine3D();
                 this.engine.animate();
-                // สุ่มปล่อยสิ่งกีดขวางทุกๆ 1.5 วิ
                 setInterval(() => this.engine.spawnObstacle(), 1500);
             },
 
@@ -503,8 +471,8 @@
             },
 
             startGame: function() {
-                const name = document.getElementById('player-name').value || 'GUEST_AGENT';
-                document.getElementById('hud-name').innerText = name.toUpperCase();
+                const name = document.getElementById('player-name').value || 'นักเรียนทั่วไป';
+                document.getElementById('hud-name').innerText = name;
                 
                 this.switchScreen('screen-login', null);
                 document.getElementById('hud').style.opacity = 1;
@@ -531,8 +499,6 @@
 
                 this.engine.pauseForUI();
                 document.getElementById('hud').style.opacity = 0;
-                
-                // Set Video Logic
                 this.setupVideo(QuizData[this.currentQuizLevel].videoId);
                 this.switchScreen(null, 'screen-video');
             },
@@ -541,8 +507,7 @@
                 document.getElementById('vid-progress').style.width = '0%';
                 const btnQuiz = document.getElementById('btn-quiz');
                 btnQuiz.disabled = true;
-                btnQuiz.style.opacity = '0.5';
-                btnQuiz.innerHTML = '<i class="fa-solid fa-lock"></i> SYSTEM LOCKED';
+                btnQuiz.innerHTML = '<i class="fa-solid fa-lock" id="btn-lock-icon"></i> ระบบล็อกการทดสอบ';
 
                 if(this.playerVideo) {
                     this.playerVideo.loadVideoById(vidId);
@@ -550,9 +515,7 @@
                     this.playerVideo = new YT.Player('youtube-player', {
                         videoId: vidId,
                         playerVars: { 'controls': 0, 'disablekb': 1, 'rel': 0 },
-                        events: {
-                            'onStateChange': (e) => this.onVideoStateChange(e)
-                        }
+                        events: { 'onStateChange': (e) => this.onVideoStateChange(e) }
                     });
                 }
             },
@@ -573,13 +536,14 @@
                     document.getElementById('vid-progress').style.width = '100%';
                     const btn = document.getElementById('btn-quiz');
                     btn.disabled = false;
-                    btn.style.opacity = '1';
-                    btn.innerHTML = 'PROCEED TO EVALUATION <i class="fa-solid fa-arrow-right"></i>';
+                    btn.innerHTML = 'เริ่มทำแบบทดสอบ <i class="fa-solid fa-arrow-right"></i>';
                 }
             },
 
             showQuiz: function() {
-                this.playerVideo.pauseVideo();
+                if(this.playerVideo && typeof this.playerVideo.pauseVideo === 'function'){
+                    this.playerVideo.pauseVideo();
+                }
                 this.switchScreen('screen-video', 'screen-quiz');
                 
                 const data = QuizData[this.currentQuizLevel];
@@ -598,7 +562,6 @@
             },
 
             checkAnswer: function(btn, selected, correct) {
-                // ล็อกปุ่ม
                 document.querySelectorAll('.choice-btn').forEach(b => b.style.pointerEvents = 'none');
                 
                 if (selected === correct) {
@@ -607,7 +570,7 @@
                 } else {
                     btn.classList.add('wrong');
                     document.querySelectorAll('.choice-btn')[correct].classList.add('correct');
-                    this.score += 100; // ปลอบใจ
+                    this.score += 100; 
                 }
                 
                 document.getElementById('hud-score').innerText = this.score;
@@ -616,7 +579,7 @@
                     this.currentQuizLevel++;
                     this.switchScreen('screen-quiz', null);
                     document.getElementById('hud').style.opacity = 1;
-                    this.engine.resumeCinematic(); // กลับไปวิ่ง 3D ต่อ
+                    this.engine.resumeCinematic(); 
                 }, 2000);
             },
 
@@ -628,8 +591,6 @@
             }
         };
 
-        // --- Initialize System ---
-        // เมื่อ YouTube API พร้อมโหลด จะเซ็ตอัปโค้ดเกม 3D
         function onYouTubeIframeAPIReady() {
             GameApp.init();
         }
