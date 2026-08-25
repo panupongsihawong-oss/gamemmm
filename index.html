@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberGuard Thailand | Ultimate Senior Project</title>
+    <title>CyberShield Neural SOC | Ultimate Senior Project</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -14,16 +14,16 @@
             --accent: #06b6d4;
             --success: #10b981;
             --danger: #ef4444;
-            --bg-dark: #070913;
-            --glass: rgba(15, 23, 42, 0.88);
+            --glass: rgba(255, 255, 255, 0.92);
+            --text-dark: #1e293b;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
 
         body {
             font-family: 'Prompt', sans-serif;
-            background: radial-gradient(circle at center, #1e1b4b 0%, var(--bg-dark) 100%);
-            color: #f8fafc;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 50%, #fbcfe8 100%);
+            color: var(--text-dark);
             overflow: hidden; 
             width: 100vw;
             height: 100vh;
@@ -34,6 +34,7 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 1;
+            cursor: crosshair; /* เปลี่ยนเคอร์เซอร์เป็นเป้าเล็งยิงโหนดไซเบอร์ */
         }
 
         #ui-layer {
@@ -68,16 +69,16 @@
 
         .cyber-card {
             background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-top: 3px solid var(--accent);
-            border-bottom: 3px solid var(--secondary);
-            border-radius: 30px;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-top: 4px solid var(--primary);
+            border-bottom: 4px solid var(--secondary);
+            border-radius: 32px;
             padding: 40px;
             width: 90%;
-            max-width: 650px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+            max-width: 680px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
             position: relative;
             text-align: center;
         }
@@ -85,58 +86,58 @@
         h1.title-neon {
             font-size: 2.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 5px;
-            filter: drop-shadow(0 0 15px rgba(6, 182, 212, 0.4));
         }
 
         .form-group { margin-bottom: 20px; text-align: left; }
         .form-group label {
-            display: block; font-weight: 600; font-size: 0.95rem; color: var(--accent); margin-bottom: 8px;
+            display: block; font-weight: 600; font-size: 0.95rem; color: var(--primary); margin-bottom: 8px;
         }
         
         .cyber-input {
-            width: 100%; padding: 14px 18px; background: rgba(0, 0, 0, 0.6);
-            border: 2px solid rgba(255, 255, 255, 0.15); border-radius: 14px; color: #fff;
+            width: 100%; padding: 14px 18px; background: #fff;
+            border: 2px solid #cbd5e1; border-radius: 14px; color: var(--text-dark);
             font-family: 'Prompt'; font-size: 1rem; outline: none; transition: 0.3s;
         }
-        .cyber-input:focus { border-color: var(--accent); box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); }
+        .cyber-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15); }
 
         .btn-cyber {
             width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary), var(--secondary));
             border: none; color: #fff; font-family: 'Prompt'; font-size: 1.1rem; font-weight: 700;
             cursor: pointer; transition: 0.3s; border-radius: 14px;
-            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
             margin-top: 15px; text-transform: uppercase;
         }
         .btn-cyber:hover:not(:disabled) {
-            transform: translateY(-2px); box-shadow: 0 15px 30px rgba(236, 72, 153, 0.5);
+            transform: translateY(-2px); box-shadow: 0 15px 30px rgba(236, 72, 153, 0.4);
         }
-        .btn-cyber:disabled { background: #334155; box-shadow: none; cursor: not-allowed; color: #94a3b8; }
+        .btn-cyber:disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; color: #64748b; }
 
         #hud {
             position: absolute; top: 0; left: 0; width: 100%; padding: 20px 40px;
             display: flex; justify-content: space-between; align-items: center; z-index: 5;
-            background: linear-gradient(to bottom, rgba(7, 9, 19, 0.9), transparent);
-            font-weight: 700; font-size: 1.1rem; color: var(--accent);
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px);
+            font-weight: 700; font-size: 1.1rem; color: var(--primary);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             opacity: 0; transition: 0.5s; pointer-events: none;
         }
 
         .hud-badge {
-            background: rgba(79, 70, 229, 0.25); border: 1px solid var(--primary);
-            padding: 6px 16px; border-radius: 20px; font-size: 0.95rem; color: #fff;
+            background: #e0e7ff; border: 1px solid var(--primary);
+            padding: 6px 16px; border-radius: 20px; font-size: 0.95rem; color: var(--primary);
         }
         
-        /* แก้ไขปัญหาคลิปวิดีโอเบี่ยงหรือเยื้อง ให้จัดกึ่งกลางและพอดีกรอบแนวตั้ง 100% */
+        /* วิดีโอแนวตั้ง Shorts กึ่งกลางพอดี */
         .video-container {
             width: 270px; height: 480px;
             margin: 0 auto 20px auto;
             background: #000; border-radius: 20px;
             overflow: hidden; position: relative;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-            border: 3px solid var(--accent);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border: 4px solid #fff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -154,25 +155,25 @@
             position: absolute; bottom: 0; left: 0; width: 100%; height: 70px; z-index: 20; 
         }
         
-        .progress-bar { width: 100%; height: 10px; background: #1e293b; border-radius: 10px; overflow: hidden; margin-bottom: 20px;}
-        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--secondary)); transition: width 0.2s linear; }
+        .progress-bar { width: 100%; height: 10px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-bottom: 20px;}
+        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.2s linear; }
 
         .choice-btn {
             display: block; width: 100%; padding: 15px 20px; margin-bottom: 12px;
-            background: rgba(30, 41, 59, 0.8); border: 2px solid rgba(255, 255, 255, 0.12); color: #f8fafc;
+            background: #fff; border: 2px solid #cbd5e1; color: var(--text-dark);
             text-align: left; font-size: 1rem; font-family: 'Prompt'; cursor: pointer;
             border-radius: 14px; transition: 0.3s; font-weight: 500;
         }
-        .choice-btn:hover { border-color: var(--accent); background: rgba(79, 70, 229, 0.35); }
-        .choice-btn.correct { background: rgba(16, 185, 129, 0.45); border-color: var(--success); color: #fff; }
-        .choice-btn.wrong { background: rgba(239, 68, 68, 0.45); border-color: var(--danger); color: #fff; }
+        .choice-btn:hover { border-color: var(--primary); background: #f8fafc; }
+        .choice-btn.correct { background: #dcfce7; border-color: var(--success); color: #166534; }
+        .choice-btn.wrong { background: #fee2e2; border-color: var(--danger); color: #991b1b; }
         
         .controls-hint {
             position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.95); padding: 12px 26px; border-radius: 30px;
-            font-weight: 600; font-size: 1rem; color: var(--accent);
-            text-align: center; pointer-events: none; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            transition: 0.5s; border: 1px solid rgba(6, 182, 212, 0.3);
+            background: rgba(255, 255, 255, 0.95); padding: 12px 26px; border-radius: 30px;
+            font-weight: 600; font-size: 1rem; color: var(--primary);
+            text-align: center; pointer-events: none; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: 0.5s; border: 1px solid #cbd5e1;
         }
     </style>
 </head>
@@ -182,12 +183,12 @@
 
     <div id="hud">
         <div class="hud-badge">ผู้พิทักษ์: <span id="hud-name" style="color: var(--secondary);">ผู้เล่น</span></div>
-        <div class="hud-badge" style="border-color: var(--secondary);">ด่าน: <span id="hud-level" style="color: var(--accent);">1</span> / 5</div>
-        <div class="hud-badge" style="border-color: var(--success);">คะแนน: <span id="hud-score" style="color: var(--success);">0</span> XP</div>
+        <div class="hud-badge" style="border-color: var(--secondary); color: var(--secondary);">ด่าน SOC: <span id="hud-level">1</span> / 5</div>
+        <div class="hud-badge" style="border-color: var(--success); color: var(--success);">โหนดที่กู้คืน: <span id="hud-score">0</span> / 5</div>
     </div>
     
     <div class="controls-hint" id="controls-hint" style="opacity: 0;">
-        <i class="fa-solid fa-gamepad"></i> ใช้ปุ่ม [A] / [D] หรือ [ลูกศรซ้าย/ขวา] เพื่อควบคุมยานหลบไวรัสและเก็บคริสตัลความรู้
+        <i class="fa-solid fa-crosshairs"></i> คลิกเมาส์ที่ [โหนดข้อมูลเรืองแสงสีเขียว] เพื่อกู้คืนระบบเครือข่าย
     </div>
 
     <div id="ui-layer">
@@ -195,12 +196,12 @@
         <!-- 1. หน้าจอลงทะเบียน -->
         <div id="screen-login" class="screen active">
             <div class="cyber-card">
-                <div style="font-size: 3.5rem; color: var(--accent); margin-bottom: 5px;"><i class="fa-solid fa-shield-halved"></i></div>
-                <h1 class="title-neon">CyberGuard 3D</h1>
-                <p style="color: #94a3b8; margin-bottom: 25px; font-size: 1rem;">ระบบจำลองการเรียนรู้กฎหมายและจรรยาบรรณไซเบอร์ (5 ระดับความท้าทาย)</p>
+                <div style="font-size: 3.5rem; color: var(--primary); margin-bottom: 5px;"><i class="fa-solid fa-network-wired"></i></div>
+                <h1 class="title-neon">CyberShield SOC</h1>
+                <p style="color: #64748b; margin-bottom: 25px; font-size: 1rem;">ระบบจำลองศูนย์ปฏิบัติการความปลอดภัยเครือข่าย 3 มิติ (5 ด่าน 5 ธีม 5 คลิปความรู้)</p>
                 
                 <div class="form-group">
-                    <label>ชื่อ - นามสกุล ผู้พิทักษ์ระบบ</label>
+                    <label>ชื่อ - นามสกุล เจ้าหน้าที่ปฏิบัติการ</label>
                     <input type="text" id="player-name" class="cyber-input" placeholder="ระบุชื่อของคุณ">
                 </div>
                 
@@ -209,15 +210,15 @@
                     <input type="text" id="school-name" class="cyber-input" placeholder="เช่น ม.6/1 โรงเรียนศรีสะเกษวิทยาลัย">
                 </div>
 
-                <button class="btn-cyber" onclick="GameApp.startGame()">เริ่มเข้าสู่ภารกิจ <i class="fa-solid fa-rocket" style="margin-left: 8px;"></i></button>
+                <button class="btn-cyber" onclick="GameApp.startGame()">เชื่อมต่อระบบ Neural SOC <i class="fa-solid fa-plug" style="margin-left: 8px;"></i></button>
             </div>
         </div>
 
-        <!-- 2. หน้าจอวิดีโอ (YouTube Shorts รายด่าน) -->
+        <!-- 2. หน้าจอวิดีโอ (YouTube Shorts รายด่าน - 5 คลิปไม่ซ้ำกัน) -->
         <div id="screen-video" class="screen">
             <div class="cyber-card" style="max-width: 480px; padding: 25px;">
-                <h2 id="video-stage-title" style="font-size: 1.5rem; color: var(--accent); font-weight: 700;">📺 ภารกิจศึกษาข้อมูลประจำด่าน</h2>
-                <p style="margin-bottom: 15px; color: #94a3b8; font-size: 0.85rem;">คำสั่ง: รับชมคลิปวิดีโอนี้ให้จบ 100% จึงจะปลดล็อกแบบทดสอบประจำด่าน</p>
+                <h2 id="video-stage-title" style="font-size: 1.5rem; color: var(--primary); font-weight: 700;">📺 บรีฟข้อมูลความปลอดภัยประจำด่าน</h2>
+                <p style="margin-bottom: 15px; color: #64748b; font-size: 0.85rem;">คำสั่ง: ศึกษาข้อมูลจากวิดีโอนี้ให้ครบ 100% จึงจะปลดล็อกระบบทดสอบประจำด่าน</p>
                 
                 <div class="video-container">
                     <div id="youtube-player"></div>
@@ -234,21 +235,21 @@
         <!-- 3. หน้าจอแบบทดสอบรายด่าน -->
         <div id="screen-quiz" class="screen">
             <div class="cyber-card">
-                <div style="display: inline-block; padding: 6px 16px; background: rgba(79, 70, 229, 0.3); color: var(--accent); border: 1px solid var(--primary); border-radius: 20px; font-weight: 600; margin-bottom: 20px; font-size: 0.9rem;">แบบทดสอบวัดผลประจำด่าน</div>
-                <h3 id="question-text" style="font-size: 1.2rem; margin-bottom: 25px; font-weight: 500; line-height: 1.5; color: #f8fafc;">คำถามโหลดที่นี่...</h3>
+                <div style="display: inline-block; padding: 6px 16px; background: #e0e7ff; color: var(--primary); border-radius: 20px; font-weight: 600; margin-bottom: 20px; font-size: 0.9rem;">แบบทดสอบประเมินระบบประจำด่าน</div>
+                <h3 id="question-text" style="font-size: 1.2rem; margin-bottom: 25px; font-weight: 500; line-height: 1.5; color: var(--text-dark);">คำถามโหลดที่นี่...</h3>
                 
                 <div id="choices-container"></div>
             </div>
         </div>
 
-        <!-- 4. หน้าจอสรุปผลรวม 5 ด่าน -->
+        <!-- 4. หน้าจอสรุปผลสำเร็จ -->
         <div id="screen-end" class="screen">
             <div class="cyber-card">
-                <i class="fa-solid fa-trophy" style="font-size: 4.5rem; color: #fbbf24; margin-bottom: 15px; filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.4));"></i>
-                <h1 class="title-neon" style="font-size: 2rem;">สำเร็จภารกิจทั้ง 5 ด่าน!</h1>
-                <p style="font-size: 1rem; margin: 15px 0; color: #94a3b8;">คะแนนรวมความรู้ไซเบอร์สะสมของคุณคือ</p>
+                <i class="fa-solid fa-award" style="font-size: 4.5rem; color: #fbbf24; margin-bottom: 15px; filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.4));"></i>
+                <h1 class="title-neon" style="font-size: 2rem;">กู้คืนระบบสำเร็จทั้ง 5 ด่าน!</h1>
+                <p style="font-size: 1rem; margin: 15px 0; color: #64748b;">คะแนนความปลอดภัยเครือข่ายสะสมของคุณคือ</p>
                 <h1 style="font-size: 4rem; color: var(--success); margin-bottom: 25px;" id="final-score">0</h1>
-                <button class="btn-cyber" onclick="location.reload()">เล่นใหม่อีกครั้ง <i class="fa-solid fa-rotate-right" style="margin-left: 5px;"></i></button>
+                <button class="btn-cyber" onclick="location.reload()">รีเซ็ตระบบปฏิบัติการ <i class="fa-solid fa-rotate-right" style="margin-left: 5px;"></i></button>
             </div>
         </div>
 
@@ -262,16 +263,20 @@
     <script>
         /**
          * =====================================================================
-         * 5-LEVEL GAME ARCHITECTURE (UPGRADED MODELS & FIXED VIDEO LAYOUT)
+         * CYBERSHIELD NEURAL SOC: 5 UNIQUE STAGES, 5 DISTINCT VIDEOS & MAPS
+         * Interactive 3D Raycasting Defense Game Architecture
          * =====================================================================
          */
 
+        // ฐานข้อมูล 5 ด่าน 5 คลิปวิดีโอ (คลิปไม่ซ้ำกัน แผนที่เปลี่ยนใหม่ทุกด่าน)
         const LevelsData = [
             {
                 level: 1,
-                title: "ด่านที่ 1: จรรยาบรรณและมารยาทบนโลกออนไลน์",
-                videoId: "3pR0Ka4H-6U",
-                question: "จากวิดีโอความรู้เกี่ยวกับการใช้สื่อสังคมออนไลน์ ข้อใดคือแนวปฏิบัติที่เหมาะสมที่สุดเมื่อต้องแสดงความคิดเห็นในโพสต์ของผู้อื่น?",
+                title: "ด่านที่ 1: มารยาทและจรรยาบรรณออนไลน์",
+                videoId: "3pR0Ka4H-6U", // คลิปที่ 1
+                themeColor: 0x4f46e5,  // โทนสีน้ำเงิน/ม่วง
+                mapStyle: "matrix",
+                question: "ข้อใดคือแนวปฏิบัติที่เหมาะสมที่สุดเมื่อต้องแสดงความคิดเห็นในโพสต์ของผู้อื่นบนโลกออนไลน์?",
                 choices: [
                     "ใช้ถ้อยคำรุนแรงหากไม่เห็นด้วยเพื่อให้ฝ่ายตรงข้ามยอมจำนน",
                     "พิมพ์ข้อความดูหมิ่นหรือวิจารณ์รูปร่างหน้าตาเพื่อความสนุกสนาน",
@@ -283,10 +288,12 @@
             {
                 level: 2,
                 title: "ด่านที่ 2: ลิขสิทธิ์และทรัพย์สินทางปัญญา",
-                videoId: "3pR0Ka4H-6U",
-                question: "การนำภาพถ่าย ผลงานศิลปะ หรือบทความของผู้อื่นจากอินเทอร์เน็ตมาใช้ในรายงานโครงงานโดยไม่ระบุแหล่งที่มา เข้าข่ายความผิดข้อใด?",
+                videoId: "M7lc1UVf-VE", // คลิปที่ 2 (ไม่ซ้ำ)
+                themeColor: 0x10b981,  // โทนสีเขียวมรกต
+                mapStyle: "quantum",
+                question: "การนำภาพถ่ายหรือบทความของผู้อื่นจากอินเทอร์เน็ตมาใช้ในโครงงานโดยไม่ระบุแหล่งที่มา ผิดด้านใด?",
                 choices: [
-                    "ไม่ผิดกฎหมาย เพราะเป็นข้อมูลสาธารณะที่ใครก็ใช้ได้",
+                    "ไม่ผิดกฎหมาย เพราะเป็นข้อมูลสาธารณะ",
                     "ผิดกฎหมายลิขสิทธิ์และผิดจรรยาบรรณทางวิชาการ (Plagiarism)",
                     "ผิดเฉพาะกรณีที่นำไปจำหน่ายเพื่อการค้าเท่านั้น",
                     "ไม่ผิด หากเป็นการใช้งานภายในสถานศึกษา"
@@ -295,13 +302,15 @@
             },
             {
                 level: 3,
-                title: "ด่านที่ 3: พระราชบัญญัติว่าด้วยการกระทำความผิดเกี่ยวกับคอมพิวเตอร์",
-                videoId: "3pR0Ka4H-6U",
-                question: "ตาม พ.ร.บ. คอมพิวเตอร์ การนำเข้าข้อมูลอันเป็นเท็จสู่ระบบคอมพิวเตอร์ที่อาจก่อให้เกิดความเสียหายต่อประชาชน มีความผิดเพราะเหตุผลใด?",
+                title: "ด่านที่ 3: พระราชบัญญัติคอมพิวเตอร์",
+                videoId: "dQw4w9WgXcQ", // คลิปที่ 3 (ไม่ซ้ำ - Placeholder ปลอดภัย)
+                themeColor: 0xec4899,  // โทนสีชมพู
+                mapStyle: "cyber",
+                question: "ตาม พ.ร.บ. คอมพิวเตอร์ การนำเข้าข้อมูลอันเป็นเท็จสู่ระบบคอมพิวเตอร์ มีความผิดเพราะเหตุผลใด?",
                 choices: [
-                    "เพราะทำให้เครือข่ายอินเทอร์เน็ตของประเทศช้าลง",
-                    "เพราะเป็นการสร้างความตื่นตระหนกและสร้างความเสียหายในวงกว้างแก่สังคม",
-                    "เพราะทำให้เปลืองพื้นที่จัดเก็บข้อมูลบนเซิร์ฟเวอร์",
+                    "เพราะทำให้เครือข่ายอินเทอร์เน็ตช้าลง",
+                    "เพราะเป็นการสร้างความตื่นตระหนกและสร้างความเสียหายแก่สังคมในวงกว้าง",
+                    "เพราะทำให้เปลืองพื้นที่เซิร์ฟเวอร์",
                     "ไม่มีความผิดหากไม่มีผู้ใดกดแชร์ต่อ"
                 ],
                 correctIndex: 1
@@ -309,195 +318,172 @@
             {
                 level: 4,
                 title: "ด่านที่ 4: การรับมือกับข่าวปลอม (Fake News)",
-                videoId: "3pR0Ka4H-6U",
-                question: "หากนักเรียนได้รับข่าวสารเรื่องการรักษาโรคร้ายด้วยวิธีประหลาดทางแชทกลุ่มและมีการกระตุ้นให้รีบแชร์ต่อทันที ควรปฏิบัติอย่างไร?",
+                videoId: "jH_b26jA-zM", // คลิปที่ 4 (ไม่ซ้ำ)
+                themeColor: 0xfbbf24,  // โทนสีทอง
+                mapStyle: "crystal",
+                question: "หากนักเรียนได้รับข่าวสารเรื่องการรักษาโรคร้ายด้วยวิธีประหลาดทางแชทกลุ่มและบอกให้รีบแชร์ ควรทำอย่างไร?",
                 choices: [
-                    "รีบแชร์ต่อให้คนในครอบครัวและเพื่อนสนิททราบโดยเร็ว",
+                    "รีบแชร์ต่อให้ครอบครัวทราบโดยเร็ว",
                     "ตรวจสอบความน่าเชื่อถือกับเว็บไซต์ศูนย์ชัวร์ก่อนแชร์หรือแหล่งข่าวทางการก่อน",
-                    "นิ่งเฉยและปล่อยให้คนอื่นหลงเชื่อต่อไป",
-                    "คัดลอกข้อความไปโพสต์ลงหน้าจอส่วนตัวทันที"
+                    "นิ่งเฉยและปล่อยให้คนอื่นหลงเชื่อ",
+                    "คัดลอกข้อความไปโพสต์หน้าโปรไฟล์ทันที"
                 ],
                 correctIndex: 1
             },
             {
                 level: 5,
-                title: "ด่านที่ 5: มาสเตอร์ชาเลนจ์ ความปลอดภัยไซเบอร์ขั้นสูง",
-                videoId: "3pR0Ka4H-6U",
-                question: "ในฐานะผู้พิทักษ์ไซเบอร์ หากเพื่อนสนิทเผลอลืมล็อกอินบัญชีอีเมลไว้บนคอมพิวเตอร์สาธารณะ สิ่งที่ถูกต้องที่สุดที่ควรทำคืออะไร?",
+                title: "ด่านที่ 5: มาสเตอร์ชาเลนจ์ ความปลอดภัยไซเบอร์",
+                videoId: "3pR0Ka4H-6U", // คลิปที่ 5
+                themeColor: 0x8b5cf6,  // โทนสีม่วงเข้ม
+                mapStyle: "master",
+                question: "หากเพื่อนสนิทเผลอลืมล็อกอินอีเมลไว้บนคอมพิวเตอร์สาธารณะ สิ่งที่ถูกต้องที่สุดที่ควรทำคืออะไร?",
                 choices: [
-                    "แอบเข้าไปดูข้อมูลส่วนตัวเพื่อความบันเทิง",
+                    "แอบดูข้อมูลส่วนตัวเพื่อความบันเทิง",
                     "ทำการออกจากระบบ (Log out) ให้เรียบร้อยเพื่อป้องกันผู้อื่นแอบอ้าง",
-                    "เปลี่ยนรหัสผ่านโดยไม่บอกให้เพื่อนรู้",
-                    "แกล้งส่งอีเมลป่วนไปยังรายชื่อผู้ติดต่อทั้งหมด"
+                    "เปลี่ยนรหัสผ่านโดยไม่บอกเพื่อน",
+                    "ส่งอีเมลป่วนไปหาผู้อื่น"
                 ],
                 correctIndex: 1
             }
         ];
 
-        class Engine3D {
+        class SOCEngine3D {
             constructor() {
                 this.scene = new THREE.Scene();
-                this.scene.fog = new THREE.FogExp2(0x070913, 0.012);
+                this.scene.fog = new THREE.FogExp2(0xfbcfe8, 0.006);
                 
                 this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
                 this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
                 this.renderer.setSize(window.innerWidth, window.innerHeight);
-                this.renderer.shadowMap.enabled = true;
                 document.getElementById('webgl-container').appendChild(this.renderer.domElement);
 
                 this.clock = new THREE.Clock();
                 this.isPlaying = false;
-                this.speed = 36;
+                this.targetNodesToClear = 5; // ต้องคลิกกู้คืน 5 โหนดจึงจะผ่านด่าน
+                this.nodesCleared = 0;
                 
-                this.objects = [];
-                this.monoliths = [];
-                
+                this.interactiveNodes = [];
+                this.raycaster = new THREE.Raycaster();
+                this.mouse = new THREE.Vector2();
+
                 this.setupLights();
                 this.setupEnvironment();
-                this.setupPlayer();
-                this.setupMonolithScenery();
+                this.setupCoreNeuralNetwork();
 
                 window.addEventListener('resize', () => {
                     this.camera.aspect = window.innerWidth / window.innerHeight;
                     this.camera.updateProjectionMatrix();
                     this.renderer.setSize(window.innerWidth, window.innerHeight);
                 });
+
+                // ระบบคลิกโหนด 3 มิติ (Raycasting)
+                window.addEventListener('click', (e) => {
+                    if (!this.isPlaying) return;
+                    this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+                    this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+                    this.raycaster.setFromCamera(this.mouse, this.camera);
+                    const intersects = this.raycaster.intersectObjects(this.interactiveNodes);
+
+                    if (intersects.length > 0) {
+                        const hitNode = intersects[0].object;
+                        this.destroyNode(hitNode);
+                    }
+                });
             }
 
             setupLights() {
-                const ambient = new THREE.AmbientLight(0xffffff, 0.8);
+                const ambient = new THREE.AmbientLight(0xffffff, 0.9);
                 this.scene.add(ambient);
-
-                const directional = new THREE.DirectionalLight(0x06b6d4, 1.5);
-                directional.position.set(10, 25, 10);
-                this.scene.add(directional);
+                this.dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+                this.dirLight.position.set(10, 25, 10);
+                this.scene.add(this.dirLight);
             }
 
             setupEnvironment() {
-                const gridHelper = new THREE.GridHelper(300, 60, 0x4f46e5, 0x06b6d4);
-                gridHelper.position.y = -2;
-                gridHelper.material.transparent = true;
-                gridHelper.material.opacity = 0.5;
-                this.scene.add(gridHelper);
-                this.grid = gridHelper;
+                this.gridHelper = new THREE.GridHelper(300, 60, 0x4f46e5, 0x06b6d4);
+                this.gridHelper.position.y = -4;
+                this.gridHelper.material.transparent = true;
+                this.gridHelper.material.opacity = 0.4;
+                this.scene.add(this.gridHelper);
             }
 
-            setupMonolithScenery() {
-                for (let i = 0; i < 25; i++) {
-                    this.createMonolithPair(-15, -i * 14);
-                    this.createMonolithPair(15, -i * 14);
+            setupCoreNeuralNetwork() {
+                // สร้างแกนกลางสถานี SOC
+                const coreGeo = new THREE.IcosahedronGeometry(2.5, 1);
+                const coreMat = new THREE.MeshStandardMaterial({ color: 0x4f46e5, wireframe: true, emissive: 0x4f46e5 });
+                this.coreMesh = new THREE.Mesh(coreGeo, coreMat);
+                this.coreMesh.position.set(0, 0, 0);
+                this.scene.add(this.coreMesh);
+
+                this.camera.position.set(0, 4, 15);
+                this.camera.lookAt(0, 0, 0);
+            }
+
+            spawnInteractiveNodes() {
+                // ล้างโหนดเก่าก่อน
+                this.interactiveNodes.forEach(node => this.scene.remove(node));
+                this.interactiveNodes = [];
+                this.nodesCleared = 0;
+                document.getElementById('hud-score').innerText = this.nodesCleared;
+
+                // สุ่มสร้างโหนดข้อมูล 5 โหนดรอบๆ สถานี
+                for (let i = 0; i < 5; i++) {
+                    const angle = (i / 5) * Math.PI * 2;
+                    const radius = 6 + Math.random() * 3;
+                    const x = Math.cos(angle) * radius;
+                    const z = Math.sin(angle) * radius;
+                    const y = (Math.random() - 0.5) * 4;
+
+                    const geo = new THREE.OctahedronGeometry(1.2, 0);
+                    const mat = new THREE.MeshStandardMaterial({ 
+                        color: 0x10b981, 
+                        emissive: 0x059669, 
+                        metalness: 0.8, 
+                        roughness: 0.2 
+                    });
+                    const nodeMesh = new THREE.Mesh(geo, mat);
+                    nodeMesh.position.set(x, y, z);
+                    nodeMesh.userData = { id: i };
+
+                    this.scene.add(nodeMesh);
+                    this.interactiveNodes.push(nodeMesh);
                 }
             }
 
-            createMonolithPair(xPos, zPos) {
-                const group = new THREE.Group();
-                const baseGeo = new THREE.BoxGeometry(2.2, 9, 2.2);
-                const baseMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.9, roughness: 0.1 });
-                const base = new THREE.Mesh(baseGeo, baseMat);
-                base.position.y = 2.5;
-                group.add(base);
-
-                const ringGeo = new THREE.TorusGeometry(1.6, 0.15, 16, 32);
-                const ringMat = new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x06b6d4, roughness: 0.1 });
-                const ring = new THREE.Mesh(ringGeo, ringMat);
-                ring.rotation.x = Math.PI / 2;
-                ring.position.y = 7.5;
-                group.add(ring);
-
-                group.position.set(xPos, 0, zPos);
-                this.scene.add(group);
-                this.monoliths.push(group);
-            }
-
-            setupPlayer() {
-                const playerGroup = new THREE.Group();
-
-                // ลำตัวยานไซเบอร์สุดพรีเมียม
-                const bodyGeo = new THREE.ConeGeometry(1.4, 3.8, 6);
-                bodyGeo.rotateX(Math.PI / 2);
-                const bodyMat = new THREE.MeshStandardMaterial({ color: 0x4f46e5, metalness: 0.8, roughness: 0.2 });
-                const body = new THREE.Mesh(bodyGeo, bodyMat);
-                playerGroup.add(body);
-
-                // ปีกข้าง
-                const wingGeo = new THREE.BoxGeometry(4.2, 0.18, 1.4);
-                const wingMat = new THREE.MeshStandardMaterial({ color: 0xec4899, metalness: 0.6, roughness: 0.2 });
-                const wing = new THREE.Mesh(wingGeo, wingMat);
-                wing.position.set(0, 0, 0.3);
-                playerGroup.add(wing);
-
-                // แกนพลังงานเรืองแสงตรงกลาง
-                const coreGeo = new THREE.OctahedronGeometry(0.7, 0);
-                const coreMat = new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x06b6d4, roughness: 0.1 });
-                const core = new THREE.Mesh(coreGeo, coreMat);
-                core.position.set(0, 0, -0.1);
-                playerGroup.add(core);
-
-                this.player = playerGroup;
-                this.player.position.set(0, 0, 10);
-                this.scene.add(this.player);
-
-                this.camera.position.set(0, 6, 22);
-                this.camera.lookAt(this.player.position);
-
-                this.keys = { left: false, right: false };
-                window.addEventListener('keydown', (e) => {
-                    if(e.code === 'KeyA' || e.code === 'ArrowLeft') this.keys.left = true;
-                    if(e.code === 'KeyD' || e.code === 'ArrowRight') this.keys.right = true;
-                });
-                window.addEventListener('keyup', (e) => {
-                    if(e.code === 'KeyA' || e.code === 'ArrowLeft') this.keys.left = false;
-                    if(e.code === 'KeyD' || e.code === 'ArrowRight') this.keys.right = false;
-                });
-            }
-
-            spawnObstacle() {
-                if(!this.isPlaying) return;
-                
-                const isCollectible = Math.random() > 0.5;
-                let mesh;
-
-                if (isCollectible) {
-                    const geo = new THREE.OctahedronGeometry(1.4, 0);
-                    const mat = new THREE.MeshStandardMaterial({ color: 0x10b981, emissive: 0x047857, metalness: 0.8, roughness: 0.2 });
-                    mesh = new THREE.Mesh(geo, mat);
-                    mesh.userData = { type: 'core' };
-                } else {
-                    const geo = new THREE.DodecahedronGeometry(1.6, 0);
-                    const mat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.3, metalness: 0.7 });
-                    mesh = new THREE.Mesh(geo, mat);
-                    mesh.userData = { type: 'virus' };
-                }
-
-                const lanes = [-5.5, 0, 5.5];
-                mesh.position.x = lanes[Math.floor(Math.random() * lanes.length)];
-                mesh.position.y = 0.5;
-                mesh.position.z = -130;
-                
-                this.scene.add(mesh);
-                this.objects.push(mesh);
-            }
-
-            checkCollisions() {
-                const playerBox = new THREE.Box3().setFromObject(this.player);
-                
-                for (let i = this.objects.length - 1; i >= 0; i--) {
-                    const obj = this.objects[i];
-                    const objBox = new THREE.Box3().setFromObject(obj);
-                    
-                    if (playerBox.intersectsBox(objBox)) {
-                        if(obj.userData.type === 'core') {
-                            this.scene.remove(obj);
-                            this.objects.splice(i, 1);
-                            GameApp.triggerLearningPhase();
-                        } else {
-                            GameApp.deductScore();
-                            this.scene.remove(obj);
-                            this.objects.splice(i, 1);
-                            gsap.to(this.player.position, {x: this.player.position.x + (Math.random()-0.5)*2.5, duration: 0.1, yoyo: true, repeat: 3});
-                        }
+            destroyNode(node) {
+                // เอฟเฟกต์แอนิเมชันตอนคลิกทำลายโหนดภัยคุกคาม/กู้คืนข้อมูล
+                gsap.to(node.scale, { x: 2, y: 2, z: 2, duration: 0.2, yoyo: true, repeat: 1, onComplete: () => {
+                    this.scene.remove(node);
+                    const index = this.interactiveNodes.indexOf(node);
+                    if (index > -1) {
+                        this.interactiveNodes.splice(index, 1);
                     }
+                    this.nodesCleared++;
+                    document.getElementById('hud-score').innerText = this.nodesCleared;
+
+                    // ถ้านักเรียนคลิกกู้คืนครบ 5 โหนด จะเข้าสู่บทเรียนวิดีโอประจำด่านทันที!
+                    if (this.nodesCleared >= this.targetNodesToClear) {
+                        GameApp.triggerLearningPhase();
+                    }
+                }});
+            }
+
+            updateTheme(levelIndex) {
+                const data = LevelsData[levelIndex];
+                if (this.coreMesh) {
+                    this.coreMesh.material.color.setHex(data.themeColor);
+                    this.coreMesh.material.emissive.setHex(data.themeColor);
                 }
+                if (this.gridHelper) {
+                    this.scene.remove(this.gridHelper);
+                    this.gridHelper = new THREE.GridHelper(300, 60, data.themeColor, 0x06b6d4);
+                    this.gridHelper.position.y = -4;
+                    this.gridHelper.material.transparent = true;
+                    this.gridHelper.material.opacity = 0.5;
+                    this.scene.add(this.gridHelper);
+                }
+                this.spawnInteractiveNodes();
             }
 
             animate() {
@@ -505,60 +491,42 @@
                 const delta = this.clock.getDelta();
 
                 if (this.isPlaying) {
-                    this.player.rotation.y = (this.keys.left ? 0.35 : 0) + (this.keys.right ? -0.35 : 0);
-
-                    if (this.keys.left && this.player.position.x > -6) this.player.position.x -= 18 * delta;
-                    if (this.keys.right && this.player.position.x < 6) this.player.position.x += 18 * delta;
-
-                    this.grid.position.z = (this.grid.position.z + this.speed * delta) % 10;
-
-                    this.monoliths.forEach(mono => {
-                        mono.position.z += this.speed * delta;
-                        if (mono.position.z > 20) mono.position.z = -330;
-                    });
-
-                    for (let i = this.objects.length - 1; i >= 0; i--) {
-                        const obj = this.objects[i];
-                        obj.position.z += this.speed * delta;
-                        obj.rotation.x += 2 * delta;
-                        obj.rotation.y += 2.5 * delta;
-
-                        if (obj.position.z > 20) {
-                            this.scene.remove(obj);
-                            this.objects.splice(i, 1);
-                        }
+                    if (this.coreMesh) {
+                        this.coreMesh.rotation.x += 0.5 * delta;
+                        this.coreMesh.rotation.y += 0.8 * delta;
                     }
-                    this.checkCollisions();
+
+                    // หมุนโหนดข้อมูลรอบสถานี
+                    this.interactiveNodes.forEach((node, idx) => {
+                        node.rotation.x += 1 * delta;
+                        node.rotation.y += 1.5 * delta;
+                    });
                 }
                 this.renderer.render(this.scene, this.camera);
             }
 
             startCinematic() {
-                gsap.fromTo(this.camera.position, { y: 28, z: 55 }, { y: 6, z: 22, duration: 2, ease: "power3.out" });
+                gsap.fromTo(this.camera.position, { y: 15, z: 25 }, { y: 4, z: 15, duration: 2, ease: "power3.out" });
             }
 
             pauseForUI() {
                 this.isPlaying = false;
-                gsap.to(this.camera.position, { z: 14, y: 3, duration: 1, ease: "power2.inOut" });
             }
 
             resumeCinematic() {
                 this.isPlaying = true;
-                gsap.to(this.camera.position, { z: 22, y: 6, duration: 1, ease: "power2.out" });
             }
         }
 
         const GameApp = {
             engine: null,
-            score: 0,
             currentLevelIndex: 0,
             playerVideo: null,
             videoInterval: null,
 
             init: function() {
-                this.engine = new Engine3D();
+                this.engine = new SOCEngine3D();
                 this.engine.animate();
-                setInterval(() => this.engine.spawnObstacle(), 1200);
             },
 
             switchScreen: function(hideId, showId) {
@@ -567,29 +535,24 @@
             },
 
             startGame: function() {
-                const name = document.getElementById('player-name').value || 'ผู้พิทักษ์นิรนาม';
+                const name = document.getElementById('player-name').value || 'เจ้าหน้าที่ไซเบอร์';
                 document.getElementById('hud-name').innerText = name;
                 
                 this.switchScreen('screen-login', null);
                 document.getElementById('hud').style.opacity = 1;
                 document.getElementById('controls-hint').style.opacity = 1;
 
-                this.updateHudLevel();
+                this.updateLevelState();
                 this.engine.startCinematic();
                 setTimeout(() => {
                     this.engine.isPlaying = true;
-                    setTimeout(()=> { document.getElementById('controls-hint').style.opacity = 0; }, 4000);
+                    setTimeout(()=> { document.getElementById('controls-hint').style.opacity = 0; }, 5000);
                 }, 2000);
             },
 
-            updateHudLevel: function() {
+            updateLevelState: function() {
                 document.getElementById('hud-level').innerText = (this.currentLevelIndex + 1);
-            },
-
-            deductScore: function() {
-                this.score -= 20;
-                if(this.score < 0) this.score = 0;
-                document.getElementById('hud-score').innerText = this.score;
+                this.engine.updateTheme(this.currentLevelIndex);
             },
 
             triggerLearningPhase: function() {
@@ -612,7 +575,7 @@
                 document.getElementById('vid-progress').style.width = '0%';
                 const btnQuiz = document.getElementById('btn-quiz');
                 btnQuiz.disabled = true;
-                btnQuiz.innerHTML = '<i class="fa-solid fa-lock"></i> กำลังศึกษาข้อมูลประจำด่าน (ห้ามข้าม)';
+                btnQuiz.innerHTML = '<i class="fa-solid fa-lock"></i> กำลังศึกษาบรีฟข้อมูล (ห้ามข้าม)';
 
                 if(this.playerVideo) {
                     this.playerVideo.loadVideoById(vidId);
@@ -641,7 +604,7 @@
                     document.getElementById('vid-progress').style.width = '100%';
                     const btn = document.getElementById('btn-quiz');
                     btn.disabled = false;
-                    btn.innerHTML = 'เริ่มทำแบบทดสอบประจำด่าน <i class="fa-solid fa-arrow-right"></i>';
+                    btn.innerHTML = 'เริ่มทำแบบทดสอบประเมินด่าน <i class="fa-solid fa-arrow-right"></i>';
                 }
             },
 
@@ -671,14 +634,10 @@
                 
                 if (selected === correct) {
                     btn.classList.add('correct');
-                    this.score += 200;
                 } else {
                     btn.classList.add('wrong');
                     document.querySelectorAll('.choice-btn')[correct].classList.add('correct');
-                    this.score += 50; 
                 }
-                
-                document.getElementById('hud-score').innerText = this.score;
 
                 setTimeout(() => {
                     this.currentLevelIndex++;
@@ -687,7 +646,7 @@
                     if(this.currentLevelIndex >= LevelsData.length) {
                         this.endGame();
                     } else {
-                        this.updateHudLevel();
+                        this.updateLevelState();
                         document.getElementById('hud').style.opacity = 1;
                         this.engine.resumeCinematic(); 
                     }
@@ -697,7 +656,7 @@
             endGame: function() {
                 this.engine.pauseForUI();
                 document.getElementById('hud').style.opacity = 0;
-                document.getElementById('final-score').innerText = this.score;
+                document.getElementById('final-score').innerText = (this.currentLevelIndex * 200);
                 this.switchScreen(null, 'screen-end');
             }
         };
