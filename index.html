@@ -3,505 +3,516 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Defender | โครงงานจบ</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Cyber Law & Ethics Simulator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #00ffcc;
-            --secondary: #b100ff;
-            --bg-color: #0b0c10;
-            --surface: rgba(31, 40, 51, 0.7);
-            --text: #c5c6c7;
+            --bg-dark: #07090f;
+            --panel-bg: rgba(16, 22, 36, 0.8);
+            --primary: #0ea5e9;
+            --primary-glow: rgba(14, 165, 233, 0.5);
+            --accent: #10b981;
+            --danger: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Prompt', sans-serif; user-select: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-color);
-            color: white;
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden;
-            background: radial-gradient(circle at center, #1f2833 0%, #0b0c10 100%);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(14, 165, 233, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.08), transparent 25%);
         }
 
-        /* Glassmorphism UI */
-        .glass-panel {
-            background: var(--surface);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(0, 255, 204, 0.2);
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.1);
-            padding: 40px;
-            width: 90%;
-            max-width: 600px;
-            text-align: center;
+        .screen {
+            width: 100%;
+            height: 100%;
             position: absolute;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            top: 0; left: 0;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(20px);
         }
 
-        .hidden { opacity: 0; pointer-events: none; transform: scale(0.95); z-index: -1; }
-        .active { opacity: 1; pointer-events: all; transform: scale(1); z-index: 10; }
+        .screen.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0);
+        }
 
-        h1 {
+        /* --- UI Components --- */
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .title-cyber {
+            font-family: 'Orbitron', sans-serif;
             font-size: 2.5rem;
-            text-transform: uppercase;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--primary-glow);
             margin-bottom: 10px;
-            font-weight: 800;
+            letter-spacing: 2px;
         }
 
-        p { color: var(--text); margin-bottom: 20px; font-weight: 300; }
-
-        /* Form Elements */
-        .form-group { margin-bottom: 20px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 5px; color: var(--primary); font-size: 0.9rem; }
-        
-        input[type="text"], select {
-            width: 100%; padding: 12px 15px; border-radius: 8px;
-            background: rgba(0,0,0,0.5); border: 1px solid var(--primary);
-            color: white; font-size: 1rem; outline: none; transition: 0.3s;
-        }
-        input[type="text"]:focus, select:focus { box-shadow: 0 0 15px rgba(0,255,204,0.5); }
-
-        /* Image Upload */
-        .upload-container {
-            display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;
-        }
-        .profile-preview {
-            width: 120px; height: 120px; border-radius: 50%;
-            border: 3px dashed var(--primary); background: rgba(0,0,0,0.5);
-            display: flex; justify-content: center; align-items: center;
-            overflow: hidden; margin-bottom: 15px; position: relative; cursor: pointer;
-        }
-        .profile-preview img { width: 100%; height: 100%; object-fit: cover; display: none; }
-        .profile-preview i { font-size: 2rem; color: var(--primary); }
-        input[type="file"] { display: none; }
-
-        /* Buttons */
         .btn {
-            background: linear-gradient(45deg, var(--primary), #0099ff);
-            border: none; padding: 12px 30px; border-radius: 30px;
-            color: #000; font-weight: 800; font-size: 1.1rem; cursor: pointer;
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
-            transition: all 0.3s ease; text-transform: uppercase; width: 100%; margin-top: 10px;
-        }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 0 30px rgba(0, 255, 204, 0.7); }
-
-        /* Game Screen */
-        #game-container {
-            position: absolute; width: 100vw; height: 100vh;
-            display: flex; justify-content: center; align-items: center;
-            background: #000; z-index: 5;
-        }
-        canvas {
-            border: 2px solid rgba(0,255,204,0.3); border-radius: 10px;
-            box-shadow: 0 0 30px rgba(0,255,204,0.1);
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 12px 24px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* HUD & UI */
-        .hud {
-            position: absolute; top: 20px; left: 20px; z-index: 20;
-            display: flex; align-items: center; background: var(--surface);
-            padding: 10px 20px; border-radius: 30px; border: 1px solid var(--primary);
+        .btn:hover:not(:disabled) {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 20px var(--primary-glow);
         }
-        .hud img { width: 40px; height: 40px; border-radius: 50%; margin-right: 15px; border: 2px solid var(--primary); }
-        .hud-info h3 { font-size: 1rem; color: #fff; margin: 0; }
-        .hud-info p { font-size: 0.8rem; color: var(--primary); margin: 0; }
+
+        .btn:disabled {
+            border-color: var(--text-muted);
+            color: var(--text-muted);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        /* --- Screen 1: Login & Avatar --- */
+        #screen-login { justify-content: center; align-items: center; }
         
-        .score-board {
-            position: absolute; top: 20px; right: 20px; z-index: 20;
-            background: var(--surface); padding: 10px 20px; border-radius: 30px;
-            border: 1px solid var(--secondary); color: #fff; font-size: 1.2rem; font-weight: bold;
+        .avatar-container {
+            display: flex; gap: 20px; margin: 30px 0;
+        }
+        
+        .avatar-card {
+            width: 120px; height: 150px;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            cursor: pointer; transition: 0.3s;
+            background: rgba(0,0,0,0.3);
+        }
+        
+        .avatar-card i { font-size: 3rem; margin-bottom: 15px; color: var(--text-muted); transition: 0.3s; }
+        .avatar-card span { font-weight: bold; color: var(--text-muted); }
+        
+        .avatar-card.selected {
+            border-color: var(--primary);
+            background: rgba(14, 165, 233, 0.1);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+        .avatar-card.selected i, .avatar-card.selected span { color: var(--primary); }
+
+        input.cyber-input {
+            width: 100%; padding: 15px; background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 8px;
+            color: white; font-family: 'Sarabun'; font-size: 1.1rem;
+            margin-bottom: 20px; outline: none; transition: 0.3s;
+        }
+        input.cyber-input:focus { border-color: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
+
+        /* --- Screen 2: Video Lesson --- */
+        #screen-lesson { justify-content: center; align-items: center; padding: 20px; }
+        .video-container {
+            width: 100%; max-width: 900px;
+            background: #000; border-radius: 12px;
+            overflow: hidden; border: 1px solid var(--primary);
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            position: relative;
+        }
+        /* Lock overlay to prevent clicking timeline */
+        .video-blocker {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 60px;
+            z-index: 10; background: transparent; 
+        }
+        
+        .progress-container {
+            width: 100%; max-width: 900px; height: 10px;
+            background: rgba(255,255,255,0.1); border-radius: 5px;
+            margin: 20px 0; overflow: hidden;
+        }
+        #video-progress {
+            height: 100%; width: 0%; background: var(--primary);
+            transition: width 0.5s linear;
+            box-shadow: 0 0 10px var(--primary);
         }
 
-        /* Visual Novel / Quiz Dialog */
-        #dialog-box {
-            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            width: 80%; max-width: 800px; padding: 30px; z-index: 30;
-            border-left: 5px solid var(--primary);
-        }
-        .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        /* --- Screen 3: Evaluation (Quiz) --- */
+        #screen-quiz { justify-content: center; align-items: center; }
+        .quiz-box { width: 100%; max-width: 800px; }
+        .question-text { font-size: 1.5rem; margin-bottom: 30px; line-height: 1.5; }
+        
+        .choice-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
         .choice-btn {
-            background: rgba(0,0,0,0.7); border: 1px solid var(--text);
-            color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.3s;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
+            padding: 20px; border-radius: 8px; color: white;
+            text-align: left; font-size: 1.1rem; font-family: 'Sarabun';
+            cursor: pointer; transition: 0.2s;
         }
-        .choice-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); }
+        .choice-btn:hover { background: rgba(14, 165, 233, 0.2); border-color: var(--primary); }
+        .choice-btn.correct { background: rgba(16, 185, 129, 0.2); border-color: var(--accent); }
+        .choice-btn.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--danger); }
 
-        /* Splash Screen Animation */
-        #splash-screen i { font-size: 5rem; color: var(--primary); margin-bottom: 20px; animation: pulse 2s infinite; }
-        @keyframes pulse {
-            0% { text-shadow: 0 0 10px var(--primary); transform: scale(1); }
-            50% { text-shadow: 0 0 40px var(--primary); transform: scale(1.1); }
-            100% { text-shadow: 0 0 10px var(--primary); transform: scale(1); }
+        /* HUD (Header) */
+        .hud {
+            position: absolute; top: 0; left: 0; width: 100%;
+            padding: 20px 40px; display: flex; justify-content: space-between;
+            align-items: center; z-index: 100; pointer-events: none;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
         }
+        .hud-profile { display: flex; align-items: center; gap: 15px; }
+        .hud-icon {
+            width: 50px; height: 50px; border-radius: 50%;
+            background: rgba(14, 165, 233, 0.2); border: 2px solid var(--primary);
+            display: flex; justify-content: center; align-items: center; font-size: 1.5rem;
+        }
+
     </style>
 </head>
 <body>
 
-    <!-- 1. Splash Screen -->
-    <div id="splash-screen" class="glass-panel active">
-        <i class="fa-solid fa-shield-halved"></i>
-        <h1>Cyber Defender</h1>
-        <p>The Digital Law & Ethics Awakens</p>
-        <div style="margin-top: 30px;">
-            <p style="font-size: 0.8rem;">Loading Secure Core...</p>
-            <div style="width: 100%; height: 5px; background: #333; border-radius: 5px; overflow: hidden;">
-                <div style="width: 100%; height: 100%; background: var(--primary); animation: load 2s ease-in-out forwards;"></div>
+    <!-- HUD Overlay (แสดงตลอดเวลาเมื่อเข้าระบบ) -->
+    <div id="hud" class="hud" style="opacity: 0;">
+        <div class="hud-profile">
+            <div class="hud-icon" id="hud-avatar"><i class="fa-solid fa-user"></i></div>
+            <div>
+                <div style="font-family: 'Orbitron'; color: var(--primary); font-weight: bold;" id="hud-name">AGENT NAME</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);" id="hud-class">CLASS DATA</div>
             </div>
+        </div>
+        <div style="font-family: 'Orbitron'; font-size: 1.2rem; color: var(--accent);">
+            SCORE: <span id="hud-score">0</span>
         </div>
     </div>
 
-    <!-- 2. Registration System -->
-    <div id="auth-screen" class="glass-panel hidden">
-        <h1>ID Registration</h1>
-        <p>สร้างประวัติเจ้าหน้าที่พิทักษ์ไซเบอร์ของคุณ</p>
+    <!-- 1. หน้าลงทะเบียนและเลือกตัวละคร -->
+    <div id="screen-login" class="screen active">
+        <div class="glass-panel" style="width: 100%; max-width: 600px; text-align: center;">
+            <h1 class="title-cyber">CYBER ACADEMY</h1>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">ระบบประเมินความรู้กฎหมายและจรรยาบรรณไซเบอร์</p>
+            
+            <input type="text" id="input-name" class="cyber-input" placeholder="กรอกชื่อ - นามสกุล">
+            <input type="text" id="input-class" class="cyber-input" placeholder="ระดับชั้น (เช่น ม.6/1)">
+
+            <h3 style="text-align: left; margin-bottom: 10px; color: var(--primary);">Select Your Agent:</h3>
+            <div class="avatar-container">
+                <div class="avatar-card selected" onclick="selectAvatar(this, 'fa-user-ninja')">
+                    <i class="fa-solid fa-user-ninja"></i>
+                    <span>Infiltrator</span>
+                </div>
+                <div class="avatar-card" onclick="selectAvatar(this, 'fa-user-astronaut')">
+                    <i class="fa-solid fa-user-astronaut"></i>
+                    <span>Net-Surfer</span>
+                </div>
+                <div class="avatar-card" onclick="selectAvatar(this, 'fa-user-secret')">
+                    <i class="fa-solid fa-user-secret"></i>
+                    <span>Defender</span>
+                </div>
+            </div>
+
+            <button class="btn" style="width: 100%;" onclick="login()">INITIALIZE SYSTEM <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- 2. หน้าบทเรียน (YouTube) ที่ห้ามข้าม -->
+    <div id="screen-lesson" class="screen">
+        <h2 class="title-cyber" style="font-size: 1.8rem;">MISSION BRIEFING</h2>
+        <p style="margin-bottom: 20px;">คำสั่ง: เจ้าหน้าที่ต้องศึกษาข้อมูลวิดีโอนี้ให้จบ 100% จึงจะสามารถทำแบบทดสอบได้ (ไม่อนุญาตให้ข้าม)</p>
         
-        <div class="upload-container">
-            <div class="profile-preview" onclick="document.getElementById('file-upload').click()">
-                <i class="fa-solid fa-camera" id="upload-icon"></i>
-                <img id="profile-img" src="" alt="Profile">
-            </div>
-            <input type="file" id="file-upload" accept="image/*" onchange="previewImage(event)">
-            <p style="font-size: 0.8rem; margin: 0;">คลิกเพื่ออัปโหลดรูปภาพ</p>
+        <div class="video-container">
+            <!-- ซ่อนปุ่มควบคุมด้วย controls=0 และ disablekb=1 -->
+            <div id="youtube-player"></div>
+            <!-- บล็อกการคลิกแถบเวลาด้านล่างของ YouTube -->
+            <div class="video-blocker"></div>
         </div>
 
-        <div class="form-group">
-            <label>ชื่อ-นามสกุล</label>
-            <input type="text" id="fullname" placeholder="ระบุชื่อจริงของคุณ">
+        <div class="progress-container">
+            <div id="video-progress"></div>
         </div>
-        <div class="form-group">
-            <label>ชื่อเล่น (Codename)</label>
-            <input type="text" id="nickname" placeholder="ระบุนามแฝง">
-        </div>
-        <div class="form-group">
-            <label>ระดับชั้นเรียน</label>
-            <select id="grade">
-                <option value="ม.4">มัธยมศึกษาปีที่ 4</option>
-                <option value="ม.5">มัธยมศึกษาปีที่ 5</option>
-                <option value="ม.6">มัธยมศึกษาปีที่ 6</option>
-            </select>
-        </div>
-        <button class="btn" onclick="registerUser()">เข้าสู่ระบบเครือข่าย</button>
+        <p id="video-status" style="color: var(--danger); margin-bottom: 15px; font-family: 'Orbitron';">VIDEO IN PROGRESS... PLEASE WATCH</p>
+
+        <button id="btn-start-quiz" class="btn" disabled onclick="startQuiz()">
+            <i class="fa-solid fa-lock" id="btn-lock-icon"></i> PROCEED TO EVALUATION
+        </button>
     </div>
 
-    <!-- 3. Main Menu -->
-    <div id="main-menu" class="glass-panel hidden">
-        <img id="menu-profile" src="" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 10px;">
-        <h2 style="color: var(--primary); margin-bottom: 5px;">ยินดีต้อนรับ Agent <span id="menu-name"></span></h2>
-        <p>ระดับชั้น: <span id="menu-grade"></span></p>
-        <hr style="border: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
-        <button class="btn" style="margin-bottom: 15px;" onclick="startGame()">Start Mission</button>
-        <button class="btn" style="background: transparent; border: 2px solid var(--text); color: var(--text);" onclick="alert('ระบบอันดับอยู่ระหว่างการพัฒนา')"><i class="fa-solid fa-trophy"></i> Leaderboard</button>
-    </div>
-
-    <!-- 4. Game Screen -->
-    <div id="game-screen" class="hidden">
-        <!-- HUD -->
-        <div class="hud">
-            <img id="hud-profile" src="" alt="Profile">
-            <div class="hud-info">
-                <h3 id="hud-name">Agent</h3>
-                <p>Status: <span style="color: #00ffcc;">Online</span></p>
+    <!-- 3. หน้าแบบทดสอบ -->
+    <div id="screen-quiz" class="screen">
+        <div class="glass-panel quiz-box">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-family: 'Orbitron'; color: var(--primary);">
+                <span>THREAT ANALYSIS</span>
+                <span>DATA: <span id="q-current">1</span>/<span id="q-total">3</span></span>
             </div>
-        </div>
-        <div class="score-board">
-            Score: <span id="game-score">0</span>
-        </div>
-
-        <!-- Canvas Game -->
-        <div id="game-container">
-            <canvas id="gameCanvas" width="1024" height="768"></canvas>
-        </div>
-
-        <!-- Quiz Dialog Box -->
-        <div id="dialog-box" class="glass-panel hidden" style="position: absolute; z-index: 30;">
-            <h2 id="scenario-title" style="color: var(--primary); text-align: left; margin-bottom: 10px;">Warning: Cyber Incident</h2>
-            <p id="scenario-text" style="font-size: 1.1rem; text-align: left; color: #fff;">พบผู้ใช้คอมพิวเตอร์ลืมล็อกเอาท์ออกจากระบบ คุณจะจัดการอย่างไร?</p>
-            <div class="choices" id="choices-container">
-                <!-- Choices injected by JS -->
+            
+            <h2 class="question-text" id="question-text">Loading Data...</h2>
+            
+            <div class="choice-grid" id="choice-grid">
+                <!-- Choices generated here -->
             </div>
         </div>
     </div>
 
-    <!-- JavaScript (Advanced OOP Engine) -->
+    <!-- 4. หน้าสรุปผล -->
+    <div id="screen-result" class="screen" style="justify-content: center; align-items: center;">
+        <div class="glass-panel" style="text-align: center; max-width: 600px;">
+            <i class="fa-solid fa-shield-check" style="font-size: 5rem; color: var(--accent); margin-bottom: 20px;"></i>
+            <h1 class="title-cyber" style="color: var(--accent);">EVALUATION COMPLETE</h1>
+            <p style="font-size: 1.2rem; margin: 20px 0;">คะแนนภารกิจของคุณคือ</p>
+            <h1 style="font-size: 4rem; color: white; margin-bottom: 20px;"><span id="final-score">0</span></h1>
+            <p id="final-message" style="margin-bottom: 30px; color: var(--text-muted);"></p>
+            <button class="btn" onclick="location.reload()">REBOOT SYSTEM</button>
+        </div>
+    </div>
+
+    <!-- โหลด YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // --- 1. System & State Management ---
-        const UI = {
-            switchScreen: (hideId, showId) => {
-                document.getElementById(hideId).classList.replace('active', 'hidden');
-                setTimeout(() => {
-                    document.getElementById(showId).classList.replace('hidden', 'active');
-                }, 500);
-            }
-        };
-
-        let userData = { name: '', nickname: '', grade: '', profilePic: '' };
-
-        // Splash screen to Auth
-        setTimeout(() => { UI.switchScreen('splash-screen', 'auth-screen'); }, 2500);
-
-        // Profile Image Preview (FileReader API)
-        function previewImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    userData.profilePic = e.target.result;
-                    document.getElementById('profile-img').src = userData.profilePic;
-                    document.getElementById('profile-img').style.display = 'block';
-                    document.getElementById('upload-icon').style.display = 'none';
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        // Register User Logic
-        function registerUser() {
-            userData.name = document.getElementById('fullname').value;
-            userData.nickname = document.getElementById('nickname').value;
-            userData.grade = document.getElementById('grade').value;
-
-            if(!userData.name || !userData.nickname) {
-                alert("กรุณากรอกข้อมูลให้ครบถ้วน!"); return;
-            }
-            if(!userData.profilePic) {
-                // Default placeholder
-                userData.profilePic = "https://via.placeholder.com/150/1f2833/00ffcc?text=Agent"; 
-            }
-
-            // Set Data to Menu
-            document.getElementById('menu-name').innerText = userData.nickname;
-            document.getElementById('menu-grade').innerText = userData.grade;
-            document.getElementById('menu-profile').src = userData.profilePic;
-
-            UI.switchScreen('auth-screen', 'main-menu');
-        }
-
-        // --- 2. Game Data (Cyber Ethics & Law) ---
-        const scenarios = [
+        // --- 1. State Management ---
+        let userData = { name: '', grade: '', avatarClass: 'fa-user-ninja', score: 0 };
+        
+        // --- ข้อมูลแบบทดสอบ ---
+        const quizData = [
             {
-                title: "กรณีละเมิดลิขสิทธิ์ (Copyright)",
-                text: "คุณพบเว็บไซต์ที่แจกโปรแกรมเถื่อน (Crack) และภาพยนตร์ละเมิดลิขสิทธิ์ให้โหลดฟรี ตาม พรบ.คอมพิวเตอร์ การกระทำนี้ผิดหรือไม่?",
+                question: "ข้อใดคือการกระทำที่ผิด พ.ร.บ.คอมพิวเตอร์ อย่างชัดเจนที่สุด?",
                 choices: [
-                    { text: "ผิด เพราะนำเข้าข้อมูลที่ละเมิดลิขสิทธิ์ผู้อื่น", correct: true },
-                    { text: "ไม่ผิด เพราะไม่ได้บังคับให้ใครโหลด", correct: false },
-                    { text: "ไม่ผิด เพราะเป็นการแบ่งปันความรู้", correct: false },
-                    { text: "ผิดเฉพาะคนโหลด คนแจกไม่ผิด", correct: false }
-                ]
+                    "ตั้งรหัสผ่าน Facebook ยากเกินไปจนตัวเองลืม",
+                    "กด Like รูปภาพดาราที่ชื่นชอบ",
+                    "ใช้รหัสผ่านของเพื่อนล็อกอินเข้าสู่ระบบโดยที่เพื่อนไม่รู้",
+                    "บล็อกข้อความจากคนแปลกหน้า"
+                ],
+                correct: 2
             },
             {
-                title: "Fake News (ข่าวปลอม)",
-                text: "เพื่อนของคุณแชร์ข่าวปลอมเกี่ยวกับการรักษาโรคที่ไม่มีแหล่งอ้างอิง คุณควรทำอย่างไร?",
+                question: "หากพบเจอข่าวสารที่น่าตกใจบนโซเชียลมีเดีย ควรทำสิ่งใดเป็นอันดับแรก?",
                 choices: [
-                    { text: "แชร์ต่อเพื่อให้คนระวังตัว", correct: false },
-                    { text: "ด่าเพื่อนในคอมเมนต์ทันที", correct: false },
-                    { text: "แจ้งเตือนเพื่อนอย่างสุภาพพร้อมส่งลิงก์ข้อมูลที่ถูกต้อง", correct: true },
-                    { text: "ปล่อยผ่านไป ไม่ใช่เรื่องของเรา", correct: false }
-                ]
+                    "แชร์ต่อให้เร็วที่สุดเพื่อให้คนอื่นรู้",
+                    "ตรวจสอบแหล่งที่มาของข่าวและความน่าเชื่อถือก่อน",
+                    "คอมเมนต์ด่าทอต้นโพสต์ทันที",
+                    "บันทึกรูปภาพไว้ข่มขู่เพื่อน"
+                ],
+                correct: 1
             },
             {
-                title: "จรรยาบรรณการเข้าถึงข้อมูล",
-                text: "คุณบังเอิญเห็นเพื่อนพิมพ์รหัสผ่าน Facebook และเพื่อนลืมล็อกเอาท์ คุณจะทำอย่างไร?",
+                question: "การกลั่นแกล้งบนโลกออนไลน์ (Cyberbullying) ส่งผลกระทบอย่างไร?",
                 choices: [
-                    { text: "แอบเข้าไปโพสต์แกล้งเพื่อน", correct: false },
-                    { text: "ล็อกเอาท์ออกจากระบบให้เพื่อนทันที", correct: true },
-                    { text: "แอบอ่านแชทส่วนตัวของเพื่อน", correct: false },
-                    { text: "จดรหัสผ่านไว้ใช้คราวหลัง", correct: false }
-                ]
+                    "เป็นการฝึกความอดทนให้ผู้ถูกแกล้ง",
+                    "ไม่มีผลกระทบใดๆ เพราะเป็นแค่ตัวหนังสือ",
+                    "สร้างความสนุกสนานในหมู่เพื่อนฝูง",
+                    "สร้างบาดแผลทางจิตใจและอาจนำไปสู่ภาวะซึมเศร้าของผู้ถูกแกล้ง"
+                ],
+                correct: 3
             }
         ];
 
-        // --- 3. Advanced Game Engine (OOP Canvas) ---
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        let gameEngine;
+        let currentQuestion = 0;
 
-        class InputManager {
-            constructor() {
-                this.keys = {};
-                window.addEventListener('keydown', e => this.keys[e.code] = true);
-                window.addEventListener('keyup', e => this.keys[e.code] = false);
-            }
-            isKeyPressed(code) { return this.keys[code] === true; }
+        // --- 2. UI Functions ---
+        function switchScreen(hideId, showId) {
+            document.getElementById(hideId).classList.remove('active');
+            setTimeout(() => {
+                document.getElementById(showId).classList.add('active');
+            }, 600);
         }
 
-        class Player {
-            constructor(x, y) {
-                this.x = x; this.y = y;
-                this.speed = 5; this.size = 20;
-                this.color = '#00ffcc';
-                this.pulse = 0;
-            }
-            update(input) {
-                if (input.isKeyPressed('KeyW') || input.isKeyPressed('ArrowUp')) this.y -= this.speed;
-                if (input.isKeyPressed('KeyS') || input.isKeyPressed('ArrowDown')) this.y += this.speed;
-                if (input.isKeyPressed('KeyA') || input.isKeyPressed('ArrowLeft')) this.x -= this.speed;
-                if (input.isKeyPressed('KeyD') || input.isKeyPressed('ArrowRight')) this.x += this.speed;
-
-                // Canvas boundaries
-                this.x = Math.max(this.size, Math.min(canvas.width - this.size, this.x));
-                this.y = Math.max(this.size, Math.min(canvas.height - this.size, this.y));
-                this.pulse += 0.1;
-            }
-            draw(ctx) {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.shadowBlur = 20 + Math.sin(this.pulse) * 10;
-                ctx.shadowColor = this.color;
-                ctx.fill();
-                ctx.closePath();
-                ctx.shadowBlur = 0; // reset
-            }
+        function selectAvatar(element, iconClass) {
+            document.querySelectorAll('.avatar-card').forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+            userData.avatarClass = iconClass;
         }
 
-        class ServerNode {
-            constructor(x, y, data) {
-                this.x = x; this.y = y; this.size = 30;
-                this.data = data; this.color = '#b100ff';
-                this.active = true;
-            }
-            draw(ctx) {
-                if(!this.active) return;
-                ctx.fillStyle = this.color;
-                ctx.fillRect(this.x - this.size/2, this.y - this.size/2, this.size, this.size);
-                ctx.strokeStyle = '#fff';
-                ctx.lineWidth = 2;
-                ctx.strokeRect(this.x - this.size/2, this.y - this.size/2, this.size, this.size);
-                
-                // Tech decor
-                ctx.fillStyle = '#fff';
-                ctx.fillRect(this.x - 10, this.y - 5, 20, 2);
-                ctx.fillRect(this.x - 10, this.y + 3, 20, 2);
-            }
-            checkCollision(player) {
-                if(!this.active) return false;
-                const dist = Math.hypot(player.x - this.x, player.y - this.y);
-                return dist < player.size + this.size/2;
-            }
-        }
-
-        class GameEngine {
-            constructor() {
-                this.input = new InputManager();
-                this.player = new Player(canvas.width/2, canvas.height/2);
-                this.nodes = [];
-                this.score = 0;
-                this.isPaused = false;
-                this.initNodes();
-            }
-            initNodes() {
-                scenarios.forEach((scenario, index) => {
-                    // Random positions
-                    const x = 100 + Math.random() * (canvas.width - 200);
-                    const y = 100 + Math.random() * (canvas.height - 200);
-                    this.nodes.push(new ServerNode(x, y, scenario));
-                });
-            }
-            update() {
-                if (this.isPaused) return;
-                this.player.update(this.input);
-
-                // Check collisions
-                this.nodes.forEach(node => {
-                    if (node.checkCollision(this.player)) {
-                        this.triggerQuiz(node);
-                    }
-                });
-            }
-            draw() {
-                // Cyberpunk Grid Background
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.strokeStyle = "rgba(0, 255, 204, 0.1)";
-                ctx.lineWidth = 1;
-                for(let i=0; i<canvas.width; i+=50) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,canvas.height); ctx.stroke(); }
-                for(let j=0; j<canvas.height; j+=50) { ctx.beginPath(); ctx.moveTo(0,j); ctx.lineTo(canvas.width,j); ctx.stroke(); }
-
-                this.nodes.forEach(node => node.draw(ctx));
-                this.player.draw(ctx);
-            }
-            loop() {
-                this.update();
-                this.draw();
-                requestAnimationFrame(() => this.loop());
-            }
-            triggerQuiz(node) {
-                this.isPaused = true;
-                node.active = false; // Disable node
-
-                const dialog = document.getElementById('dialog-box');
-                document.getElementById('scenario-title').innerText = node.data.title;
-                document.getElementById('scenario-text').innerText = node.data.text;
-                
-                const choicesContainer = document.getElementById('choices-container');
-                choicesContainer.innerHTML = '';
-                
-                node.data.choices.forEach(choice => {
-                    const btn = document.createElement('button');
-                    btn.className = 'choice-btn';
-                    btn.innerText = choice.text;
-                    btn.onclick = () => this.handleAnswer(choice.correct, dialog);
-                    choicesContainer.appendChild(btn);
-                });
-
-                dialog.classList.remove('hidden');
-                dialog.classList.add('active');
-            }
-            handleAnswer(isCorrect, dialogBox) {
-                if(isCorrect) {
-                    this.score += 100;
-                    document.getElementById('game-score').innerText = this.score;
-                    // Add Sound effect logic here later
-                    alert("ทำได้ดีมาก Agent! คุณเข้าใจกฎหมายและจรรยาบรรณไซเบอร์");
-                } else {
-                    this.score -= 50;
-                    document.getElementById('game-score').innerText = this.score;
-                    alert("คำตอบผิด! ระวังการละเมิดกฎหมาย พรบ.คอมพิวเตอร์");
-                }
-                
-                dialogBox.classList.replace('active', 'hidden');
-                setTimeout(() => { this.isPaused = false; }, 500);
-
-                // Check Game Over (All nodes deactivated)
-                if(this.nodes.every(n => !n.active)) {
-                    setTimeout(() => {
-                        alert(`ภารกิจเสร็จสิ้น!\nAgent: ${userData.nickname}\nคะแนนรวม: ${this.score}`);
-                        location.reload();
-                    }, 1000);
-                }
-            }
-        }
-
-        // Start Game Flow
-        function startGame() {
-            UI.switchScreen('main-menu', 'game-screen');
-            // Setup HUD
-            document.getElementById('hud-profile').src = userData.profilePic;
-            document.getElementById('hud-name').innerText = userData.nickname;
+        function login() {
+            const name = document.getElementById('input-name').value;
+            const grade = document.getElementById('input-class').value;
             
-            // Start Engine
-            gameEngine = new GameEngine();
-            gameEngine.loop();
+            if(!name || !grade) {
+                alert("SYSTEM ERROR: กรุณากรอกข้อมูลให้ครบถ้วน");
+                return;
+            }
+
+            userData.name = name;
+            userData.grade = grade;
+
+            // Update HUD
+            document.getElementById('hud-name').innerText = userData.name.toUpperCase();
+            document.getElementById('hud-class').innerText = userData.grade;
+            document.getElementById('hud-avatar').innerHTML = `<i class="fa-solid ${userData.avatarClass}"></i>`;
+            document.getElementById('hud').style.opacity = 1;
+
+            switchScreen('screen-login', 'screen-lesson');
+            
+            // สั่งเล่นวิดีโอ (ถ้า API โหลดเสร็จแล้ว)
+            if(player && typeof player.playVideo === 'function') {
+                player.playVideo();
+            }
         }
 
-        /* 
-        ========================================================================================
-        คำแนะนำสำหรับการต่อยอดให้ถึง 2,000 บรรทัด (สำหรับ Senior Project)
-        ========================================================================================
-        1. ให้แยกไฟล์เป็น index.html, style.css, script.js
-        2. เพิ่มคลาส ParticleSystem เข้าไปใน GameEngine เพื่อสร้างเอฟเฟกต์ระเบิดตอนตอบถูก
-        3. เพิ่มระบบ เสียง (Audio Context) สำหรับเสียง BGM และ SFX
-        4. เพิ่ม Array ของคำถาม (scenarios) ให้มีประมาณ 30-50 ข้อ (แค่ข้อมูลก็ยาวแล้ว)
-        5. เพิ่มศัตรู (NPC Hacker) ให้คลาส Player ต้องวิ่งหนี (AI Pathfinding)
-        6. บันทึกคะแนนลง localStorage เพื่อทำตาราง Leaderboard ถาวรในเบราว์เซอร์
-        ========================================================================================
-        */
+        // --- 3. YouTube Player Logic (บังคับดูห้ามข้าม) ---
+        let player;
+        let videoDuration = 0;
+        let progressInterval;
+
+        // ฟังก์ชันนี้ถูกเรียกอัตโนมัติโดย YouTube API
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '500',
+                width: '100%',
+                /* 
+                  เปลี่ยน Video ID ตรงนี้! 
+                  หาคลิปจากยูทูป เช่น https://www.youtube.com/watch?v=XXXXXXXXXXX 
+                  ให้เอาตัวอักษร XXXXXXXXXXX มาใส่แทน
+                */
+                videoId: 'h0uWk_K8R3A', // <--- ตัวอย่างคลิปกฎหมาย พรบ.คอม สั้นๆ
+                playerVars: {
+                    'controls': 0,      // ซ่อนปุ่มควบคุม
+                    'disablekb': 1,     // ปิดคีย์บอร์ดช็อตคัต
+                    'rel': 0,           // ไม่โชว์คลิปแนะนำมั่วๆตอนจบ
+                    'modestbranding': 1,
+                    'fs': 0             // ปิดปุ่มเต็มจอ
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            videoDuration = player.getDuration();
+        }
+
+        function onPlayerStateChange(event) {
+            // เมื่อวิดีโอกำลังเล่น
+            if (event.data == YT.PlayerState.PLAYING) {
+                progressInterval = setInterval(updateProgressBar, 500);
+            } else {
+                clearInterval(progressInterval);
+            }
+
+            // เมื่อวิดีโอเล่นจบ (ENDED = 0)
+            if (event.data == YT.PlayerState.ENDED) {
+                unlockQuiz();
+            }
+        }
+
+        function updateProgressBar() {
+            if(player && player.getCurrentTime) {
+                let current = player.getCurrentTime();
+                let percent = (current / videoDuration) * 100;
+                document.getElementById('video-progress').style.width = percent + '%';
+            }
+        }
+
+        function unlockQuiz() {
+            document.getElementById('video-progress').style.width = '100%';
+            
+            const btn = document.getElementById('btn-start-quiz');
+            const status = document.getElementById('video-status');
+            
+            btn.disabled = false;
+            btn.style.borderColor = 'var(--accent)';
+            btn.style.color = 'var(--accent)';
+            document.getElementById('btn-lock-icon').className = 'fa-solid fa-unlock';
+            
+            status.innerText = "DATA RECEIVED. YOU MAY PROCEED.";
+            status.style.color = 'var(--accent)';
+        }
+
+        // --- 4. Quiz Logic ---
+        function startQuiz() {
+            // หยุดคลิปเผื่อไว้
+            if(player && typeof player.pauseVideo === 'function') player.pauseVideo();
+            
+            switchScreen('screen-lesson', 'screen-quiz');
+            document.getElementById('q-total').innerText = quizData.length;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const data = quizData[currentQuestion];
+            document.getElementById('q-current').innerText = currentQuestion + 1;
+            document.getElementById('question-text').innerText = data.question;
+            
+            const grid = document.getElementById('choice-grid');
+            grid.innerHTML = ''; // Clear old
+
+            data.choices.forEach((choice, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.innerText = choice;
+                btn.onclick = () => checkAnswer(btn, index, data.correct);
+                grid.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(btn, selected, correct) {
+            // ป้องกันกดซ้ำ
+            const allBtns = document.querySelectorAll('.choice-btn');
+            allBtns.forEach(b => b.style.pointerEvents = 'none');
+
+            if (selected === correct) {
+                btn.classList.add('correct');
+                userData.score += 10;
+                document.getElementById('hud-score').innerText = userData.score;
+            } else {
+                btn.classList.add('wrong');
+                // โชว์ข้อถูกด้วย
+                allBtns[correct].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < quizData.length) {
+                    loadQuestion();
+                } else {
+                    endGame();
+                }
+            }, 1500);
+        }
+
+        // --- 5. End Game ---
+        function endGame() {
+            document.getElementById('hud').style.opacity = 0;
+            switchScreen('screen-quiz', 'screen-result');
+            
+            const maxScore = quizData.length * 10;
+            document.getElementById('final-score').innerText = userData.score + " / " + maxScore;
+            
+            const msg = document.getElementById('final-message');
+            if(userData.score === maxScore) {
+                msg.innerText = "EXCELLENT WORK, AGENT! ข้อมูลปลอดภัย 100%";
+                msg.style.color = 'var(--accent)';
+            } else if(userData.score > 0) {
+                msg.innerText = "MISSION ACCOMPLISHED. แต่ยังมีช่องโหว่ที่ต้องพัฒนา";
+            } else {
+                msg.innerText = "MISSION FAILED. ระบบถูกเจาะ กรุณาศึกษาบทเรียนใหม่";
+                msg.style.color = 'var(--danger)';
+            }
+        }
     </script>
 </body>
 </html>
