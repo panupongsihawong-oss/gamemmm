@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เกมพัฒนาโครงงานทางคอมพิวเตอร์</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            font-family: 'Kanit', sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #game-wrapper {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 2px solid #00ffcc;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #00ffcc;
+            overflow: hidden;
+        }
+
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #1a1a2e;
+            z-index: 10;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        h1 { color: #00ffcc; text-shadow: 0 0 10px #00ffcc; }
+        h2 { color: #ffeb3b; }
+        
+        .content-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            text-align: left;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 25px;
+            font-size: 18px;
+            font-family: 'Kanit', sans-serif;
+            background-color: #00ffcc;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #00b38f;
+            transform: scale(1.05);
+        }
+
+        canvas {
+            display: block;
+        }
+
+        #ui-layer {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        #quiz-screen {
+            background-color: rgba(15, 32, 39, 0.95);
+        }
+
+        .choice-btn {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            background-color: #2c5364;
+            color: #fff;
+            border: 1px solid #00ffcc;
+        }
+
+        .choice-btn:hover {
+            background-color: #00ffcc;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+<div id="game-wrapper">
+    <!-- UI ของเกม (คะแนน) -->
+    <div id="ui-layer" class="hidden">
+        คะแนน: <span id="score">0</span> / 5
+    </div>
+
+    <!-- หน้าจอความรู้ก่อนเริ่มเกม -->
+    <div id="intro-screen" class="screen">
+        <h1>ภารกิจนักพัฒนาโครงงาน (Project Dev Quest)</h1>
+        <div class="content-box">
+            <h3>เนื้อหาก่อนเรียน: ขั้นตอนการพัฒนาโครงงานคอมพิวเตอร์</h3>
+            <p>การพัฒนาโครงงานคอมพิวเตอร์อย่างเป็นระบบ มีหลักการคล้ายกับวงจรการพัฒนาระบบ (SDLC - Software Development Life Cycle) ประกอบด้วย 6 ขั้นตอนสำคัญ:</p>
+            <ul>
+                <li><b>1. คัดเลือกหัวข้อ:</b> หาปัญหาหรือความสนใจที่อยากแก้</li>
+                <li><b>2. ศึกษาค้นคว้า:</b> รวบรวมข้อมูล ทฤษฎี และงานวิจัยที่เกี่ยวข้อง</li>
+                <li><b>3. จัดทำข้อเสนอ:</b> วางแผนและเขียนเค้าโครงโครงงาน</li>
+                <li><b>4. พัฒนาโครงงาน:</b> ลงมือเขียนโปรแกรม หรือสร้างชิ้นงาน</li>
+                <li><b>5. ทดสอบและแก้ไข:</b> หาข้อผิดพลาด (Bug) และปรับปรุงให้สมบูรณ์</li>
+                <li><b>6. จัดทำรายงานและนำเสนอ:</b> สรุปผลและเผยแพร่ผลงาน</li>
+            </ul>
+        </div>
+        <p><i>วิธีเล่น: ใช้ปุ่มลูกศร (Arrow Keys) บนคีย์บอร์ดเพื่อบังคับหุ่นยนต์ไปเก็บ Data Core (วงกลมสีเหลือง) เพื่อทำแบบทดสอบ</i></p>
+        <button onclick="startGame()">เริ่มเล่นเกม</button>
+    </div>
+
+    <!-- ส่วนของพื้นที่เกม -->
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+    <!-- หน้าจอแบบทดสอบระหว่างเกม -->
+    <div id="quiz-screen" class="screen hidden">
+        <h2 id="question-text">คำถามจะแสดงที่นี่</h2>
+        <div id="choices-container">
+            <!-- ปุ่มตัวเลือกจะถูกสร้างอัตโนมัติ -->
+        </div>
+    </div>
+
+    <!-- หน้าจอสิ้นสุดเกม -->
+    <div id="end-screen" class="screen hidden">
+        <h1>จบภารกิจ!</h1>
+        <h2>คุณทำคะแนนได้: <span id="final-score">0</span> / 5</h2>
+        <p id="end-message"></p>
+        <button onclick="location.reload()">เล่นอีกครั้ง</button>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // ตัวแปรควบคุมหน้าจอ
+    const introScreen = document.getElementById('intro-screen');
+    const quizScreen = document.getElementById('quiz-screen');
+    const endScreen = document.getElementById('end-screen');
+    const uiLayer = document.getElementById('ui-layer');
+    const scoreElement = document.getElementById('score');
+
+    // ตัวแปรเกม
+    let score = 0;
+    let gameLoop;
+    let isPaused = false;
+    let currentQuizIndex = 0;
+
+    // ข้อมูลผู้เล่น (หุ่นยนต์)
+    const player = {
+        x: 50,
+        y: 50,
+        size: 30,
+        speed: 4,
+        dx: 0,
+        dy: 0,
+        color: '#00ffcc'
+    };
+
+    // คำถามแบบทดสอบ
+    const quizzes = [
+        {
+            question: "ขั้นตอนแรกสุดในการทำโครงงานคอมพิวเตอร์คืออะไร?",
+            choices: ["เขียนโปรแกรม", "คัดเลือกหัวข้อที่สนใจ", "จัดทำรายงาน", "ทดสอบระบบ"],
+            answer: 1
+        },
+        {
+            question: "การศึกษาทฤษฎี งานวิจัย และเทคโนโลยีที่เกี่ยวข้อง ตรงกับขั้นตอนใด?",
+            choices: ["ศึกษาค้นคว้า", "จัดทำข้อเสนอโครงงาน", "ทดสอบและแก้ไข", "จัดทำรายงาน"],
+            answer: 0
+        },
+        {
+            question: "หลักการ SDLC (Software Development Life Cycle) มีความสำคัญอย่างไรต่อโครงงาน?",
+            choices: ["ทำให้โปรแกรมสวยขึ้น", "ลดต้นทุนการซื้อคอมพิวเตอร์", "ช่วยให้การพัฒนาระบบเป็นขั้นตอนและมีประสิทธิภาพ", "ใช้แทนการเขียนโค้ดได้เลย"],
+            answer: 2
+        },
+        {
+            question: "หากโปรแกรมที่นักเรียนเขียนมีข้อผิดพลาด (Bug) ควรกลับไปเน้นกระบวนการใดมากที่สุด?",
+            choices: ["นำเสนอใหม่", "เปลี่ยนหัวข้อโครงงาน", "ทดสอบและแก้ไข (Testing)", "จัดทำข้อเสนอใหม่"],
+            answer: 2
+        },
+        {
+            question: "ขั้นตอนใดที่ช่วยให้ผู้อื่นเข้าใจถึงวิธีการทำงานและประโยชน์ของโครงงานเราได้ดีที่สุด?",
+            choices: ["คัดเลือกหัวข้อ", "พัฒนาโครงงาน (Coding)", "จัดทำรายงานและนำเสนอ", "หาข้อผิดพลาด"],
+            answer: 2
+        }
+    ];
+
+    // ไอเทมที่ต้องเก็บ (Data Cores)
+    let collectibles = [];
+
+    // สร้างไอเทมแบบสุ่ม
+    function spawnCollectible() {
+        collectibles = [{
+            x: Math.random() * (canvas.width - 60) + 30,
+            y: Math.random() * (canvas.height - 60) + 30,
+            radius: 15,
+            color: '#ffeb3b',
+            quizData: quizzes[currentQuizIndex]
+        }];
+    }
+
+    // จัดการปุ่มกดคีย์บอร์ด
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'd') player.dx = player.speed;
+        if (e.key === 'ArrowLeft' || e.key === 'a') player.dx = -player.speed;
+        if (e.key === 'ArrowUp' || e.key === 'w') player.dy = -player.speed;
+        if (e.key === 'ArrowDown' || e.key === 's') player.dy = player.speed;
+    });
+
+    document.addEventListener('keyup', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'd' || e.key === 'a') player.dx = 0;
+        if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'w' || e.key === 's') player.dy = 0;
+    });
+
+    // เริ่มเกม
+    function startGame() {
+        introScreen.classList.add('hidden');
+        uiLayer.classList.remove('hidden');
+        spawnCollectible();
+        isPaused = false;
+        update();
+    }
+
+    // เคลียร์หน้าจอ
+    function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // วาดพื้นหลัง Grid ให้ดูเป็นแนวดิจิทัล
+        ctx.strokeStyle = "rgba(255,255,255,0.05)";
+        ctx.lineWidth = 1;
+        for(let i=0; i<canvas.width; i+=40) {
+            ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,canvas.height); ctx.stroke();
+        }
+        for(let j=0; j<canvas.height; j+=40) {
+            ctx.beginPath(); ctx.moveTo(0,j); ctx.lineTo(canvas.width,j); ctx.stroke();
+        }
+    }
+
+    // วาดผู้เล่น
+    function drawPlayer() {
+        ctx.fillStyle = player.color;
+        // วาดตัวหุ่นยนต์สี่เหลี่ยม
+        ctx.fillRect(player.x, player.y, player.size, player.size);
+        // วาดตาสองข้าง
+        ctx.fillStyle = '#000';
+        ctx.fillRect(player.x + 5, player.y + 5, 5, 5);
+        ctx.fillRect(player.x + 20, player.y + 5, 5, 5);
+    }
+
+    // วาดไอเทม
+    function drawCollectibles() {
+        collectibles.forEach(item => {
+            ctx.beginPath();
+            ctx.arc(item.x, item.y, item.radius, 0, Math.PI * 2);
+            ctx.fillStyle = item.color;
+            ctx.fill();
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = item.color;
+            ctx.closePath();
+            ctx.shadowBlur = 0; // reset shadow
+        });
+    }
+
+    // แสดงคำถาม
+    function showQuiz(quiz) {
+        isPaused = true;
+        quizScreen.classList.remove('hidden');
+        document.getElementById('question-text').innerText = quiz.question;
+        
+        const choicesContainer = document.getElementById('choices-container');
+        choicesContainer.innerHTML = ''; // เคลียร์ปุ่มเก่า
+        
+        quiz.choices.forEach((choice, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'choice-btn';
+            btn.innerText = choice;
+            btn.onclick = () => checkAnswer(index, quiz.answer);
+            choicesContainer.appendChild(btn);
+        });
+    }
+
+    // ตรวจคำตอบ
+    function checkAnswer(selectedIndex, correctIndex) {
+        if (selectedIndex === correctIndex) {
+            score++;
+            scoreElement.innerText = score;
+            alert("ถูกต้อง! เก่งมากครับ");
+        } else {
+            alert("ผิดครับ! ลองทบทวนเนื้อหาดูใหม่นะ");
+        }
+
+        currentQuizIndex++;
+        quizScreen.classList.add('hidden');
+        collectibles = []; // ลบไอเทมที่เพิ่งเก็บ
+
+        if (currentQuizIndex < quizzes.length) {
+            spawnCollectible(); // สร้างข้อต่อไป
+            isPaused = false;
+            update();
+        } else {
+            endGame(); // จบเกมถ้าครบทุกข้อ
+        }
+    }
+
+    // จบเกม
+    function endGame() {
+        isPaused = true;
+        uiLayer.classList.add('hidden');
+        endScreen.classList.remove('hidden');
+        document.getElementById('final-score').innerText = score;
+        
+        const msg = document.getElementById('end-message');
+        if(score === 5) msg.innerText = "ยอดเยี่ยม! คุณเข้าใจการทำโครงงานได้อย่างถ่องแท้";
+        else if(score >= 3) msg.innerText = "ทำได้ดี! แต่ยังสามารถกลับไปทบทวนเพิ่มเติมได้นะ";
+        else msg.innerText = "พยายามเข้า! ลองอ่านเนื้อหาก่อนเรียนอีกครั้งและสู้ใหม่นะ";
+    }
+
+    // อัปเดตการเคลื่อนไหว
+    function movePlayer() {
+        player.x += player.dx;
+        player.y += player.dy;
+
+        // ป้องกันทะลุขอบจอ
+        if (player.x < 0) player.x = 0;
+        if (player.x + player.size > canvas.width) player.x = canvas.width - player.size;
+        if (player.y < 0) player.y = 0;
+        if (player.y + player.size > canvas.height) player.y = canvas.height - player.size;
+    }
+
+    // ตรวจจับการชน
+    function checkCollision() {
+        collectibles.forEach((item, index) => {
+            // หาจุดกึ่งกลางของผู้เล่น
+            const playerCenterX = player.x + player.size / 2;
+            const playerCenterY = player.y + player.size / 2;
+            
+            // ระยะห่างระหว่างผู้เล่นและไอเทม
+            const dist = Math.hypot(playerCenterX - item.x, playerCenterY - item.y);
+            
+            if (dist < player.size / 2 + item.radius) {
+                showQuiz(item.quizData);
+            }
+        });
+    }
+
+    // Loop ของเกม
+    function update() {
+        if (isPaused) return;
+
+        clearCanvas();
+        movePlayer();
+        drawCollectibles();
+        drawPlayer();
+        checkCollision();
+
+        requestAnimationFrame(update);
+    }
+</script>
+
+</body>
+</html>
