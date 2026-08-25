@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberGuard Thailand | Senior Project Master Edition</title>
+    <title>CyberRunner Thailand | Ultimate 3D Senior Project</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -23,7 +23,6 @@
 
         body {
             font-family: 'Prompt', sans-serif;
-            /* พื้นหลังสว่างสดใส สวยงามระดับโปรเจกต์เกรด A */
             background: linear-gradient(135deg, #f5f3ff 0%, #e0e7ff 50%, #fce7f3 100%);
             color: var(--text-main);
             overflow: hidden; 
@@ -36,7 +35,6 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 1;
-            cursor: crosshair;
         }
 
         #ui-layer {
@@ -133,7 +131,7 @@
             padding: 6px 18px; border-radius: 20px; font-size: 0.95rem; color: var(--primary);
         }
         
-        /* จัดวางวิดีโอ Shorts ให้อยู่กึ่งกลางพอดีเป๊ะ ไม่มีเบี่ยง */
+        /* วิดีโอแนวตั้ง Shorts กึ่งกลางพอดี */
         .video-container {
             width: 270px; height: 480px;
             margin: 0 auto 15px auto;
@@ -169,7 +167,7 @@
         }
         .choice-btn:hover { border-color: var(--primary); background: #f8fafc; }
         .choice-btn.correct { background: #dcfce7; border-color: var(--success); color: #166534; }
-        .choice-btn.wrong { background: #fee2e2; border-color: var(--danger); color: #991b1b; }
+        .choice-btn.wrong { background: #fee2e2; border-color: var(--danger); color: #842029; }
         
         .controls-hint {
             position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
@@ -186,12 +184,12 @@
 
     <div id="hud">
         <div class="hud-badge">ผู้พิทักษ์: <span id="hud-name" style="color: var(--secondary);">ผู้เล่น</span></div>
-        <div class="hud-badge" style="border-color: var(--secondary); color: var(--secondary);">ด่าน SOC: <span id="hud-level">1</span> / 5</div>
-        <div class="hud-badge" style="border-color: var(--success); color: var(--success);">โหนดที่กู้คืน: <span id="hud-score">0</span> / 5</div>
+        <div class="hud-badge" style="border-color: var(--secondary); color: var(--secondary);">ด่านวิ่ง: <span id="hud-level">1</span> / 5</div>
+        <div class="hud-badge" style="border-color: var(--success); color: var(--success);">คะแนน: <span id="hud-score">0</span> XP</div>
     </div>
     
     <div class="controls-hint" id="controls-hint" style="opacity: 0;">
-        <i class="fa-solid fa-crosshairs"></i> คลิกเมาส์ที่ [โหนดข้อมูลเรืองแสง] รอบสถานีกลางเพื่อกู้คืนระบบเครือข่าย
+        <i class="fa-solid fa-gamepad"></i> ใช้ปุ่ม [A] / [D] หรือ [ลูกศรซ้าย/ขวา] เพื่อควบคุมยานหลบไวรัสและเก็บคริสตัลข้อมูล
     </div>
 
     <div id="ui-layer">
@@ -199,12 +197,12 @@
         <!-- 1. หน้าจอลงทะเบียน -->
         <div id="screen-login" class="screen active">
             <div class="cyber-card">
-                <div style="font-size: 3.5rem; color: var(--primary); margin-bottom: 5px;"><i class="fa-solid fa-network-wired"></i></div>
-                <h1 class="title-neon">CyberShield SOC 3D</h1>
-                <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 1rem;">ระบบจำลองศูนย์ปฏิบัติการความปลอดภัยเครือข่าย (5 ด่าน 5 ธีมแผนที่ และ 5 คลิปวิดีโอไม่ซ้ำกัน)</p>
+                <div style="font-size: 3.5rem; color: var(--primary); margin-bottom: 5px;"><i class="fa-solid fa-rocket"></i></div>
+                <h1 class="title-neon">CyberRunner 3D</h1>
+                <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 1rem;">เกม 3D Arcade Runner ผสานบทเรียน (5 ด่าน 5 แผนที่ 5 คลิปความรู้ไม่ซ้ำกัน)</p>
                 
                 <div class="form-group">
-                    <label>ชื่อ - นามสกุล เจ้าหน้าที่ปฏิบัติการ</label>
+                    <label>ชื่อ - นามสกุล ผู้พิทักษ์ระบบ</label>
                     <input type="text" id="player-name" class="cyber-input" placeholder="ระบุชื่อของคุณ">
                 </div>
                 
@@ -213,7 +211,7 @@
                     <input type="text" id="school-name" class="cyber-input" placeholder="เช่น ม.6/1 โรงเรียนศรีสะเกษวิทยาลัย">
                 </div>
 
-                <button class="btn-cyber" onclick="GameApp.startGame()">เชื่อมต่อระบบ Neural SOC <i class="fa-solid fa-plug" style="margin-left: 8px;"></i></button>
+                <button class="btn-cyber" onclick="GameApp.startGame()">เริ่มเล่นเกม 3D Runner <i class="fa-solid fa-play" style="margin-left: 8px;"></i></button>
             </div>
         </div>
 
@@ -221,7 +219,7 @@
         <div id="screen-video" class="screen">
             <div class="cyber-card" style="max-width: 480px; padding: 25px;">
                 <h2 id="video-stage-title" style="font-size: 1.4rem; color: var(--primary); font-weight: 700; margin-bottom: 5px;">📺 บรีฟข้อมูลความปลอดภัยประจำด่าน</h2>
-                <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.82rem;">คำสั่ง: ศึกษาข้อมูลจากวิดีโอนี้ให้ครบ 100% จึงจะปลดล็อกระบบทดสอบประจำด่าน</p>
+                <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.82rem;">คำสั่ง: ศึกษาข้อมูลจากวิดีโอนี้ให้ครบ 100% จึงจะปลดล็อกแบบทดสอบประจำด่าน</p>
                 
                 <div class="video-container">
                     <div id="youtube-player"></div>
@@ -238,7 +236,7 @@
         <!-- 3. หน้าจอแบบทดสอบรายด่าน -->
         <div id="screen-quiz" class="screen">
             <div class="cyber-card">
-                <div style="display: inline-block; padding: 6px 16px; background: #e0e7ff; color: var(--primary); border-radius: 20px; font-weight: 600; margin-bottom: 15px; font-size: 0.9rem;">แบบทดสอบประเมินระบบประจำด่าน</div>
+                <div style="display: inline-block; padding: 6px 16px; background: #e0e7ff; color: var(--primary); border-radius: 20px; font-weight: 600; margin-bottom: 15px; font-size: 0.9rem;">แบบทดสอบประเมินด่านวิ่ง</div>
                 <h3 id="question-text" style="font-size: 1.15rem; margin-bottom: 20px; font-weight: 500; line-height: 1.5; color: var(--text-main);">คำถามโหลดที่นี่...</h3>
                 
                 <div id="choices-container"></div>
@@ -248,11 +246,11 @@
         <!-- 4. หน้าจอสรุปผลสำเร็จ -->
         <div id="screen-end" class="screen">
             <div class="cyber-card">
-                <i class="fa-solid fa-award" style="font-size: 4.5rem; color: #fbbf24; margin-bottom: 15px; filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.4));"></i>
-                <h1 class="title-neon" style="font-size: 2rem;">กู้คืนระบบสำเร็จทั้ง 5 ด่าน!</h1>
-                <p style="font-size: 1rem; margin: 15px 0; color: var(--text-muted);">คะแนนความปลอดภัยเครือข่ายสะสมของคุณคือ</p>
+                <i class="fa-solid fa-trophy" style="font-size: 4.5rem; color: #fbbf24; margin-bottom: 15px; filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.4));"></i>
+                <h1 class="title-neon" style="font-size: 2rem;">เคลียร์สำเร็จทั้ง 5 ด่าน!</h1>
+                <p style="font-size: 1rem; margin: 15px 0; color: var(--text-muted);">คะแนนรวมความรู้ไซเบอร์สะสมของคุณคือ</p>
                 <h1 style="font-size: 4rem; color: var(--success); margin-bottom: 25px;" id="final-score">1000 XP</h1>
-                <button class="btn-cyber" onclick="location.reload()">รีเซ็ตระบบปฏิบัติการ <i class="fa-solid fa-rotate-right" style="margin-left: 5px;"></i></button>
+                <button class="btn-cyber" onclick="location.reload()">เล่นใหม่อีกครั้ง <i class="fa-solid fa-rotate-right" style="margin-left: 5px;"></i></button>
             </div>
         </div>
 
@@ -266,17 +264,16 @@
     <script>
         /**
          * =====================================================================
-         * CYBERSHIELD NEURAL SOC: 5 UNIQUE STAGES, 5 DISTINCT VIDEOS & MAPS
-         * Bright Vibrant Theme & Fixed UI Alignment
+         * CYBER-RUNNER 3D: 5 UNIQUE STAGES, 5 DISTINCT VIDEOS & MAPS
          * =====================================================================
          */
 
-        // ฐานข้อมูล 5 ด่าน 5 คลิปวิดีโอ (คลิปไม่ซ้ำกัน แยกตามหัวข้ออย่างแท้จริง)
+        // ฐานข้อมูล 5 ด่าน 5 คลิปวิดีโอ (ไม่ซ้ำกัน แยกตามหัวข้อ)
         const LevelsData = [
             {
                 level: 1,
                 title: "ด่านที่ 1: มารยาทและจรรยาบรรณออนไลน์",
-                videoId: "3pR0Ka4H-6U", // คลิปด่าน 1
+                videoId: "3pR0Ka4H-6U", // คลิปที่ 1
                 themeColor: 0x4f46e5,
                 gridColor: 0x06b6d4,
                 question: "ข้อใดคือแนวปฏิบัติที่เหมาะสมที่สุดเมื่อต้องแสดงความคิดเห็นในโพสต์ของผู้อื่นบนโลกออนไลน์?",
@@ -291,7 +288,7 @@
             {
                 level: 2,
                 title: "ด่านที่ 2: ลิขสิทธิ์และทรัพย์สินทางปัญญา",
-                videoId: "M7lc1UVf-VE", // คลิปด่าน 2 (ไม่ซ้ำ)
+                videoId: "M7lc1UVf-VE", // คลิปที่ 2
                 themeColor: 0x10b981,
                 gridColor: 0x34d399,
                 question: "การนำภาพถ่ายหรือบทความของผู้อื่นจากอินเทอร์เน็ตมาใช้ในโครงงานโดยไม่ระบุแหล่งที่มา ผิดด้านใด?",
@@ -306,7 +303,7 @@
             {
                 level: 3,
                 title: "ด่านที่ 3: พระราชบัญญัติคอมพิวเตอร์",
-                videoId: "jfKfPfyJRdk", // คลิปด่าน 3 (ไม่ซ้ำ)
+                videoId: "jfKfPfyJRdk", // คลิปที่ 3
                 themeColor: 0xec4899,
                 gridColor: 0xf43f5e,
                 question: "ตาม พ.ร.บ. คอมพิวเตอร์ การนำเข้าข้อมูลอันเป็นเท็จสู่ระบบคอมพิวเตอร์ มีความผิดเพราะเหตุผลใด?",
@@ -321,7 +318,7 @@
             {
                 level: 4,
                 title: "ด่านที่ 4: การรับมือกับข่าวปลอม (Fake News)",
-                videoId: "9bZkp7q19f0", // คลิปด่าน 4 (ไม่ซ้ำ)
+                videoId: "9bZkp7q19f0", // คลิปที่ 4
                 themeColor: 0xfbbf24,
                 gridColor: 0xd97706,
                 question: "หากนักเรียนได้รับข่าวสารเรื่องการรักษาโรคร้ายด้วยวิธีประหลาดทางแชทกลุ่มและบอกให้รีบแชร์ ควรทำอย่างไร?",
@@ -336,7 +333,7 @@
             {
                 level: 5,
                 title: "ด่านที่ 5: มาสเตอร์ชาเลนจ์ ความปลอดภัยไซเบอร์",
-                videoId: "L_LUpnjgPso", // คลิปด่าน 5 (ไม่ซ้ำ)
+                videoId: "L_LUpnjgPso", // คลิปที่ 5
                 themeColor: 0x8b5cf6,
                 gridColor: 0xc084fc,
                 question: "หากเพื่อนสนิทเผลอลืมล็อกอินอีเมลไว้บนคอมพิวเตอร์สาธารณะ สิ่งที่ถูกต้องที่สุดที่ควรทำคืออะไร?",
@@ -350,10 +347,10 @@
             }
         ];
 
-        class SOCEngine3D {
+        class RunnerEngine3D {
             constructor() {
                 this.scene = new THREE.Scene();
-                this.scene.fog = new THREE.FogExp2(0xf0fdf4, 0.005);
+                this.scene.fog = new THREE.FogExp2(0xf5f3ff, 0.008);
                 
                 this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
                 this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -362,40 +359,25 @@
 
                 this.clock = new THREE.Clock();
                 this.isPlaying = false;
-                this.targetNodesToClear = 5;
-                this.nodesCleared = 0;
+                this.speed = 35;
                 
-                this.interactiveNodes = [];
-                this.raycaster = new THREE.Raycaster();
-                this.mouse = new THREE.Vector2();
-
+                this.objects = [];
+                this.sceneryItems = [];
+                
                 this.setupLights();
                 this.setupEnvironment();
-                this.setupCoreNeuralNetwork();
+                this.setupPlayer();
+                this.setupScenery();
 
                 window.addEventListener('resize', () => {
                     this.camera.aspect = window.innerWidth / window.innerHeight;
                     this.camera.updateProjectionMatrix();
                     this.renderer.setSize(window.innerWidth, window.innerHeight);
                 });
-
-                window.addEventListener('click', (e) => {
-                    if (!this.isPlaying) return;
-                    this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-                    this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-
-                    this.raycaster.setFromCamera(this.mouse, this.camera);
-                    const intersects = this.raycaster.intersectObjects(this.interactiveNodes);
-
-                    if (intersects.length > 0) {
-                        const hitNode = intersects[0].object;
-                        this.destroyNode(hitNode);
-                    }
-                });
             }
 
             setupLights() {
-                const ambient = new THREE.AmbientLight(0xffffff, 1.0);
+                const ambient = new THREE.AmbientLight(0xffffff, 0.9);
                 this.scene.add(ambient);
                 const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
                 dirLight.position.set(10, 25, 10);
@@ -404,83 +386,146 @@
 
             setupEnvironment() {
                 this.gridHelper = new THREE.GridHelper(300, 60, 0x4f46e5, 0x06b6d4);
-                this.gridHelper.position.y = -4;
+                this.gridHelper.position.y = -2;
                 this.gridHelper.material.transparent = true;
-                this.gridHelper.material.opacity = 0.3;
+                this.gridHelper.material.opacity = 0.5;
                 this.scene.add(this.gridHelper);
             }
 
-            setupCoreNeuralNetwork() {
-                const coreGeo = new THREE.IcosahedronGeometry(2.5, 1);
-                const coreMat = new THREE.MeshStandardMaterial({ color: 0x4f46e5, wireframe: true, emissive: 0x4f46e5 });
-                this.coreMesh = new THREE.Mesh(coreGeo, coreMat);
-                this.coreMesh.position.set(0, 0, 0);
-                this.scene.add(this.coreMesh);
-
-                this.camera.position.set(0, 4, 15);
-                this.camera.lookAt(0, 0, 0);
-            }
-
-            spawnInteractiveNodes() {
-                this.interactiveNodes.forEach(node => this.scene.remove(node));
-                this.interactiveNodes = [];
-                this.nodesCleared = 0;
-                document.getElementById('hud-score').innerText = this.nodesCleared;
-
-                for (let i = 0; i < 5; i++) {
-                    const angle = (i / 5) * Math.PI * 2;
-                    const radius = 6 + Math.random() * 3;
-                    const x = Math.cos(angle) * radius;
-                    const z = Math.sin(angle) * radius;
-                    const y = (Math.random() - 0.5) * 4;
-
-                    const geo = new THREE.OctahedronGeometry(1.2, 0);
-                    const mat = new THREE.MeshStandardMaterial({ 
-                        color: 0x10b981, 
-                        emissive: 0x059669, 
-                        metalness: 0.8, 
-                        roughness: 0.2 
-                    });
-                    const nodeMesh = new THREE.Mesh(geo, mat);
-                    nodeMesh.position.set(x, y, z);
-                    nodeMesh.userData = { id: i };
-
-                    this.scene.add(nodeMesh);
-                    this.interactiveNodes.push(nodeMesh);
+            setupScenery() {
+                for (let i = 0; i < 25; i++) {
+                    this.createSceneryPair(-15, -i * 14);
+                    this.createSceneryPair(15, -i * 14);
                 }
             }
 
-            destroyNode(node) {
-                gsap.to(node.scale, { x: 2, y: 2, z: 2, duration: 0.2, yoyo: true, repeat: 1, onComplete: () => {
-                    this.scene.remove(node);
-                    const index = this.interactiveNodes.indexOf(node);
-                    if (index > -1) {
-                        this.interactiveNodes.splice(index, 1);
-                    }
-                    this.nodesCleared++;
-                    document.getElementById('hud-score').innerText = this.nodesCleared;
+            createSceneryPair(xPos, zPos) {
+                const group = new THREE.Group();
+                const baseGeo = new THREE.CylinderGeometry(0.8, 1.2, 10, 6);
+                const baseMat = new THREE.MeshStandardMaterial({ color: 0xcbd5e1, metalness: 0.5, roughness: 0.3 });
+                const base = new THREE.Mesh(baseGeo, baseMat);
+                base.position.y = 3;
+                group.add(base);
 
-                    if (this.nodesCleared >= this.targetNodesToClear) {
-                        GameApp.triggerLearningPhase();
-                    }
-                }});
+                const topGeo = new THREE.OctahedronGeometry(1.8, 0);
+                const topMat = new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x0284c7, roughness: 0.1 });
+                const top = new THREE.Mesh(topGeo, topMat);
+                top.position.y = 8.5;
+                group.add(top);
+
+                group.position.set(xPos, 0, zPos);
+                this.scene.add(group);
+                this.sceneryItems.push({ group, topMesh: top });
             }
 
             updateTheme(levelIndex) {
                 const data = LevelsData[levelIndex];
-                if (this.coreMesh) {
-                    this.coreMesh.material.color.setHex(data.themeColor);
-                    this.coreMesh.material.emissive.setHex(data.themeColor);
+                
+                if (this.playerBodyMat) {
+                    this.playerBodyMat.color.setHex(data.themeColor);
                 }
+                
                 if (this.gridHelper) {
                     this.scene.remove(this.gridHelper);
                     this.gridHelper = new THREE.GridHelper(300, 60, data.themeColor, data.gridColor);
-                    this.gridHelper.position.y = -4;
+                    this.gridHelper.position.y = -2;
                     this.gridHelper.material.transparent = true;
-                    this.gridHelper.material.opacity = 0.4;
+                    this.gridHelper.material.opacity = 0.6;
                     this.scene.add(this.gridHelper);
                 }
-                this.spawnInteractiveNodes();
+
+                this.sceneryItems.forEach(item => {
+                    item.topMesh.material.color.setHex(data.gridColor);
+                    item.topMesh.material.emissive.setHex(data.themeColor);
+                });
+            }
+
+            setupPlayer() {
+                const playerGroup = new THREE.Group();
+
+                const bodyGeo = new THREE.ConeGeometry(1.4, 3.8, 6);
+                bodyGeo.rotateX(Math.PI / 2);
+                this.playerBodyMat = new THREE.MeshStandardMaterial({ color: 0x4f46e5, metalness: 0.7, roughness: 0.2 });
+                const body = new THREE.Mesh(bodyGeo, this.playerBodyMat);
+                playerGroup.add(body);
+
+                const wingGeo = new THREE.BoxGeometry(4.2, 0.18, 1.4);
+                const wingMat = new THREE.MeshStandardMaterial({ color: 0xec4899, metalness: 0.5, roughness: 0.2 });
+                const wing = new THREE.Mesh(wingGeo, wingMat);
+                wing.position.set(0, 0, 0.3);
+                playerGroup.add(wing);
+
+                const coreGeo = new THREE.OctahedronGeometry(0.7, 0);
+                const coreMat = new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x06b6d4, roughness: 0.1 });
+                const core = new THREE.Mesh(coreGeo, coreMat);
+                core.position.set(0, 0, -0.1);
+                playerGroup.add(core);
+
+                this.player = playerGroup;
+                this.player.position.set(0, 0, 10);
+                this.scene.add(this.player);
+
+                this.camera.position.set(0, 6, 22);
+                this.camera.lookAt(this.player.position);
+
+                this.keys = { left: false, right: false };
+                window.addEventListener('keydown', (e) => {
+                    if(e.code === 'KeyA' || e.code === 'ArrowLeft') this.keys.left = true;
+                    if(e.code === 'KeyD' || e.code === 'ArrowRight') this.keys.right = true;
+                });
+                window.addEventListener('keyup', (e) => {
+                    if(e.code === 'KeyA' || e.code === 'ArrowLeft') this.keys.left = false;
+                    if(e.code === 'KeyD' || e.code === 'ArrowRight') this.keys.right = false;
+                });
+            }
+
+            spawnObstacle() {
+                if(!this.isPlaying) return;
+                
+                const isCollectible = Math.random() > 0.5;
+                let mesh;
+
+                if (isCollectible) {
+                    const geo = new THREE.OctahedronGeometry(1.4, 0);
+                    const mat = new THREE.MeshStandardMaterial({ color: 0x10b981, emissive: 0x047857, metalness: 0.8, roughness: 0.2 });
+                    mesh = new THREE.Mesh(geo, mat);
+                    mesh.userData = { type: 'core' };
+                } else {
+                    const geo = new THREE.DodecahedronGeometry(1.6, 0);
+                    const mat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.3, metalness: 0.7 });
+                    mesh = new THREE.Mesh(geo, mat);
+                    mesh.userData = { type: 'virus' };
+                }
+
+                const lanes = [-5.5, 0, 5.5];
+                mesh.position.x = lanes[Math.floor(Math.random() * lanes.length)];
+                mesh.position.y = 0.5;
+                mesh.position.z = -130;
+                
+                this.scene.add(mesh);
+                this.objects.push(mesh);
+            }
+
+            checkCollisions() {
+                const playerBox = new THREE.Box3().setFromObject(this.player);
+                
+                for (let i = this.objects.length - 1; i >= 0; i--) {
+                    const obj = this.objects[i];
+                    const objBox = new THREE.Box3().setFromObject(obj);
+                    
+                    if (playerBox.intersectsBox(objBox)) {
+                        if(obj.userData.type === 'core') {
+                            this.scene.remove(obj);
+                            this.objects.splice(i, 1);
+                            GameApp.triggerLearningPhase();
+                        } else {
+                            GameApp.deductScore();
+                            this.scene.remove(obj);
+                            this.objects.splice(i, 1);
+                            gsap.to(this.player.position, {x: this.player.position.x + (Math.random()-0.5)*2.5, duration: 0.1, yoyo: true, repeat: 3});
+                        }
+                    }
+                }
             }
 
             animate() {
@@ -488,41 +533,60 @@
                 const delta = this.clock.getDelta();
 
                 if (this.isPlaying) {
-                    if (this.coreMesh) {
-                        this.coreMesh.rotation.x += 0.5 * delta;
-                        this.coreMesh.rotation.y += 0.8 * delta;
-                    }
+                    this.player.rotation.y = (this.keys.left ? 0.35 : 0) + (this.keys.right ? -0.35 : 0);
 
-                    this.interactiveNodes.forEach((node) => {
-                        node.rotation.x += 1 * delta;
-                        node.rotation.y += 1.5 * delta;
+                    if (this.keys.left && this.player.position.x > -6) this.player.position.x -= 18 * delta;
+                    if (this.keys.right && this.player.position.x < 6) this.player.position.x += 18 * delta;
+
+                    this.gridHelper.position.z = (this.gridHelper.position.z + this.speed * delta) % 10;
+
+                    this.sceneryItems.forEach(item => {
+                        item.group.position.z += this.speed * delta;
+                        if (item.group.position.z > 20) item.group.position.z = -330;
                     });
+
+                    for (let i = this.objects.length - 1; i >= 0; i--) {
+                        const obj = this.objects[i];
+                        obj.position.z += this.speed * delta;
+                        obj.rotation.x += 2 * delta;
+                        obj.rotation.y += 2.5 * delta;
+
+                        if (obj.position.z > 20) {
+                            this.scene.remove(obj);
+                            this.objects.splice(i, 1);
+                        }
+                    }
+                    this.checkCollisions();
                 }
                 this.renderer.render(this.scene, this.camera);
             }
 
             startCinematic() {
-                gsap.fromTo(this.camera.position, { y: 15, z: 25 }, { y: 4, z: 15, duration: 2, ease: "power3.out" });
+                gsap.fromTo(this.camera.position, { y: 28, z: 55 }, { y: 6, z: 22, duration: 2, ease: "power3.out" });
             }
 
             pauseForUI() {
                 this.isPlaying = false;
+                gsap.to(this.camera.position, { z: 14, y: 3, duration: 1, ease: "power2.inOut" });
             }
 
             resumeCinematic() {
                 this.isPlaying = true;
+                gsap.to(this.camera.position, { z: 22, y: 6, duration: 1, ease: "power2.out" });
             }
         }
 
         const GameApp = {
             engine: null,
+            score: 0,
             currentLevelIndex: 0,
             playerVideo: null,
             videoInterval: null,
 
             init: function() {
-                this.engine = new SOCEngine3D();
+                this.engine = new RunnerEngine3D();
                 this.engine.animate();
+                setInterval(() => this.engine.spawnObstacle(), 1200);
             },
 
             switchScreen: function(hideId, showId) {
@@ -531,7 +595,7 @@
             },
 
             startGame: function() {
-                const name = document.getElementById('player-name').value || 'เจ้าหน้าที่ไซเบอร์';
+                const name = document.getElementById('player-name').value || 'ผู้พิทักษ์นิรนาม';
                 document.getElementById('hud-name').innerText = name;
                 
                 this.switchScreen('screen-login', null);
@@ -542,13 +606,19 @@
                 this.engine.startCinematic();
                 setTimeout(() => {
                     this.engine.isPlaying = true;
-                    setTimeout(()=> { document.getElementById('controls-hint').style.opacity = 0; }, 5000);
+                    setTimeout(()=> { document.getElementById('controls-hint').style.opacity = 0; }, 4000);
                 }, 2000);
             },
 
             updateLevelState: function() {
                 document.getElementById('hud-level').innerText = (this.currentLevelIndex + 1);
                 this.engine.updateTheme(this.currentLevelIndex);
+            },
+
+            deductScore: function() {
+                this.score -= 20;
+                if(this.score < 0) this.score = 0;
+                document.getElementById('hud-score').innerText = this.score;
             },
 
             triggerLearningPhase: function() {
@@ -571,7 +641,7 @@
                 document.getElementById('vid-progress').style.width = '0%';
                 const btnQuiz = document.getElementById('btn-quiz');
                 btnQuiz.disabled = true;
-                btnQuiz.innerHTML = '<i class="fa-solid fa-lock"></i> กำลังศึกษาบรีฟข้อมูล (ห้ามข้าม)';
+                btnQuiz.innerHTML = '<i class="fa-solid fa-lock"></i> กำลังศึกษาข้อมูลประจำด่าน (ห้ามข้าม)';
 
                 if(this.playerVideo) {
                     this.playerVideo.loadVideoById(vidId);
@@ -600,7 +670,7 @@
                     document.getElementById('vid-progress').style.width = '100%';
                     const btn = document.getElementById('btn-quiz');
                     btn.disabled = false;
-                    btn.innerHTML = 'เริ่มทำแบบทดสอบประเมินด่าน <i class="fa-solid fa-arrow-right"></i>';
+                    btn.innerHTML = 'เริ่มทำแบบทดสอบประจำด่าน <i class="fa-solid fa-arrow-right"></i>';
                 }
             },
 
@@ -630,10 +700,14 @@
                 
                 if (selected === correct) {
                     btn.classList.add('correct');
+                    this.score += 200;
                 } else {
                     btn.classList.add('wrong');
                     document.querySelectorAll('.choice-btn')[correct].classList.add('correct');
+                    this.score += 50; 
                 }
+                
+                document.getElementById('hud-score').innerText = this.score;
 
                 setTimeout(() => {
                     this.currentLevelIndex++;
@@ -652,7 +726,7 @@
             endGame: function() {
                 this.engine.pauseForUI();
                 document.getElementById('hud').style.opacity = 0;
-                document.getElementById('final-score').innerText = ((this.currentLevelIndex) * 250) + " XP";
+                document.getElementById('final-score').innerText = this.score + " XP";
                 this.switchScreen(null, 'screen-end');
             }
         };
